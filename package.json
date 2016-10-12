@@ -4,6 +4,7 @@
     "description": "Format strings to camelize, dasherize, etc.",
     "version": "0.0.1",
     "publisher": "marclipovsky",
+    "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
     "engines": {
         "vscode": "^1.5.0"
     },
