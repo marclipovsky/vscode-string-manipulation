@@ -90,15 +90,17 @@
         ]
     },
     "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install"
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
     },
     "devDependencies": {
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0",
-        "mocha": "^2.3.3",
-        "eslint": "^3.6.0",
+        "@types/mocha": "^2.2.32",
         "@types/node": "^6.0.40",
-        "@types/mocha": "^2.2.32"
+        "eslint": "^3.6.0",
+        "mocha": "^2.3.3",
+        "typescript": "^2.0.3",
+        "vscode": "0.11.18"
     },
     "dependencies": {
         "underscore.string": "^3.3.4"
