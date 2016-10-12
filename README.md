@@ -1,6 +1,7 @@
 # String Manipulation for VSCode
 
-This extension provides string manipulation commands for any highlight text.
+This extension provides string manipulation commands for any selected text as well
+as multiple selections.
 
 Current string functions available:
 

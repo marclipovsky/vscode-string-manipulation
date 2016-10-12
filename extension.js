@@ -17,20 +17,22 @@ const commands = [
 ];
 
 function holder(commandName) {
-  if (!string[commandName]) { return; }
+  if (!string[commandName] || !editor) { return; }
 
-  if (!editor) { return; }
+  editor.edit(builder => {
+    editor.selections.forEach(selection => {
+      let text, replaced;
+      text = editor.document.getText(selection);
 
-  const selection = editor.selection;
-  let text = editor.document.getText(selection);
+      if (commandName === 'join') {
+        replaced = string[commandName](" ", ...text.split("\n"));
+      } else {
+        replaced = string[commandName](text);
+      }
 
-  if (commandName === 'join') {
-    replaced = string[commandName](" ", ...text.split("\n"));
-  } else {
-    replaced = string[commandName](text);
-  }
-
-  editor.edit(builder => builder.replace(selection, replaced));
+      builder.replace(selection, replaced);
+    });
+  })
 }
 
 exports.activate = function activate(context) {
