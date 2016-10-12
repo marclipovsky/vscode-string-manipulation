@@ -29,7 +29,7 @@ is selected in your editor.
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Roberto Huertas
+Copyright (c) 2016 Marc Lipovsky
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
