@@ -9,22 +9,11 @@
         "vscode": "^1.5.0"
     },
     "keywords": [
-        "string",
-        "string",
-        "manipulation",
         "underscore",
         "lodash",
         "case",
-        "titlize",
         "camelize",
-        "classify",
-        "underscored",
-        "dasherize",
-        "humanize",
-        "slugify",
-        "reverse",
-        "decapitalize",
-        "capitalize"
+        "dasherize"
     ],
     "categories": [
         "Other"
