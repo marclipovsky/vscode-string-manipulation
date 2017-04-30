@@ -1,6 +1,8 @@
-const vscode = require('vscode');
-const string = require('underscore.string');
-const editor = vscode.window.activeTextEditor;
+const {
+  window: { activeTextEditor: editor },
+  commands: { registerCommand }
+} = require('vscode');
+const _string = require('underscore.string');
 const commands = [
   "titlize",
   "camelize",
@@ -17,17 +19,19 @@ const commands = [
 ];
 
 function holder(commandName) {
-  if (!string[commandName] || !editor) { return; }
+  if (!_string[commandName] || !editor) { return; }
 
   editor.edit(builder => {
     editor.selections.forEach(selection => {
-      let text, replaced;
-      text = editor.document.getText(selection);
+      let replaced;
+      const text = editor.document.getText(selection);
+      const textParts = text.split('\n');
+
 
       if (commandName === 'join') {
-        replaced = string[commandName](" ", ...text.split("\n"));
+        replaced = _string[commandName](" ", ...textParts);
       } else {
-        replaced = string[commandName](text);
+        replaced = textParts.reduce((prev, curr) => prev.push(_string[commandName](curr)) && prev, []).join('\n');
       }
 
       builder.replace(selection, replaced);
@@ -37,8 +41,8 @@ function holder(commandName) {
 
 exports.activate = function activate(context) {
   commands.forEach(commandName => {
-    context.subscriptions.push(vscode.commands.registerCommand(`string-manipulation.${commandName}`, _ => holder(commandName)));
+    context.subscriptions.push(registerCommand(`string-manipulation.${commandName}`, () => holder(commandName)));
   })
 }
 
-exports.deactivate = function deactivate() { }
+exports.deactivate = function deactivate() { };
