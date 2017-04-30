@@ -20,7 +20,9 @@
     ],
     "main": "./extension",
     "activationEvents": [
-        "onCommand:string-manipulation.titlize",
+        "onCommand:string-manipulation.titleize",
+        "onCommand:string-manipulation.titleize-ap-style",
+        "onCommand:string-manipulation.titleize-chicago-style",
         "onCommand:string-manipulation.camelize",
         "onCommand:string-manipulation.classify",
         "onCommand:string-manipulation.underscored",
@@ -36,9 +38,19 @@
     "contributes": {
         "commands": [
             {
-                "title": "Titlize",
+                "title": "Titleize",
                 "category": "String Manipulation",
-                "command": "string-manipulation.titlize"
+                "command": "string-manipulation.titleize"
+            },
+            {
+                "title": "Titleize (AP Style)",
+                "category": "String Manipulation",
+                "command": "string-manipulation.titleize-ap-style"
+            },
+            {
+                "title": "Titleize (Chicago Style)",
+                "category": "String Manipulation",
+                "command": "string-manipulation.titleize-chicago-style"
             },
             {
                 "title": "Camelize",
@@ -111,6 +123,8 @@
         "vscode": "0.11.18"
     },
     "dependencies": {
+        "ap-style-title-case": "^1.0.1",
+        "chicago-capitalize": "^0.1.0",
         "underscore.string": "^3.3.4"
     }
 }

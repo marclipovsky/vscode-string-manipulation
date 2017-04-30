@@ -2,9 +2,11 @@ const {
   window: { activeTextEditor: editor },
   commands: { registerCommand }
 } = require('vscode');
-const _string = require('underscore.string');
+const string = require('underscore.string');
+const apStyleTitleCase = require('ap-style-title-case');
+const chicagoStyleTitleCase = require('chicago-capitalize');
 const commands = [
-  "titlize",
+  "titleize",
   "camelize",
   "classify",
   "underscored",
@@ -15,34 +17,49 @@ const commands = [
   "swapCase",
   "join",
   "decapitalize",
-  "capitalize"
+  "capitalize",
+  "titleize-ap-style",
+  "titleize-chicago-style",
 ];
 
-function holder(commandName) {
-  if (!_string[commandName] || !editor) { return; }
+const holder = commandName => {
+  if (!editor) { return; }
 
   editor.edit(builder => {
     editor.selections.forEach(selection => {
-      let replaced;
+      let replaced, stringFunc;
       const text = editor.document.getText(selection);
       const textParts = text.split('\n');
 
+      switch (commandName) {
+        case 'join':
+          replaced = string[commandName](" ", ...textParts);
+          builder.replace(selection, replaced);
+          return;
 
-      if (commandName === 'join') {
-        replaced = _string[commandName](" ", ...textParts);
-      } else {
-        replaced = textParts.reduce((prev, curr) => prev.push(_string[commandName](curr)) && prev, []).join('\n');
+        case 'titleize-ap-style':
+          stringFunc = apStyleTitleCase;
+          break;
+
+        case 'titleize-chicago-style':
+          stringFunc = chicagoStyleTitleCase;
+          break;
+      
+        default:
+          stringFunc = string[commandName];
+          break;
       }
 
+      replaced = textParts.reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, []).join('\n');
       builder.replace(selection, replaced);
     });
   })
 }
 
-exports.activate = function activate(context) {
+exports.activate = context => {
   commands.forEach(commandName => {
     context.subscriptions.push(registerCommand(`string-manipulation.${commandName}`, () => holder(commandName)));
   })
 }
 
-exports.deactivate = function deactivate() { };
+exports.deactivate = () => { };
