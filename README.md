@@ -15,7 +15,9 @@ Current string functions available:
 1. reverse
 1. slugify
 1. swap case
-1. titlize
+1. titleize
+1. titleize (AP Style)
+1. titleize (Chicago Style)
 1. underscored
 
 ## Use
