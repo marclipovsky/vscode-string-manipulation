@@ -1,3 +1,6 @@
+# 0.2.0
+- e497c8b Add screaming snake case - fixes #6
+
 # 0.1.0
 - 824e06e Add Chicago and AP style titleization. Fixes #2.
 - 7bc9db1 Manipulate strings without joining lines. Fixes #1.
