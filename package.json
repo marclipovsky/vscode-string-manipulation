@@ -27,6 +27,7 @@
         "onCommand:string-manipulation.classify",
         "onCommand:string-manipulation.underscored",
         "onCommand:string-manipulation.dasherize",
+        "onCommand:string-manipulation.screaming-snake",
         "onCommand:string-manipulation.humanize",
         "onCommand:string-manipulation.slugify",
         "onCommand:string-manipulation.reverse",
@@ -81,6 +82,11 @@
                 "title": "Slugify",
                 "category": "String Manipulation",
                 "command": "string-manipulation.slugify"
+            },
+            {
+                "title": "Screaming Snake",
+                "category": "String Manipulation",
+                "command": "string-manipulation.screaming-snake"
             },
             {
                 "title": "Reverse",
