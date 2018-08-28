@@ -1,3 +1,6 @@
+# 0.3.0
+- 1673eb3 Add slugify and fix #6,#7
+
 # 0.2.0
 - e497c8b Add screaming snake case - fixes #6
 
