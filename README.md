@@ -12,7 +12,6 @@ Current string functions available:
 1. decapitalize
 1. screaming snake
 1. humanize
-1. join lines
 1. reverse
 1. slugify
 1. swap case

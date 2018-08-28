@@ -33,8 +33,7 @@
     "onCommand:string-manipulation.reverse",
     "onCommand:string-manipulation.swapCase",
     "onCommand:string-manipulation.decapitalize",
-    "onCommand:string-manipulation.capitalize",
-    "onCommand:string-manipulation.join"
+    "onCommand:string-manipulation.capitalize"
   ],
   "contributes": {
     "commands": [
@@ -107,11 +106,6 @@
         "title": "Capitalize",
         "category": "String Manipulation",
         "command": "string-manipulation.capitalize"
-      },
-      {
-        "title": "Join Lines",
-        "category": "String Manipulation",
-        "command": "string-manipulation.join"
       }
     ]
   },
