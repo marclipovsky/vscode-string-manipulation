@@ -1,136 +1,137 @@
 {
-    "name": "string-manipulation",
-    "displayName": "String Manipulation",
-    "description": "Format strings to camelize, dasherize, etc.",
-    "version": "0.1.0",
-    "publisher": "marclipovsky",
-    "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
-    "engines": {
-        "vscode": "^1.5.0"
-    },
-    "keywords": [
-        "underscore",
-        "lodash",
-        "case",
-        "camelize",
-        "dasherize"
-    ],
-    "categories": [
-        "Other"
-    ],
-    "main": "./extension",
-    "activationEvents": [
-        "onCommand:string-manipulation.titleize",
-        "onCommand:string-manipulation.titleize-ap-style",
-        "onCommand:string-manipulation.titleize-chicago-style",
-        "onCommand:string-manipulation.camelize",
-        "onCommand:string-manipulation.classify",
-        "onCommand:string-manipulation.underscored",
-        "onCommand:string-manipulation.dasherize",
-        "onCommand:string-manipulation.screaming-snake",
-        "onCommand:string-manipulation.humanize",
-        "onCommand:string-manipulation.slugify",
-        "onCommand:string-manipulation.reverse",
-        "onCommand:string-manipulation.swapCase",
-        "onCommand:string-manipulation.decapitalize",
-        "onCommand:string-manipulation.capitalize",
-        "onCommand:string-manipulation.join"
-    ],
-    "contributes": {
-        "commands": [
-            {
-                "title": "Titleize",
-                "category": "String Manipulation",
-                "command": "string-manipulation.titleize"
-            },
-            {
-                "title": "Titleize (AP Style)",
-                "category": "String Manipulation",
-                "command": "string-manipulation.titleize-ap-style"
-            },
-            {
-                "title": "Titleize (Chicago Style)",
-                "category": "String Manipulation",
-                "command": "string-manipulation.titleize-chicago-style"
-            },
-            {
-                "title": "Camelize",
-                "category": "String Manipulation",
-                "command": "string-manipulation.camelize"
-            },
-            {
-                "title": "Classify",
-                "category": "String Manipulation",
-                "command": "string-manipulation.classify"
-            },
-            {
-                "title": "Underscored",
-                "category": "String Manipulation",
-                "command": "string-manipulation.underscored"
-            },
-            {
-                "title": "Dasherize",
-                "category": "String Manipulation",
-                "command": "string-manipulation.dasherize"
-            },
-            {
-                "title": "Humanize",
-                "category": "String Manipulation",
-                "command": "string-manipulation.humanize"
-            },
-            {
-                "title": "Slugify",
-                "category": "String Manipulation",
-                "command": "string-manipulation.slugify"
-            },
-            {
-                "title": "Screaming Snake",
-                "category": "String Manipulation",
-                "command": "string-manipulation.screaming-snake"
-            },
-            {
-                "title": "Reverse",
-                "category": "String Manipulation",
-                "command": "string-manipulation.reverse"
-            },
-            {
-                "title": "Swap Case",
-                "category": "String Manipulation",
-                "command": "string-manipulation.swapCase"
-            },
-            {
-                "title": "Decapitalize",
-                "category": "String Manipulation",
-                "command": "string-manipulation.decapitalize"
-            },
-            {
-                "title": "Capitalize",
-                "category": "String Manipulation",
-                "command": "string-manipulation.capitalize"
-            },
-            {
-                "title": "Join Lines",
-                "category": "String Manipulation",
-                "command": "string-manipulation.join"
-            }
-        ]
-    },
-    "scripts": {
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
-    },
-    "devDependencies": {
-        "@types/mocha": "^2.2.32",
-        "@types/node": "^6.0.40",
-        "eslint": "^3.6.0",
-        "mocha": "^2.3.3",
-        "typescript": "^2.0.3",
-        "vscode": "0.11.18"
-    },
-    "dependencies": {
-        "ap-style-title-case": "^1.0.1",
-        "chicago-capitalize": "^0.1.0",
-        "underscore.string": "^3.3.4"
-    }
+  "name": "string-manipulation",
+  "displayName": "String Manipulation",
+  "description": "Format strings to camelize, dasherize, etc.",
+  "version": "0.1.0",
+  "publisher": "marclipovsky",
+  "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
+  "engines": {
+    "vscode": "^1.5.0"
+  },
+  "keywords": [
+    "underscore",
+    "lodash",
+    "case",
+    "camelize",
+    "dasherize"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension",
+  "activationEvents": [
+    "onCommand:string-manipulation.titleize",
+    "onCommand:string-manipulation.titleize-ap-style",
+    "onCommand:string-manipulation.titleize-chicago-style",
+    "onCommand:string-manipulation.camelize",
+    "onCommand:string-manipulation.classify",
+    "onCommand:string-manipulation.underscored",
+    "onCommand:string-manipulation.dasherize",
+    "onCommand:string-manipulation.screaming-snake",
+    "onCommand:string-manipulation.humanize",
+    "onCommand:string-manipulation.slugify",
+    "onCommand:string-manipulation.reverse",
+    "onCommand:string-manipulation.swapCase",
+    "onCommand:string-manipulation.decapitalize",
+    "onCommand:string-manipulation.capitalize",
+    "onCommand:string-manipulation.join"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "title": "Titleize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.titleize"
+      },
+      {
+        "title": "Titleize (AP Style)",
+        "category": "String Manipulation",
+        "command": "string-manipulation.titleize-ap-style"
+      },
+      {
+        "title": "Titleize (Chicago Style)",
+        "category": "String Manipulation",
+        "command": "string-manipulation.titleize-chicago-style"
+      },
+      {
+        "title": "Camelize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.camelize"
+      },
+      {
+        "title": "Classify",
+        "category": "String Manipulation",
+        "command": "string-manipulation.classify"
+      },
+      {
+        "title": "Underscored",
+        "category": "String Manipulation",
+        "command": "string-manipulation.underscored"
+      },
+      {
+        "title": "Dasherize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.dasherize"
+      },
+      {
+        "title": "Humanize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.humanize"
+      },
+      {
+        "title": "Slugify",
+        "category": "String Manipulation",
+        "command": "string-manipulation.slugify"
+      },
+      {
+        "title": "Screaming Snake",
+        "category": "String Manipulation",
+        "command": "string-manipulation.screaming-snake"
+      },
+      {
+        "title": "Reverse",
+        "category": "String Manipulation",
+        "command": "string-manipulation.reverse"
+      },
+      {
+        "title": "Swap Case",
+        "category": "String Manipulation",
+        "command": "string-manipulation.swapCase"
+      },
+      {
+        "title": "Decapitalize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.decapitalize"
+      },
+      {
+        "title": "Capitalize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.capitalize"
+      },
+      {
+        "title": "Join Lines",
+        "category": "String Manipulation",
+        "command": "string-manipulation.join"
+      }
+    ]
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.32",
+    "@types/node": "^6.0.40",
+    "eslint": "^3.6.0",
+    "mocha": "^2.3.3",
+    "typescript": "^2.0.3",
+    "vscode": "0.11.18"
+  },
+  "dependencies": {
+    "@sindresorhus/slugify": "^0.3.0",
+    "ap-style-title-case": "^1.0.1",
+    "chicago-capitalize": "^0.1.0",
+    "underscore.string": "^3.3.4"
+  }
 }

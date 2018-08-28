@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@sindresorhus/slugify@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/slugify/-/slugify-0.3.0.tgz#39ec81f542b4fcaf7f67fbc8916efa990b65e139"
+  dependencies:
+    escape-string-regexp "^1.0.5"
+    lodash.deburr "^4.1.0"
+
 "@types/mocha@^2.2.32":
   version "2.2.41"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-2.2.41.tgz#e27cf0817153eb9f2713b2d3f6c68f1e1c3ca608"
@@ -1441,6 +1448,10 @@ lodash._shimkeys@~2.4.1:
   resolved "https://registry.yarnpkg.com/lodash._shimkeys/-/lodash._shimkeys-2.4.1.tgz#6e9cc9666ff081f0b5a6c978b83e242e6949d203"
   dependencies:
     lodash._objecttypes "~2.4.1"
+
+lodash.deburr@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/lodash.deburr/-/lodash.deburr-4.1.0.tgz#ddb1bbb3ef07458c0177ba07de14422cb033ff9b"
 
 lodash.defaults@~2.4.1:
   version "2.4.1"
