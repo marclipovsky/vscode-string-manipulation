@@ -8,7 +8,7 @@
   "engines": {
     "vscode": "^1.5.0"
   },
-  "icon": "./icon.png",
+  "icon": "icon.png",
   "keywords": [
     "underscore",
     "lodash",
