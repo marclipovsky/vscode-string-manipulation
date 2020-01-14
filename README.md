@@ -10,15 +10,16 @@ Current string functions available:
 1. classify
 1. dasherize
 1. decapitalize
-1. screaming snake
 1. humanize
 1. reverse
+1. screaming snake
+1. sentence
 1. slugify
+1. snake / underscore
 1. swap case
 1. titleize
 1. titleize (AP Style)
 1. titleize (Chicago Style)
-1. underscored
 
 ## Use
 
