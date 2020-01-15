@@ -132,6 +132,6 @@
     "@sindresorhus/slugify": "^0.3.0",
     "ap-style-title-case": "^1.0.1",
     "chicago-capitalize": "^0.1.0",
-    "underscore.string": "^3.3.4"
+    "underscore.string": "^3.3.5"
   }
 }
