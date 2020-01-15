@@ -2,7 +2,7 @@
   "name": "string-manipulation",
   "displayName": "String Manipulation",
   "description": "Format strings to camelize, dasherize, etc.",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "publisher": "marclipovsky",
   "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
   "engines": {
@@ -113,14 +113,19 @@
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
     "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "test": "node ./test/runTest.js"
   },
   "devDependencies": {
-    "@types/mocha": "^2.2.32",
-    "@types/node": "^6.0.40",
-    "eslint": "^3.6.0",
-    "mocha": "^2.3.3",
-    "typescript": "^2.0.3",
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.41.0",
+    "eslint": "^6.6.0",
+    "glob": "^7.1.5",
+    "mocha": "^6.2.2",
+    "typescript": "^3.6.4",
+    "vscode-test": "^1.2.2",
     "vscode": "0.11.18"
   },
   "dependencies": {

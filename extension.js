@@ -1,13 +1,10 @@
 
-const {
-  window: { activeTextEditor: editor },
-  commands
-} = require('vscode');
+const vscode = require('vscode');
 const _string = require('underscore.string');
 const apStyleTitleCase = require('ap-style-title-case');
 const chicagoStyleTitleCase = require('chicago-capitalize');
 const slugify = require('@sindresorhus/slugify');
-const defaultFunction = commandName => str => _string[commandName](str.toLowerCase());
+const defaultFunction = (commandName, option) => str => _string[commandName](str, option);
 
 const commandNameFunctionMap = {
   'titleize': defaultFunction('titleize'),
@@ -18,9 +15,15 @@ const commandNameFunctionMap = {
   'reverse': defaultFunction('reverse'),
   'decapitalize': defaultFunction('decapitalize'),
   'capitalize': defaultFunction('capitalize'),
+  'sentence': defaultFunction('capitalize', true),
   'camelize': str => _string.camelize(str.match(/[a-z]/) ? str : str.toLowerCase()),
   'slugify': slugify,
-  'swapCase': _string['swapCase'],
+  'swapCase': defaultFunction('swapCase'),
+  'snake': str => _string.underscored(str)
+    .replace(/([A-Z])[^A-Z]/g, ' $1')
+    .replace(/[^a-z]+/ig, ' ')
+    .trim()
+    .replace(/\s/gi, '_'),
   'screaming-snake': str => _string.underscored(str)
     .replace(/([A-Z])[^A-Z]/g, ' $1')
     .replace(/[^a-z]+/ig, ' ')
@@ -33,6 +36,7 @@ const commandNameFunctionMap = {
 
 
 const stringFunction = commandName => {
+  const editor = vscode.window.activeTextEditor;
   if (!editor) { return; }
 
   editor.edit(builder => {
@@ -47,11 +51,18 @@ const stringFunction = commandName => {
 
       builder.replace(selection, replaced);
     }
-  }, () => {});
+  }, () => { });
 }
 
-exports.activate = context => {
+function activate(context) {
   Object.keys(commandNameFunctionMap).forEach(commandName => {
-    context.subscriptions.push(commands.registerCommand(`string-manipulation.${commandName}`, () => stringFunction(commandName)));
+    context.subscriptions.push(vscode.commands.registerCommand(`string-manipulation.${commandName}`, () => stringFunction(commandName)));
   });
+}
+
+exports.activate = activate;
+
+module.exports = {
+  activate,
+  commandNameFunctionMap,
 }
