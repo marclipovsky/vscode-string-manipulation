@@ -113,7 +113,7 @@
         "title": "Sentence",
         "category": "String Manipulation",
         "command": "string-manipulation.sentence"
-      },
+      }
     ]
   },
   "scripts": {
