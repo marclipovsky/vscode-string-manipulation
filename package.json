@@ -34,7 +34,8 @@
     "onCommand:string-manipulation.reverse",
     "onCommand:string-manipulation.swapCase",
     "onCommand:string-manipulation.decapitalize",
-    "onCommand:string-manipulation.capitalize"
+    "onCommand:string-manipulation.capitalize",
+    "onCommand:string-manipulation.sentence"
   ],
   "contributes": {
     "commands": [
@@ -107,7 +108,12 @@
         "title": "Capitalize",
         "category": "String Manipulation",
         "command": "string-manipulation.capitalize"
-      }
+      },
+      {
+        "title": "Sentence",
+        "category": "String Manipulation",
+        "command": "string-manipulation.sentence"
+      },
     ]
   },
   "scripts": {
