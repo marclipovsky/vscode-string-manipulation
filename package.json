@@ -2,7 +2,7 @@
   "name": "string-manipulation",
   "displayName": "String Manipulation",
   "description": "Format strings to camelize, dasherize, etc.",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "publisher": "marclipovsky",
   "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
   "engines": {
@@ -25,6 +25,9 @@
     "onCommand:string-manipulation.titleize-ap-style",
     "onCommand:string-manipulation.titleize-chicago-style",
     "onCommand:string-manipulation.camelize",
+    "onCommand:string-manipulation.chop",
+    "onCommand:string-manipulation.clean",
+    "onCommand:string-manipulation.cleanDiacritics",
     "onCommand:string-manipulation.classify",
     "onCommand:string-manipulation.underscored",
     "onCommand:string-manipulation.dasherize",
@@ -35,7 +38,10 @@
     "onCommand:string-manipulation.swapCase",
     "onCommand:string-manipulation.decapitalize",
     "onCommand:string-manipulation.capitalize",
-    "onCommand:string-manipulation.sentence"
+    "onCommand:string-manipulation.sentence",
+    "onCommand:string-manipulation.prune",
+    "onCommand:string-manipulation.truncate",
+    "onCommand:string-manipulation.repeat"
   ],
   "contributes": {
     "commands": [
@@ -58,6 +64,21 @@
         "title": "Camelize",
         "category": "String Manipulation",
         "command": "string-manipulation.camelize"
+      },
+      {
+        "title": "Chop",
+        "category": "String Manipulation",
+        "command": "string-manipulation.chop"
+      },
+      {
+        "title": "Clean",
+        "category": "String Manipulation",
+        "command": "string-manipulation.clean"
+      },
+      {
+        "title": "Clean diacritics",
+        "category": "String Manipulation",
+        "command": "string-manipulation.cleanDiacritics"
       },
       {
         "title": "Classify",
@@ -113,6 +134,21 @@
         "title": "Sentence",
         "category": "String Manipulation",
         "command": "string-manipulation.sentence"
+      },
+      {
+        "title": "Truncate",
+        "category": "String Manipulation",
+        "command": "string-manipulation.truncate"
+      },
+      {
+        "title": "Prune",
+        "category": "String Manipulation",
+        "command": "string-manipulation.prune"
+      },
+      {
+        "title": "Repeat",
+        "category": "String Manipulation",
+        "command": "string-manipulation.repeat"
       }
     ]
   },
@@ -126,13 +162,14 @@
     "@types/glob": "^7.1.1",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.11.7",
-    "@types/vscode": "^1.41.0",
+    "@types/vscode": "^1.5.0",
     "eslint": "^6.6.0",
     "glob": "^7.1.5",
     "mocha": "^6.2.2",
+    "sinon": "^9.0.3",
     "typescript": "^3.6.4",
-    "vscode-test": "^1.2.2",
-    "vscode": "0.11.18"
+    "vscode": "0.11.18",
+    "vscode-test": "^1.2.2"
   },
   "dependencies": {
     "@sindresorhus/slugify": "^0.3.0",

@@ -8,6 +8,9 @@ Current string functions available:
 1. camelize
 1. capitalize
 1. classify
+1. chop - split into groups provided n # of characters
+1. clean
+1. clean diacritics
 1. dasherize
 1. decapitalize
 1. humanize
@@ -20,6 +23,9 @@ Current string functions available:
 1. titleize
 1. titleize (AP Style)
 1. titleize (Chicago Style)
+1. truncate - trims string to n # of characters and appends ellipsis
+1. prune - truncate but keeps ellipsis within character count provided
+1. repeat - repeat selection n #of times
 
 ## Use
 
