@@ -1,3 +1,5 @@
+![Node.js CI](https://github.com/marclipovsky/vscode-string-manipulation/workflows/Node.js%20CI/badge.svg)
+
 # String Manipulation for VSCode
 
 This extension provides string manipulation commands for any selected text as well
