@@ -45,37 +45,40 @@ const commandNameFunctionMap = {
   repeat: (n) => defaultFunction("repeat", n),
 };
 
-const stringFunction = async (commandName) => {
+const stringFunction = (commandName) => {
   const editor = vscode.window.activeTextEditor;
+
   if (!editor) {
     return;
   }
 
-  let l = editor.selections.length;
-  while (l--) {
-    let selection = editor.selections[l];
-    const text = editor.document.getText(selection);
-    const textParts = text.split("\n");
-    let stringFunc, replaced;
+  editor.edit(
+    async (builder) => {
+      let l = editor.selections.length;
+      while (l--) {
+        let selection = editor.selections[l];
+        const text = editor.document.getText(selection);
+        const textParts = text.split("\n");
+        let stringFunc, replaced;
 
-    if (["chop", "truncate", "prune", "repeat"].includes(commandName)) {
-      const value = await vscode.window.showInputBox();
-      stringFunc = commandNameFunctionMap[commandName](value);
-      replaced = textParts
-        .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
-        .join("\n");
-    } else {
-      stringFunc = commandNameFunctionMap[commandName];
-      replaced = textParts
-        .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
-        .join("\n");
-    }
+        if (["chop", "truncate", "prune", "repeat"].includes(commandName)) {
+          const value = await vscode.window.showInputBox();
+          stringFunc = commandNameFunctionMap[commandName](value);
+          replaced = textParts
+            .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
+            .join("\n");
+        } else {
+          stringFunc = commandNameFunctionMap[commandName];
+          replaced = textParts
+            .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
+            .join("\n");
+        }
 
-    editor.edit(
-      (builder) => builder.replace(selection, replaced),
-      () => {}
-    );
-  }
+        builder.replace(selection, replaced);
+      }
+    },
+    () => {}
+  );
 };
 
 function activate(context) {
