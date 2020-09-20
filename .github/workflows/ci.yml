@@ -3,10 +3,12 @@ name: Node.js CI
 on:
   push:
     branches:
-      - "*"
+      - master
+      - feature/*
   pull_request:
     branches:
-      - "*"
+      - master
+      - feature/*
 
 jobs:
   test:
