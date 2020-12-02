@@ -39,6 +39,30 @@ suite("Extension Test Suite", () => {
       "Underscored-is-like  snake-case",
       "underscored_is_like_snake_case",
     ],
+    ["increment", "foo 1 bar 2 qux 3 bazz 4", "foo 2 bar 3 qux 4 bazz 5"],
+    ["decrement", "foo 1 bar 2 qux 3 bazz 4", "foo 0 bar 1 qux 2 bazz 3"],
+    [
+      "copyAndIncrement",
+      "foo 1 bar 2 qux 3 bazz 4",
+      "foo 1 bar 2 qux 3 bazz 4foo 2 bar 3 qux 4 bazz 5",
+    ],
+    [
+      "copyAndDecrement",
+      "foo 1 bar 2 qux 3 bazz 4",
+      "foo 1 bar 2 qux 3 bazz 4foo 0 bar 1 qux 2 bazz 3",
+    ],
+    ["escape", "foo & bar % qux", "foo%20%26%20bar%20%25%20qux"],
+    ["unescape", "foo%20%26%20bar%20%25%20qux", "foo & bar % qux"],
+    [
+      "sequence",
+      '<div class="foo-10"></div>\n<div class="foo-1"></div>\n<div class="foo-1"></div>\n<div class="foo-1"></div>\n<div class="foo-1"></div>\n<div class="foo-1"></div>',
+      '<div class="foo-10"></div>\n<div class="foo-11"></div>\n<div class="foo-12"></div>\n<div class="foo-13"></div>\n<div class="foo-14"></div>\n<div class="foo-15"></div>',
+    ],
+    [
+      "sequence",
+      '<div class="foo-1"></div>\n<div class="foo-1"></div>\n<div class="foo-1"></div>\n<div class="foo-1"></div>\n<div class="foo-1"></div>',
+      '<div class="foo-1"></div>\n<div class="foo-2"></div>\n<div class="foo-3"></div>\n<div class="foo-4"></div>\n<div class="foo-5"></div>',
+    ],
   ];
   suite("commandNameFunctionMap outputs correctly for all methods", () => {
     tests.forEach((testData) => {

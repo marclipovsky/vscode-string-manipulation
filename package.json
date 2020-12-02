@@ -41,7 +41,14 @@
     "onCommand:string-manipulation.sentence",
     "onCommand:string-manipulation.prune",
     "onCommand:string-manipulation.truncate",
-    "onCommand:string-manipulation.repeat"
+    "onCommand:string-manipulation.repeat",
+    "onCommand:string-manipulation.sequence",
+    "onCommand:string-manipulation.increment",
+    "onCommand:string-manipulation.decrement",
+    "onCommand:string-manipulation.copyAndIncrement",
+    "onCommand:string-manipulation.copyAndDecrement",
+    "onCommand:string-manipulation.escape",
+    "onCommand:string-manipulation.unescape"
   ],
   "contributes": {
     "commands": [
@@ -149,6 +156,41 @@
         "title": "Repeat",
         "category": "String Manipulation",
         "command": "string-manipulation.repeat"
+      },
+      {
+        "title": "Sequence",
+        "category": "String Manipulation",
+        "command": "string-manipulation.sequence"
+      },
+      {
+        "title": "Increment",
+        "category": "String Manipulation",
+        "command": "string-manipulation.increment"
+      },
+      {
+        "title": "Decrement",
+        "category": "String Manipulation",
+        "command": "string-manipulation.decrement"
+      },
+      {
+        "title": "Copy & Increment",
+        "category": "String Manipulation",
+        "command": "string-manipulation.copyAndIncrement"
+      },
+      {
+        "title": "Copy & Decrement",
+        "category": "String Manipulation",
+        "command": "string-manipulation.copyAndDecrement"
+      },
+      {
+        "title": "Escape",
+        "category": "String Manipulation",
+        "command": "string-manipulation.escape"
+      },
+      {
+        "title": "Unescape",
+        "category": "String Manipulation",
+        "command": "string-manipulation.unescape"
       }
     ]
   },
