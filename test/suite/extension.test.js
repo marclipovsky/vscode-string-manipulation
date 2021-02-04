@@ -39,22 +39,21 @@ suite("Extension Test Suite", () => {
       "Underscored-is-like  snake-case",
       "underscored_is_like_snake_case",
     ],
+    ["chop", "aabbccdd", "aa,bb,cc,dd", { functionArg: 2 }],
+    ["truncate", "aabbccdd", "aabb...", { functionArg: 4 }],
+    ["prune", "aabbccddaabbccdd", "aabbc...", { functionArg: 8 }],
+    ["repeat", "aabbccdd", "aabbccddaabbccdd", { functionArg: 2 }],
   ];
   suite("commandNameFunctionMap outputs correctly for all methods", () => {
-    tests.forEach((testData) => {
-      test(
-        testData[0] +
-          " returns " +
-          testData[2] +
-          " when called with " +
-          testData[1],
-        () => {
-          assert.equal(
-            myExtension.commandNameFunctionMap[testData[0]](testData[1]),
-            testData[2]
-          );
-        }
-      );
-    });
+    tests.forEach(
+      ([funcName, originalString, expectedString, { functionArg } = {}]) => {
+        test(`${funcName} returns ${expectedString} when called with ${originalString}`, () => {
+          const func = functionArg
+            ? myExtension.commandNameFunctionMap[funcName](functionArg)
+            : myExtension.commandNameFunctionMap[funcName];
+          assert.equal(func(originalString), expectedString);
+        });
+      }
+    );
   });
 });

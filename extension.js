@@ -41,44 +41,38 @@ const commandNameFunctionMap = {
   "titleize-ap-style": apStyleTitleCase,
   "titleize-chicago-style": chicagoStyleTitleCase,
   truncate: (n) => defaultFunction("truncate", n),
-  prune: (n) => defaultFunction("prune", n),
+  prune: (n) => (str) => str.slice(0, n - 3).trim() + "...",
   repeat: (n) => defaultFunction("repeat", n),
 };
 
-const stringFunction = (commandName) => {
+const stringFunction = async (commandName) => {
   const editor = vscode.window.activeTextEditor;
 
   if (!editor) {
     return;
   }
 
-  editor.edit(
-    async (builder) => {
-      let l = editor.selections.length;
-      while (l--) {
-        let selection = editor.selections[l];
-        const text = editor.document.getText(selection);
-        const textParts = text.split("\n");
-        let stringFunc, replaced;
+  let l = editor.selections.length;
+  while (l--) {
+    let selection = editor.selections[l];
+    const text = editor.document.getText(selection);
+    const textParts = text.split("\n");
+    let stringFunc, replaced;
 
-        if (["chop", "truncate", "prune", "repeat"].includes(commandName)) {
-          const value = await vscode.window.showInputBox();
-          stringFunc = commandNameFunctionMap[commandName](value);
-          replaced = textParts
-            .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
-            .join("\n");
-        } else {
-          stringFunc = commandNameFunctionMap[commandName];
-          replaced = textParts
-            .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
-            .join("\n");
-        }
-
-        builder.replace(selection, replaced);
-      }
-    },
-    () => {}
-  );
+    if (["chop", "truncate", "prune", "repeat"].includes(commandName)) {
+      const value = await vscode.window.showInputBox();
+      stringFunc = commandNameFunctionMap[commandName](value);
+      replaced = textParts
+        .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
+        .join("\n");
+    } else {
+      stringFunc = commandNameFunctionMap[commandName];
+      replaced = textParts
+        .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
+        .join("\n");
+    }
+    editor.edit((builder) => builder.replace(selection, replaced));
+  }
 };
 
 function activate(context) {
