@@ -20,7 +20,8 @@ Current string functions available:
 1. screaming snake
 1. sentence
 1. slugify
-1. snake / underscore
+1. snake
+1. underscore
 1. swap case
 1. titleize
 1. titleize (AP Style)
@@ -29,10 +30,17 @@ Current string functions available:
 1. prune - truncate but keeps ellipsis within character count provided
 1. repeat - repeat selection n #of times
 
+Number related functions:
+
+1. increment all numbers in selection
+1. decrement all numbers in selection
+1. duplicate selection and increment all number
+1. duplicate selection and decrement all number
+1. sequence all numbers in selection from first number
+
 ## Use
 
-To use these commands, press ⌘+p and enter any of the commands above while text
-is selected in your editor.
+To use these commands, press ⌘+p and enter any of the commands above while text is selected in your editor.
 
 ![String Manipulation Screencast](images/demo.gif)
 

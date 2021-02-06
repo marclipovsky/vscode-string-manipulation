@@ -5,6 +5,16 @@ const chicagoStyleTitleCase = require("chicago-capitalize");
 const slugify = require("@sindresorhus/slugify");
 const defaultFunction = (commandName, option) => (str) =>
   _string[commandName](str, option);
+const sequence = (str) => {
+  let initial;
+  return str.replace(/-?\d+/g, (n) => {
+    const isFirst = typeof initial !== "number";
+    initial = isFirst ? Number(n) : initial + 1;
+    return initial;
+  });
+};
+const increment = (str) => str.replace(/-?\d+/g, (n) => Number(n) + 1);
+const decrement = (str) => str.replace(/-?\d+/g, (n) => Number(n) - 1);
 
 const commandNameFunctionMap = {
   titleize: defaultFunction("titleize"),
@@ -30,7 +40,7 @@ const commandNameFunctionMap = {
       .replace(/[^a-z]+/gi, " ")
       .trim()
       .replace(/\s/gi, "_"),
-  "screaming-snake": (str) =>
+  screamingSnake: (str) =>
     _string
       .underscored(str)
       .replace(/([A-Z])[^A-Z]/g, " $1")
@@ -38,44 +48,61 @@ const commandNameFunctionMap = {
       .trim()
       .replace(/\s/gi, "_")
       .toUpperCase(),
-  "titleize-ap-style": apStyleTitleCase,
-  "titleize-chicago-style": chicagoStyleTitleCase,
+  titleizeApStyle: apStyleTitleCase,
+  titleizeChicagoStyle: chicagoStyleTitleCase,
   truncate: (n) => defaultFunction("truncate", n),
   prune: (n) => (str) => str.slice(0, n - 3).trim() + "...",
   repeat: (n) => defaultFunction("repeat", n),
+  increment,
+  decrement,
+  duplicateAndIncrement: (str) => str + increment(str),
+  duplicateAndDecrement: (str) => str + decrement(str),
+  sequence,
 };
+const numberFunctionNames = [
+  "increment",
+  "decrement",
+  "sequence",
+  "duplicateAndIncrement",
+  "duplicateAndDecrement",
+];
+const functionNamesWithArgument = ["chop", "truncate", "prune", "repeat"];
 
 const stringFunction = async (commandName) => {
   const editor = vscode.window.activeTextEditor;
+  const selectionMap = {};
+  if (!editor) return;
 
-  if (!editor) {
-    return;
-  }
-
-  let l = editor.selections.length;
-  while (l--) {
-    let selection = editor.selections[l];
+  editor.selections.forEach(async (selection) => {
     const text = editor.document.getText(selection);
     const textParts = text.split("\n");
     let stringFunc, replaced;
 
-    if (["chop", "truncate", "prune", "repeat"].includes(commandName)) {
+    if (functionNamesWithArgument.includes(commandName)) {
       const value = await vscode.window.showInputBox();
       stringFunc = commandNameFunctionMap[commandName](value);
       replaced = textParts
         .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
         .join("\n");
+    } else if (numberFunctionNames.includes(commandName)) {
+      replaced = commandNameFunctionMap[commandName](text);
     } else {
       stringFunc = commandNameFunctionMap[commandName];
       replaced = textParts
         .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
         .join("\n");
     }
-    editor.edit((builder) => builder.replace(selection, replaced));
-  }
+    selectionMap[replaced] = selection;
+  });
+
+  editor.edit((builder) => {
+    Object.keys(selectionMap).forEach((replaced) => {
+      builder.replace(selectionMap[replaced], replaced);
+    });
+  });
 };
 
-function activate(context) {
+const activate = (context) => {
   Object.keys(commandNameFunctionMap).forEach((commandName) => {
     context.subscriptions.push(
       vscode.commands.registerCommand(
@@ -84,7 +111,7 @@ function activate(context) {
       )
     );
   });
-}
+};
 
 exports.activate = activate;
 

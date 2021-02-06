@@ -2,7 +2,7 @@
   "name": "string-manipulation",
   "displayName": "String Manipulation",
   "description": "Format strings to camelize, dasherize, etc.",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "publisher": "marclipovsky",
   "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
   "engines": {
@@ -22,8 +22,8 @@
   "main": "./extension",
   "activationEvents": [
     "onCommand:string-manipulation.titleize",
-    "onCommand:string-manipulation.titleize-ap-style",
-    "onCommand:string-manipulation.titleize-chicago-style",
+    "onCommand:string-manipulation.titleizeApStyle",
+    "onCommand:string-manipulation.titleizeChicagoStyle",
     "onCommand:string-manipulation.camelize",
     "onCommand:string-manipulation.chop",
     "onCommand:string-manipulation.clean",
@@ -41,7 +41,12 @@
     "onCommand:string-manipulation.sentence",
     "onCommand:string-manipulation.prune",
     "onCommand:string-manipulation.truncate",
-    "onCommand:string-manipulation.repeat"
+    "onCommand:string-manipulation.repeat",
+    "onCommand:string-manipulation.increment",
+    "onCommand:string-manipulation.decrement",
+    "onCommand:string-manipulation.duplicateAndIncrement",
+    "onCommand:string-manipulation.duplicateAndDecrement",
+    "onCommand:string-manipulation.sequence"
   ],
   "contributes": {
     "commands": [
@@ -53,12 +58,12 @@
       {
         "title": "Titleize (AP Style)",
         "category": "String Manipulation",
-        "command": "string-manipulation.titleize-ap-style"
+        "command": "string-manipulation.titleizeApStyle"
       },
       {
         "title": "Titleize (Chicago Style)",
         "category": "String Manipulation",
-        "command": "string-manipulation.titleize-chicago-style"
+        "command": "string-manipulation.titleizeChicagoStyle"
       },
       {
         "title": "Camelize",
@@ -108,7 +113,7 @@
       {
         "title": "Screaming Snake",
         "category": "String Manipulation",
-        "command": "string-manipulation.screaming-snake"
+        "command": "string-manipulation.screamingSnake"
       },
       {
         "title": "Reverse",
@@ -149,6 +154,31 @@
         "title": "Repeat",
         "category": "String Manipulation",
         "command": "string-manipulation.repeat"
+      },
+      {
+        "title": "Increment all numbers",
+        "category": "String Manipulation",
+        "command": "string-manipulation.increment"
+      },
+      {
+        "title": "Increment all numbers",
+        "category": "String Manipulation",
+        "command": "string-manipulation.decrement"
+      },
+      {
+        "title": "Duplicate and increment all numbers",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateAndIncrement"
+      },
+      {
+        "title": "Duplicate and decrement all numbers",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateAndDecrement"
+      },
+      {
+        "title": "Sequence all numbers (starting with first number)",
+        "category": "String Manipulation",
+        "command": "string-manipulation.sequence"
       }
     ]
   },
