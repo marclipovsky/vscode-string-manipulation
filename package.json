@@ -161,7 +161,7 @@
         "command": "string-manipulation.increment"
       },
       {
-        "title": "Increment all numbers",
+        "title": "Decrement all numbers",
         "category": "String Manipulation",
         "command": "string-manipulation.decrement"
       },
