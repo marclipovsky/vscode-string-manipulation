@@ -2,7 +2,7 @@
   "name": "string-manipulation",
   "displayName": "String Manipulation",
   "description": "Format strings to camelize, dasherize, etc.",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "publisher": "marclipovsky",
   "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
   "engines": {
@@ -31,7 +31,7 @@
     "onCommand:string-manipulation.classify",
     "onCommand:string-manipulation.underscored",
     "onCommand:string-manipulation.dasherize",
-    "onCommand:string-manipulation.screaming-snake",
+    "onCommand:string-manipulation.screamingSnake",
     "onCommand:string-manipulation.humanize",
     "onCommand:string-manipulation.slugify",
     "onCommand:string-manipulation.reverse",
