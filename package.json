@@ -6,7 +6,7 @@
   "publisher": "marclipovsky",
   "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
   "engines": {
-    "vscode": "^1.5.0"
+    "vscode": "^1.54.0"
   },
   "icon": "icon.png",
   "keywords": [
