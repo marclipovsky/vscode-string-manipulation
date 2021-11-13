@@ -46,7 +46,16 @@
     "onCommand:string-manipulation.decrement",
     "onCommand:string-manipulation.duplicateAndIncrement",
     "onCommand:string-manipulation.duplicateAndDecrement",
-    "onCommand:string-manipulation.sequence"
+    "onCommand:string-manipulation.duplicateNumAndIncrement",
+    "onCommand:string-manipulation.duplicateNumAndDecrement",
+    "onCommand:string-manipulation.incrementWithZero",
+    "onCommand:string-manipulation.decrementWithZero",
+    "onCommand:string-manipulation.duplicateAndIncrementWithZero",
+    "onCommand:string-manipulation.duplicateAndDecrementWithZero",
+    "onCommand:string-manipulation.duplicateNumAndIncrementWithZero",
+    "onCommand:string-manipulation.duplicateNumAndDecrementWithZero",
+    "onCommand:string-manipulation.sequence",
+    "onCommand:string-manipulation.sequenceWithZero"
   ],
   "contributes": {
     "commands": [
@@ -176,9 +185,54 @@
         "command": "string-manipulation.duplicateAndDecrement"
       },
       {
+        "title": "Duplicate the number part and increment new number copies",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateNumAndIncrement"
+      },
+      {
+        "title": "Duplicate the number part and decrement new number copies",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateNumAndDecrement"
+      },
+      {
+        "title": "Increment all numbers with 0 paddings at left",
+        "category": "String Manipulation",
+        "command": "string-manipulation.incrementWithZero"
+      },
+      {
+        "title": "Decrement all numbers with 0 paddings at left",
+        "category": "String Manipulation",
+        "command": "string-manipulation.decrementWithZero"
+      },
+      {
+        "title": "Duplicate and increment all numbers with 0 paddings at left",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateAndIncrementWithZero"
+      },
+      {
+        "title": "Duplicate and decrement all numbers with 0 paddings at left",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateAndDecrementWithZero"
+      },
+      {
+        "title": "Duplicate the number part and increment new number copies with 0 paddings at left",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateNumAndIncrementWithZero"
+      },
+      {
+        "title": "Duplicate the number part and decrement new number copies with 0 paddings at left",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateNumAndDecrementWithZero"
+      },
+      {
         "title": "Sequence all numbers (starting with first number)",
         "category": "String Manipulation",
         "command": "string-manipulation.sequence"
+      },
+      {
+        "title": "Sequence all numbers with 0 paddings at left (starting with first number)",
+        "category": "String Manipulation",
+        "command": "string-manipulation.sequenceWithZero"
       }
     ]
   },
