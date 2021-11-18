@@ -31,10 +31,22 @@ const sequencePartly = (str, initial, textLength, withZero) => {
   });
   return { str, initial, textLength };
 };
-const increment = (str, duplicate) => str.replace(/-?\d+/g, (n) => { let result = Number(n) + 1; return duplicate ? n + result : result; });
-const decrement = (str, duplicate) => str.replace(/-?\d+/g, (n) => { let result = Number(n) - 1; return duplicate ? n + result : result; });
-const incrementWithZero = (str, duplicate) => str.replace(/-?\d+/g, (n) => { let result = leftPadZero(Number(n) + 1, n.length); return duplicate ? n + result : result});
-const decrementWithZero = (str, duplicate) => str.replace(/-?\d+/g, (n) => { let result = leftPadZero(Number(n) - 1, n.length); return duplicate ? n + result : result});
+const increment = (str, duplicate) => str.replace(/-?\d+/g, (n) => {
+  let result = Number(n) + 1;
+  return duplicate ? (n + result) : result;
+});
+const decrement = (str, duplicate) => str.replace(/-?\d+/g, (n) => {
+  let result = Number(n) - 1;
+  return duplicate ? (n + result) : result;
+});
+const incrementWithZero = (str, duplicate) => str.replace(/-?\d+/g, (n) => {
+  let result = leftPadZero(Number(n) + 1, n.length);
+  return duplicate ? (n + result) : result;
+});
+const decrementWithZero = (str, duplicate) => str.replace(/-?\d+/g, (n) => {
+  let result = leftPadZero(Number(n) - 1, n.length);
+  return duplicate ? (n + result) : result;
+});
 const sequence = (str) => sequencePartly(str).str;
 const sequenceWithZeroPartly = (str, initial, textLength) => sequencePartly(str, initial, textLength, true);
 const sequenceWithZero = (str) => sequenceWithZeroPartly(str).str;
@@ -229,8 +241,8 @@ const stringFunction = async (commandName, context) => {
   if (!editor) return;
   
   // Show function type list menu/function list menu (Support multi-level menu, mixed tree menu)
-  var typeList = functionTypeListMap[commandName];
-  var list = functionListMap[commandName];
+  let typeList = functionTypeListMap[commandName];
+  let list = functionListMap[commandName];
   if (typeList || list) {
     const nameList = typeList || list;
     const optionList = nameList.map((name, index) => {
