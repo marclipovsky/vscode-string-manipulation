@@ -6,7 +6,7 @@ const slugify = require("@sindresorhus/slugify");
 const defaultFunction = (commandName, option) => (str) =>
   _string[commandName](str, option);
 const leftPadZero = (num, digits, trim) => {
-  let text = ((num == null) || isNaN(num)) ? "" : (num + "");
+  let text = (((num === null) || (num === undefined)) || isNaN(num)) ? "" : (num + "");
   let paddingLength = (digits - text.length);
   return (paddingLength > 0) 
     ? ("0".repeat(paddingLength) + text)
@@ -15,13 +15,13 @@ const leftPadZero = (num, digits, trim) => {
 };
 const sequencePartly = (str, initial, textLength, withZero) => {
   str = str.replace(/-?\d+/g, (n) => {
-    if (initial == null) {
+    if ((initial === null) || (initial === undefined)) {
       initial = Number(n);
     }
     if (isNaN(initial)) {
       initial = 1;
     }
-    if (textLength == null) {
+    if ((textLength === null) || (textLength === undefined)) {
       textLength = n.length;
     }
     if (isNaN(textLength) || (textLength <= 0)) {
