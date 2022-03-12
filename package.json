@@ -21,6 +21,7 @@
   ],
   "main": "./extension",
   "activationEvents": [
+    "onCommand:string-manipulation.repeatLastAction",
     "onCommand:string-manipulation.titleize",
     "onCommand:string-manipulation.titleizeApStyle",
     "onCommand:string-manipulation.titleizeChicagoStyle",
@@ -50,6 +51,11 @@
   ],
   "contributes": {
     "commands": [
+      {
+        "title": "Repeat last string manipulation",
+        "category": "String Manipulation",
+        "command": "string-manipulation.repeatLastAction"
+      },
       {
         "title": "Titleize",
         "category": "String Manipulation",
@@ -192,6 +198,11 @@
         {
           "submenu": "string-manipulation",
           "group": "7_modification"
+        },
+        {
+          "submenu": "string-manipulation",
+          "group": "7_modification@2",
+          "command": "string-manipulation.repeatLastAction"
         }
       ],
       "string-manipulation": [
