@@ -1,210 +1,219 @@
 {
-  "name": "string-manipulation",
-  "displayName": "String Manipulation",
-  "description": "Format strings to camelize, dasherize, etc.",
-  "version": "0.5.4",
-  "publisher": "marclipovsky",
-  "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
-  "engines": {
-    "vscode": "^1.54.0"
-  },
-  "icon": "icon.png",
-  "keywords": [
-    "underscore",
-    "lodash",
-    "case",
-    "camelize",
-    "dasherize"
-  ],
-  "categories": [
-    "Other"
-  ],
-  "main": "./extension",
-  "activationEvents": [
-    "onCommand:string-manipulation.titleize",
-    "onCommand:string-manipulation.titleizeApStyle",
-    "onCommand:string-manipulation.titleizeChicagoStyle",
-    "onCommand:string-manipulation.camelize",
-    "onCommand:string-manipulation.chop",
-    "onCommand:string-manipulation.clean",
-    "onCommand:string-manipulation.cleanDiacritics",
-    "onCommand:string-manipulation.classify",
-    "onCommand:string-manipulation.underscored",
-    "onCommand:string-manipulation.dasherize",
-    "onCommand:string-manipulation.screamingSnake",
-    "onCommand:string-manipulation.humanize",
-    "onCommand:string-manipulation.slugify",
-    "onCommand:string-manipulation.reverse",
-    "onCommand:string-manipulation.swapCase",
-    "onCommand:string-manipulation.decapitalize",
-    "onCommand:string-manipulation.capitalize",
-    "onCommand:string-manipulation.sentence",
-    "onCommand:string-manipulation.prune",
-    "onCommand:string-manipulation.truncate",
-    "onCommand:string-manipulation.repeat",
-    "onCommand:string-manipulation.increment",
-    "onCommand:string-manipulation.decrement",
-    "onCommand:string-manipulation.duplicateAndIncrement",
-    "onCommand:string-manipulation.duplicateAndDecrement",
-    "onCommand:string-manipulation.sequence"
-  ],
-  "contributes": {
-    "commands": [
-      {
-        "title": "Titleize",
-        "category": "String Manipulation",
-        "command": "string-manipulation.titleize"
-      },
-      {
-        "title": "Titleize (AP Style)",
-        "category": "String Manipulation",
-        "command": "string-manipulation.titleizeApStyle"
-      },
-      {
-        "title": "Titleize (Chicago Style)",
-        "category": "String Manipulation",
-        "command": "string-manipulation.titleizeChicagoStyle"
-      },
-      {
-        "title": "Camelize",
-        "category": "String Manipulation",
-        "command": "string-manipulation.camelize"
-      },
-      {
-        "title": "Chop",
-        "category": "String Manipulation",
-        "command": "string-manipulation.chop"
-      },
-      {
-        "title": "Clean",
-        "category": "String Manipulation",
-        "command": "string-manipulation.clean"
-      },
-      {
-        "title": "Clean diacritics",
-        "category": "String Manipulation",
-        "command": "string-manipulation.cleanDiacritics"
-      },
-      {
-        "title": "Classify",
-        "category": "String Manipulation",
-        "command": "string-manipulation.classify"
-      },
-      {
-        "title": "Underscored",
-        "category": "String Manipulation",
-        "command": "string-manipulation.underscored"
-      },
-      {
-        "title": "Dasherize",
-        "category": "String Manipulation",
-        "command": "string-manipulation.dasherize"
-      },
-      {
-        "title": "Humanize",
-        "category": "String Manipulation",
-        "command": "string-manipulation.humanize"
-      },
-      {
-        "title": "Slugify",
-        "category": "String Manipulation",
-        "command": "string-manipulation.slugify"
-      },
-      {
-        "title": "Screaming Snake",
-        "category": "String Manipulation",
-        "command": "string-manipulation.screamingSnake"
-      },
-      {
-        "title": "Reverse",
-        "category": "String Manipulation",
-        "command": "string-manipulation.reverse"
-      },
-      {
-        "title": "Swap Case",
-        "category": "String Manipulation",
-        "command": "string-manipulation.swapCase"
-      },
-      {
-        "title": "Decapitalize",
-        "category": "String Manipulation",
-        "command": "string-manipulation.decapitalize"
-      },
-      {
-        "title": "Capitalize",
-        "category": "String Manipulation",
-        "command": "string-manipulation.capitalize"
-      },
-      {
-        "title": "Sentence",
-        "category": "String Manipulation",
-        "command": "string-manipulation.sentence"
-      },
-      {
-        "title": "Truncate",
-        "category": "String Manipulation",
-        "command": "string-manipulation.truncate"
-      },
-      {
-        "title": "Prune",
-        "category": "String Manipulation",
-        "command": "string-manipulation.prune"
-      },
-      {
-        "title": "Repeat",
-        "category": "String Manipulation",
-        "command": "string-manipulation.repeat"
-      },
-      {
-        "title": "Increment all numbers",
-        "category": "String Manipulation",
-        "command": "string-manipulation.increment"
-      },
-      {
-        "title": "Decrement all numbers",
-        "category": "String Manipulation",
-        "command": "string-manipulation.decrement"
-      },
-      {
-        "title": "Duplicate and increment all numbers",
-        "category": "String Manipulation",
-        "command": "string-manipulation.duplicateAndIncrement"
-      },
-      {
-        "title": "Duplicate and decrement all numbers",
-        "category": "String Manipulation",
-        "command": "string-manipulation.duplicateAndDecrement"
-      },
-      {
-        "title": "Sequence all numbers (starting with first number)",
-        "category": "String Manipulation",
-        "command": "string-manipulation.sequence"
-      }
-    ]
-  },
-  "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-    "test": "node ./test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/glob": "^7.1.3",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^12.20.4",
-    "@types/vscode": "^1.54.0",
-    "eslint": "^6.6.0",
-    "glob": "^7.1.5",
-    "mocha": "^6.2.3",
-    "sinon": "^9.2.4",
-    "typescript": "^3.9.9",
-    "vscode": "0.11.18",
-    "vscode-test": "^1.5.1"
-  },
-  "dependencies": {
-    "@sindresorhus/slugify": "^0.3.0",
-    "ap-style-title-case": "^1.1.2",
-    "chicago-capitalize": "^0.1.0",
-    "underscore.string": "^3.3.5"
-  }
+	"name": "string-manipulation",
+	"displayName": "String Manipulation",
+	"description": "Format strings to camelize, dasherize, etc.",
+	"version": "0.5.4",
+	"publisher": "marclipovsky",
+	"repository": "https://github.com/marclipovsky/vscode-string-manipulation",
+	"engines": {
+		"vscode": "^1.54.0"
+	},
+	"icon": "icon.png",
+	"keywords": [
+		"underscore",
+		"lodash",
+		"case",
+		"camelize",
+		"dasherize"
+	],
+	"categories": [
+		"Other"
+	],
+	"main": "./extension",
+	"activationEvents": [
+		"onCommand:string-manipulation.titleize",
+		"onCommand:string-manipulation.titleizeApStyle",
+		"onCommand:string-manipulation.titleizeChicagoStyle",
+		"onCommand:string-manipulation.camelize",
+		"onCommand:string-manipulation.chop",
+		"onCommand:string-manipulation.clean",
+		"onCommand:string-manipulation.cleanDiacritics",
+		"onCommand:string-manipulation.classify",
+		"onCommand:string-manipulation.underscored",
+		"onCommand:string-manipulation.dasherize",
+		"onCommand:string-manipulation.snake",
+		"onCommand:string-manipulation.screamingSnake",
+		"onCommand:string-manipulation.humanize",
+		"onCommand:string-manipulation.slugify",
+		"onCommand:string-manipulation.reverse",
+		"onCommand:string-manipulation.swapCase",
+		"onCommand:string-manipulation.decapitalize",
+		"onCommand:string-manipulation.capitalize",
+		"onCommand:string-manipulation.sentence",
+		"onCommand:string-manipulation.prune",
+		"onCommand:string-manipulation.truncate",
+		"onCommand:string-manipulation.repeat",
+		"onCommand:string-manipulation.increment",
+		"onCommand:string-manipulation.decrement",
+		"onCommand:string-manipulation.duplicateAndIncrement",
+		"onCommand:string-manipulation.duplicateAndDecrement",
+		"onCommand:string-manipulation.sequence"
+	],
+	"contributes": {
+		"commands": [
+			{
+				"title": "Titleize",
+				"category": "String Manipulation",
+				"command": "string-manipulation.titleize"
+			},
+			{
+				"title": "Titleize (AP Style)",
+				"category": "String Manipulation",
+				"command": "string-manipulation.titleizeApStyle"
+			},
+			{
+				"title": "Titleize (Chicago Style)",
+				"category": "String Manipulation",
+				"command": "string-manipulation.titleizeChicagoStyle"
+			},
+			{
+				"title": "Camelize",
+				"category": "String Manipulation",
+				"command": "string-manipulation.camelize"
+			},
+			{
+				"title": "Chop",
+				"category": "String Manipulation",
+				"command": "string-manipulation.chop"
+			},
+			{
+				"title": "Clean",
+				"category": "String Manipulation",
+				"command": "string-manipulation.clean"
+			},
+			{
+				"title": "Clean diacritics",
+				"category": "String Manipulation",
+				"command": "string-manipulation.cleanDiacritics"
+			},
+			{
+				"title": "Classify",
+				"category": "String Manipulation",
+				"command": "string-manipulation.classify"
+			},
+			{
+				"title": "Underscored",
+				"category": "String Manipulation",
+				"command": "string-manipulation.underscored"
+			},
+			{
+				"title": "Dasherize",
+				"category": "String Manipulation",
+				"command": "string-manipulation.dasherize"
+			},
+			{
+				"title": "Humanize",
+				"category": "String Manipulation",
+				"command": "string-manipulation.humanize"
+			},
+			{
+				"title": "Slugify",
+				"category": "String Manipulation",
+				"command": "string-manipulation.slugify"
+			},
+			{
+				"title": "Snake",
+				"category": "String Manipulation",
+				"command": "string-manipulation.snake"
+			},
+			{
+				"title": "Screaming Snake",
+				"category": "String Manipulation",
+				"command": "string-manipulation.screamingSnake"
+			},
+			{
+				"title": "Reverse",
+				"category": "String Manipulation",
+				"command": "string-manipulation.reverse"
+			},
+			{
+				"title": "Swap Case",
+				"category": "String Manipulation",
+				"command": "string-manipulation.swapCase"
+			},
+			{
+				"title": "Decapitalize",
+				"category": "String Manipulation",
+				"command": "string-manipulation.decapitalize"
+			},
+			{
+				"title": "Capitalize",
+				"category": "String Manipulation",
+				"command": "string-manipulation.capitalize"
+			},
+			{
+				"title": "Sentence",
+				"category": "String Manipulation",
+				"command": "string-manipulation.sentence"
+			},
+			{
+				"title": "Truncate",
+				"category": "String Manipulation",
+				"command": "string-manipulation.truncate"
+			},
+			{
+				"title": "Prune",
+				"category": "String Manipulation",
+				"command": "string-manipulation.prune"
+			},
+			{
+				"title": "Repeat",
+				"category": "String Manipulation",
+				"command": "string-manipulation.repeat"
+			},
+			{
+				"title": "Increment all numbers",
+				"category": "String Manipulation",
+				"command": "string-manipulation.increment"
+			},
+			{
+				"title": "Decrement all numbers",
+				"category": "String Manipulation",
+				"command": "string-manipulation.decrement"
+			},
+			{
+				"title": "Duplicate and increment all numbers",
+				"category": "String Manipulation",
+				"command": "string-manipulation.duplicateAndIncrement"
+			},
+			{
+				"title": "Duplicate and decrement all numbers",
+				"category": "String Manipulation",
+				"command": "string-manipulation.duplicateAndDecrement"
+			},
+			{
+				"title": "Sequence all numbers (starting with first number)",
+				"category": "String Manipulation",
+				"command": "string-manipulation.sequence"
+			}
+		]
+	},
+	"scripts": {
+		"test": "node ./test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.20.4",
+		"@types/vscode": "^1.54.0",
+		"@vscode/test-electron": "^2.1.3",
+		"eslint": "^6.6.0",
+		"glob": "^7.1.5",
+		"mocha": "^6.2.3",
+		"sinon": "^9.2.4",
+		"typescript": "^3.9.9",
+		"vscode-test": "^1.6.1"
+	},
+	"dependencies": {
+		"@sindresorhus/slugify": "^0.3.0",
+		"ap-style-title-case": "^1.1.2",
+		"chicago-capitalize": "^0.1.0",
+		"underscore.string": "^3.3.5"
+	},
+	"__metadata": {
+		"id": "f458266d-2636-454c-86ba-1df8d80ed929",
+		"publisherDisplayName": "marclipovsky",
+		"publisherId": "0bb81b3d-47b5-4792-9d22-906e374145af",
+		"isPreReleaseVersion": false
+	}
 }
