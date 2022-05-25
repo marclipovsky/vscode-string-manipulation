@@ -73,7 +73,7 @@ const stringFunction = async (commandName, context) => {
   const selectionMap = {};
   if (!editor) return;
 
-  editor.selections.forEach(async (selection) => {
+  editor.selections.forEach(async (selection, index) => {
     const text = editor.document.getText(selection);
     const textParts = text.split("\n");
     let stringFunc, replaced;
@@ -92,12 +92,13 @@ const stringFunction = async (commandName, context) => {
         .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
         .join("\n");
     }
-    selectionMap[replaced] = selection;
+    selectionMap[index] = {selection, replaced};
   });
 
   editor.edit((builder) => {
-    Object.keys(selectionMap).forEach((replaced) => {
-      builder.replace(selectionMap[replaced], replaced);
+    Object.keys(selectionMap).forEach((index) => {
+      const {selection, replaced} = selectionMap[index];
+      builder.replace(selection, replaced);
     });
   });
 
