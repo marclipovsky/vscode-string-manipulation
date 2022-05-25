@@ -68,7 +68,7 @@ const numberFunctionNames = [
 ];
 const functionNamesWithArgument = ["chop", "truncate", "prune", "repeat"];
 
-const stringFunction = async (commandName) => {
+const stringFunction = async (commandName, context) => {
   const editor = vscode.window.activeTextEditor;
   const selectionMap = {};
   if (!editor) return;
@@ -100,14 +100,30 @@ const stringFunction = async (commandName) => {
       builder.replace(selectionMap[replaced], replaced);
     });
   });
+
+  context.globalState.update('lastAction', commandName);
 };
 
 const activate = (context) => {
+  context.globalState.setKeysForSync(['lastAction']);
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      `string-manipulation.repeatLastAction`,
+      () => {
+        const lastAction = context.globalState.get('lastAction');
+        if (lastAction) {
+          return stringFunction(lastAction, context)
+        }
+      }
+    )
+  );
+
   Object.keys(commandNameFunctionMap).forEach((commandName) => {
     context.subscriptions.push(
       vscode.commands.registerCommand(
         `string-manipulation.${commandName}`,
-        () => stringFunction(commandName)
+        () => stringFunction(commandName, context)
       )
     );
   });
