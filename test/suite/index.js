@@ -8,7 +8,7 @@ function run() {
 		ui: 'tdd'
 	});
 	// Use any mocha API
-	mocha.useColors(true);
+	mocha.options.useColors = true;
 
 	const testsRoot = path.resolve(__dirname, '..');
 
