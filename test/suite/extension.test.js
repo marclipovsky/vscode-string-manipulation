@@ -85,6 +85,46 @@ suite("Extension Test Suite", () => {
       "a1 b2 c3 4d 5e 6f 12x y23 34z45\na0 b1 c2 3d 4e 5f 11x y22 33z44\n",
     ],
     [
+      "duplicateNumAndIncrement",
+      "a1 b2 c3 4d 5e 6f 12x y23 34z45",
+      "a12 b23 c34 45d 56e 67f 1213x y2324 3435z4546",
+    ],
+    [
+      "duplicateNumAndDecrement",
+      "a1 b2 c3 4d 5e 6f 12x y23 34z45",
+      "a10 b21 c32 43d 54e 65f 1211x y2322 3433z4544",
+    ],
+    [
+      "incrementWithZero",
+      "a0050 b002 c03 4d 05e 006f 0012x y0023 0034z0045",
+      "a0051 b003 c04 5d 06e 007f 0013x y0024 0035z0046",
+    ],
+    [
+      "decrementWithZero",
+      "a0050 b002 c03 4d 05e 006f 0012x y0023 0034z0045",
+      "a0049 b001 c02 3d 04e 005f 0011x y0022 0033z0044",
+    ],
+    [
+      "duplicateAndIncrementWithZero",
+      "a0050 b002 c03 4d 05e 006f 0012x y0023 0034z0045\n",
+      "a0050 b002 c03 4d 05e 006f 0012x y0023 0034z0045\na0051 b003 c04 5d 06e 007f 0013x y0024 0035z0046\n",
+    ],
+    [
+      "duplicateAndDecrementWithZero",
+      "a0050 b002 c03 4d 05e 006f 0012x y0023 0034z0045\n",
+      "a0050 b002 c03 4d 05e 006f 0012x y0023 0034z0045\na0049 b001 c02 3d 04e 005f 0011x y0022 0033z0044\n",
+    ],
+    [
+      "duplicateNumAndIncrementWithZero",
+      "a0050 b002 c03 4d 05e 006f 0012x y0023 0034z0045",
+      "a00500051 b002003 c0304 45d 0506e 006007f 00120013x y00230024 00340035z00450046",
+    ],
+    [
+      "duplicateNumAndDecrementWithZero",
+      "a0050 b002 c03 4d 05e 006f 0012x y0023 0034z0045",
+      "a00500049 b002001 c0302 43d 0504e 006005f 00120011x y00230022 00340033z00450044",
+    ],
+    [
       "sequence",
       "a1 b2 c3 4d 5e 6f 12x y23 34z45",
       "a1 b2 c3 4d 5e 6f 7x y8 9z10",
@@ -95,6 +135,11 @@ suite("Extension Test Suite", () => {
       "a14 b15 c16\n17d 18e 19f 20x y21 22z23",
     ],
     ["sequence", "-3 4 5 6 7", "-3 -2 -1 0 1"],
+    [
+      "sequenceWithZero",
+      "a0050 b2 c3 4d 5e 6f 12x y23 34z45",
+      "a0050 b0051 c0052 0053d 0054e 0055f 0056x y0057 0058z0059",
+    ],
   ];
   suite("commandNameFunctionMap outputs correctly for all methods", () => {
     tests.forEach(
