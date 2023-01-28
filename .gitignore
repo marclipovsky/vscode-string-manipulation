@@ -2,3 +2,5 @@ node_modules
 *.vsix
 .vscode-test
 .DS_Storedist
+.DS_Store
+.idea
