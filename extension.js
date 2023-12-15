@@ -58,6 +58,8 @@ const commandNameFunctionMap = {
   duplicateAndIncrement: (str) => str + increment(str),
   duplicateAndDecrement: (str) => str + decrement(str),
   sequence,
+  utf8ToChar: (str) => str.match(/\\u[\dA-Fa-f]{4}/g).map((x) => x.slice(2)).map((x) => String.fromCharCode(parseInt(x, 16))).join(""),
+  charToUtf8: (str) => str.split("").map((x) => `\\u${x.charCodeAt(0).toString(16).padStart(4, '0')}`).join(""),
 };
 const numberFunctionNames = [
   "increment",
