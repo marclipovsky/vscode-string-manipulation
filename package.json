@@ -185,6 +185,16 @@
 				"title": "Sequence all numbers (starting with first number)",
 				"category": "String Manipulation",
 				"command": "string-manipulation.sequence"
+			},
+			{
+				"title": "Convert char to UTF8",
+				"category": "String Manipulation",
+				"command": "string-manipulation.charToUtf8"
+			},
+			{
+				"title": "Convert UTF8 to char",
+				"category": "String Manipulation",
+				"command": "string-manipulation.utf8ToChar"
 			}
 		],
 		"submenus": [
@@ -307,6 +317,14 @@
 				},
 				{
 					"command": "string-manipulation.sequence",
+					"group": "7_modification"
+				},
+				{
+					"command": "string-manipulation.utf8ToChar",
+					"group": "7_modification"
+				},
+				{
+					"command": "string-manipulation.charToUtf8",
 					"group": "7_modification"
 				}
 			]
