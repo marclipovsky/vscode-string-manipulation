@@ -95,6 +95,8 @@ suite("Extension Test Suite", () => {
       "a14 b15 c16\n17d 18e 19f 20x y21 22z23",
     ],
     ["sequence", "-3 4 5 6 7", "-3 -2 -1 0 1"],
+    ["utf8ToChar", "\\u0061\\u0062\\u0063\\u4e2d\\u6587\\ud83d\\udc96", "abc中文💖"],
+    ["charToUtf8", "abc中文💖", "\\u0061\\u0062\\u0063\\u4e2d\\u6587\\ud83d\\udc96"],
   ];
   suite("commandNameFunctionMap outputs correctly for all methods", () => {
     tests.forEach(
