@@ -29,6 +29,7 @@ Current string functions available:
 1. truncate - trims string to n # of characters and appends ellipsis
 1. prune - truncate but keeps ellipsis within character count provided
 1. repeat - repeat selection n #of times
+1. convert between unicode and readable characters.
 
 Number related functions:
 
