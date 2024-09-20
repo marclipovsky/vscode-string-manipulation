@@ -5,12 +5,11 @@ const chicagoStyleTitleCase = require("chicago-capitalize");
 const slugify = require("@sindresorhus/slugify");
 const defaultFunction = (commandName, option) => (str) =>
   _string[commandName](str, option);
-const sequence = (str) => {
-  let initial;
+const sequence = (str, multiselectData = {}) => {
   return str.replace(/-?\d+/g, (n) => {
-    const isFirst = typeof initial !== "number";
-    initial = isFirst ? Number(n) : initial + 1;
-    return initial;
+    const isFirst = typeof multiselectData.offset !== "number";
+    multiselectData.offset = isFirst ? Number(n) : multiselectData.offset + 1;
+    return multiselectData.offset;
   });
 };
 const increment = (str) => str.replace(/-?\d+/g, (n) => Number(n) + 1);
@@ -75,6 +74,7 @@ const stringFunction = async (commandName, context) => {
   const selectionMap = {};
   if (!editor) return;
 
+  let multiselectData = {};
   editor.selections.forEach(async (selection, index) => {
     const text = editor.document.getText(selection);
     const textParts = text.split("\n");
@@ -87,7 +87,7 @@ const stringFunction = async (commandName, context) => {
         .reduce((prev, curr) => prev.push(stringFunc(curr)) && prev, [])
         .join("\n");
     } else if (numberFunctionNames.includes(commandName)) {
-      replaced = commandNameFunctionMap[commandName](text);
+      replaced = commandNameFunctionMap[commandName](text, multiselectData);
     } else {
       stringFunc = commandNameFunctionMap[commandName];
       replaced = textParts

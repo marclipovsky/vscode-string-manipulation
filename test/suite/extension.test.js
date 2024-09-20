@@ -95,17 +95,24 @@ suite("Extension Test Suite", () => {
       "a14 b15 c16\n17d 18e 19f 20x y21 22z23",
     ],
     ["sequence", "-3 4 5 6 7", "-3 -2 -1 0 1"],
+    [
+      "sequence",
+      "1 2 3 7 8 9",
+      "4 5 6 7 8 9",
+      { multiselectData: { offset: 3 } },
+    ],
     ["utf8ToChar", "\\u0061\\u0062\\u0063\\u4e2d\\u6587\\ud83d\\udc96", "abc中文💖"],
     ["charToUtf8", "abc中文💖", "\\u0061\\u0062\\u0063\\u4e2d\\u6587\\ud83d\\udc96"],
   ];
   suite("commandNameFunctionMap outputs correctly for all methods", () => {
     tests.forEach(
-      ([funcName, originalString, expectedString, { functionArg } = {}]) => {
-        test(`${funcName} returns ${expectedString} when called with ${originalString}`, () => {
+      ([funcName, originalString, expectedString, { multiselectData, functionArg } = {}]) => {
+        const arguments = `${originalString}${multiselectData ? `, ${JSON.stringify(multiselectData)}` : ''}`;
+        test(`${funcName} returns ${expectedString} when called with ${arguments}`, () => {
           const func = functionArg
             ? myExtension.commandNameFunctionMap[funcName](functionArg)
             : myExtension.commandNameFunctionMap[funcName];
-          assert.equal(func(originalString), expectedString);
+          assert.equal(func(originalString, multiselectData), expectedString);
         });
       }
     );
