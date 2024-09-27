@@ -331,7 +331,8 @@
 		}
 	},
 	"scripts": {
-		"test": "node ./test/runTest.js"
+    "test": "node ./test/runTest.js",
+    "build": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
