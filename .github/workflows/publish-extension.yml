@@ -35,7 +35,7 @@ jobs:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
         run: npm run vsce -- publish -p $VSCE_TOKEN
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         name: Upload artifact
         with:
           name: vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
