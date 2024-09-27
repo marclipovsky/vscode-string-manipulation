@@ -1,0 +1,42 @@
+name: "cd"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to branch
+        uses: actions/checkout@v2
+
+      - name: Setup node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ secrets.NODE_VERSION }}
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Calculate version
+        id: calculateVersion
+        run: |
+          APP_VERSION=`cat package.json | jq ".version" -M | sed 's/\"//g'`
+          echo "::set-output name=AppVersion::$APP_VERSION"
+          echo "app version = v$APP_VERSION"
+      - name: Build VSIX package
+        run: npm run build -- -o vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
+
+      - name: Publish extension package
+        env:
+          VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
+        run: npm run vsce -- publish -p $VSCE_TOKEN
+
+      - uses: actions/upload-artifact@v2
+        name: Upload artifact
+        with:
+          name: vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
+          path: vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
