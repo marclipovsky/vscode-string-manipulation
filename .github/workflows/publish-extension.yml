@@ -32,7 +32,7 @@ jobs:
       - name: Publish extension package
         env:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
-        run: npm run vsce -- publish -p $VSCE_TOKEN
+        run: npm run vsce -- publish minor -p $VSCE_TOKEN
 
       - uses: actions/upload-artifact@v4
         name: Upload artifact
