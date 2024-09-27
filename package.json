@@ -331,8 +331,8 @@
 		}
 	},
 	"scripts": {
-    "test": "node ./test/runTest.js",
-    "build": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package"
+		"test": "node ./test/runTest.js",
+		"build": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
@@ -345,6 +345,7 @@
 		"mocha": "^10.2.0",
 		"sinon": "^9.2.4",
 		"typescript": "^3.9.9",
+		"vsce": "^2.15.0",
 		"vscode-test": "^1.6.1"
 	},
 	"dependencies": {
