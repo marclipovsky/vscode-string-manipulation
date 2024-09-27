@@ -1,4 +1,4 @@
-name: "cd"
+name: "Publish to VS Code Marketplace"
 
 on:
   push:
@@ -11,13 +11,12 @@ jobs:
 
     steps:
       - name: Checkout to branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ secrets.NODE_VERSION }}
-
+          node-version: 20
       - name: Install packages
         run: npm ci
 
