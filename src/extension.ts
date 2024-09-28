@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
 import * as _string from "underscore.string";
-import apStyleTitleCase from "ap-style-title-case";
-import chicagoStyleTitleCase from "chicago-capitalize";
-import slugify from "@sindresorhus/slugify";
+const apStyleTitleCase = require("ap-style-title-case");
+const chicagoStyleTitleCase = require("chicago-capitalize");
+const slugify = require("@sindresorhus/slugify");
 
 interface MultiSelectData {
   offset?: number;
