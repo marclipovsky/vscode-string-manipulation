@@ -39,6 +39,9 @@ jobs:
           echo "AppVersion=$APP_VERSION" >> $GITHUB_OUTPUT
           echo "app version = v$APP_VERSION"
 
+      - name: Compile
+        run: npm run build
+
       - name: Build VSIX package
         run: npm run package -- -o vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
 

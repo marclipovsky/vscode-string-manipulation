@@ -20,8 +20,8 @@
 	"categories": [
 		"Other"
 	],
-	"main": "./out/extension",
-	"activationEvents": [
+  "main": "./out/extension.js",
+  "activationEvents": [
 		"onCommand:string-manipulation.titleize",
 		"onCommand:string-manipulation.titleizeApStyle",
 		"onCommand:string-manipulation.titleizeChicagoStyle",
@@ -335,8 +335,7 @@
 		"test": "node ./test/runTest.js",
 		"build": "tsc",
 		"package": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package",
-		"vsce": "vsce",
-		"debug": "code --extensionDevelopmentPath=./"
+    "vscode:prepublish": "tsc -p ./"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
