@@ -13,10 +13,12 @@ jobs:
     steps:
       - name: Checkout to branch
         uses: actions/checkout@v4
+
       - name: Setup node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
       - name: "Bump version"
         uses: 'phips28/gh-action-bump-version@master'
         env:
@@ -36,8 +38,9 @@ jobs:
           APP_VERSION=`cat package.json | jq ".version" -M | sed 's/\"//g'`
           echo "AppVersion=$APP_VERSION" >> $GITHUB_OUTPUT
           echo "app version = v$APP_VERSION"
+
       - name: Build VSIX package
-        run: npm run build -- -o vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
+        run: npm run package -- -o vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
 
       - name: Publish extension package
         env:
