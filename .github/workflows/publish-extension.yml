@@ -21,10 +21,12 @@ jobs:
         uses: 'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-        minor-wording:  '#add'
-        major-wording:  '#major'
-        patch-wording:  '#patch,#fix'
-        rc-wording:     '#release'
+        with:
+          minor-wording:  'MINOR'
+          major-wording:  'MAJOR'
+          patch-wording:  'PATCH,FIX'
+          rc-wording:     'RELEASE'
+
       - name: Install packages
         run: npm ci
 
