@@ -26,6 +26,8 @@ jobs:
           node-version: 18.13.0
       - name: Install dependencies
         run: npm install
+      - name: Build package
+        run: npm run build
       - name: Run headless test
         uses: GabrielBB/xvfb-action@v1.0
         with:

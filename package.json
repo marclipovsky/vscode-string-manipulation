@@ -20,7 +20,7 @@
 	"categories": [
 		"Other"
 	],
-	"main": "./extension",
+	"main": "./out/extension",
 	"activationEvents": [
 		"onCommand:string-manipulation.titleize",
 		"onCommand:string-manipulation.titleizeApStyle",
@@ -333,8 +333,10 @@
 	},
 	"scripts": {
 		"test": "node ./test/runTest.js",
-		"build": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package",
-		"vsce": "vsce"
+		"build": "tsc",
+		"package": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package",
+		"vsce": "vsce",
+		"debug": "code --extensionDevelopmentPath=./"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
@@ -346,12 +348,13 @@
 		"glob": "^7.1.5",
 		"mocha": "^10.2.0",
 		"sinon": "^9.2.4",
-		"typescript": "^3.9.9",
+		"typescript": "^3.9.10",
 		"vsce": "^2.15.0",
 		"vscode-test": "^1.6.1"
 	},
 	"dependencies": {
 		"@sindresorhus/slugify": "^0.3.0",
+		"@types/underscore.string": "^0.0.41",
 		"ap-style-title-case": "^1.1.2",
 		"chicago-capitalize": "^0.1.0",
 		"underscore.string": "^3.3.5"
