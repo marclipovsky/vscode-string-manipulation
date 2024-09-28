@@ -2,11 +2,11 @@
 	"name": "string-manipulation",
 	"displayName": "String Manipulation",
 	"description": "Format strings to camelize, dasherize, etc.",
-  "version": "0.5.12",
+	"version": "0.6.0",
 	"publisher": "marclipovsky",
 	"repository": "https://github.com/marclipovsky/vscode-string-manipulation",
-  "license": "MIT",
-  "engines": {
+	"license": "MIT",
+	"engines": {
 		"vscode": "^1.54.0"
 	},
 	"icon": "icon.png",
@@ -333,8 +333,8 @@
 	},
 	"scripts": {
 		"test": "node ./test/runTest.js",
-    "build": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package",
-    "vsce": "vsce"
+		"build": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package",
+		"vsce": "vsce"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
