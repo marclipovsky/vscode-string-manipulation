@@ -2,7 +2,7 @@
 	"name": "string-manipulation",
 	"displayName": "String Manipulation",
 	"description": "Format strings to camelize, dasherize, etc.",
-	"version": "0.7.0",
+	"version": "0.7.1",
 	"publisher": "marclipovsky",
 	"repository": "https://github.com/marclipovsky/vscode-string-manipulation",
 	"license": "MIT",
@@ -20,8 +20,8 @@
 	"categories": [
 		"Other"
 	],
-  "main": "./out/extension.js",
-  "activationEvents": [
+	"main": "./out/extension.js",
+	"activationEvents": [
 		"onCommand:string-manipulation.titleize",
 		"onCommand:string-manipulation.titleizeApStyle",
 		"onCommand:string-manipulation.titleizeChicagoStyle",
@@ -335,7 +335,7 @@
 		"test": "node ./test/runTest.js",
 		"build": "tsc",
 		"package": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package",
-    "vscode:prepublish": "tsc -p ./"
+		"vscode:prepublish": "tsc -p ./"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
