@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run headless test
+      - name: Build package
+        run: npm build
+      - name: Run headless test
         uses: GabrielBB/xvfb-action@v1.0
         with:
           run: npm test
