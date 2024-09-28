@@ -8,15 +8,23 @@ on:
 jobs:
   cd:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       - name: Checkout to branch
         uses: actions/checkout@v4
-
       - name: Setup node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: "Bump version"
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        minor-wording:  '#add'
+        major-wording:  '#major'
+        patch-wording:  '#patch,#fix'
+        rc-wording:     '#release'
       - name: Install packages
         run: npm ci
 
