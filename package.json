@@ -20,7 +20,7 @@
 	"categories": [
 		"Other"
 	],
-	"main": "./extension",
+  "main": "./out/extension",
 	"activationEvents": [
 		"onCommand:string-manipulation.titleize",
 		"onCommand:string-manipulation.titleizeApStyle",
