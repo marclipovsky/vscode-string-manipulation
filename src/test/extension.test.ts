@@ -1,10 +1,21 @@
-const assert = require("assert");
-const { test, suite } = require("mocha");
+import * as assert from "assert";
 
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
-const vscode = require("vscode");
-const myExtension = require("../../out/extension");
+import * as vscode from "vscode";
+import * as myExtension from "../extension";
+
+type StringTransformationTest = [
+  funcName: string,
+  originalString: string,
+  expectedString: string,
+  options?: {
+    multiselectData?: {
+      offset: number;
+    };
+    functionArg?: number;
+  }
+];
 
 suite("Extension Test Suite", () => {
   vscode.window.showInformationMessage("Start all tests.");
@@ -101,20 +112,39 @@ suite("Extension Test Suite", () => {
       "4 5 6 7 8 9",
       { multiselectData: { offset: 3 } },
     ],
-    ["utf8ToChar", "\\u0061\\u0062\\u0063\\u4e2d\\u6587\\ud83d\\udc96", "abc中文💖"],
-    ["charToUtf8", "abc中文💖", "\\u0061\\u0062\\u0063\\u4e2d\\u6587\\ud83d\\udc96"],
+    [
+      "utf8ToChar",
+      "\\u0061\\u0062\\u0063\\u4e2d\\u6587\\ud83d\\udc96",
+      "abc中文💖",
+    ],
+    [
+      "charToUtf8",
+      "abc中文💖",
+      "\\u0061\\u0062\\u0063\\u4e2d\\u6587\\ud83d\\udc96",
+    ],
   ];
   suite("commandNameFunctionMap outputs correctly for all methods", () => {
-    tests.forEach(
-      ([funcName, originalString, expectedString, { multiselectData, functionArg } = {}]) => {
-        const arguments = `${originalString}${multiselectData ? `, ${JSON.stringify(multiselectData)}` : ''}`;
-        test(`${funcName} returns ${expectedString} when called with ${arguments}`, () => {
-          const func = functionArg
-            ? myExtension.commandNameFunctionMap[funcName](functionArg)
-            : myExtension.commandNameFunctionMap[funcName];
-          assert.equal(func(originalString, multiselectData), expectedString);
-        });
-      }
-    );
+    tests.forEach((data) => {
+      const [
+        funcName,
+        originalString,
+        expectedString,
+        { multiselectData, functionArg } = {
+          multiselectData: {},
+          functionArg: null,
+        },
+      ] = data as StringTransformationTest;
+      const args = `${originalString}${
+        multiselectData ? `, ${JSON.stringify(multiselectData)}` : ""
+      }`;
+      test(`${funcName} returns ${expectedString} when called with ${args}`, () => {
+        const func = (
+          functionArg
+            ? myExtension.commandNameFunctionMap[funcName](functionArg as any)
+            : myExtension.commandNameFunctionMap[funcName]
+        ) as myExtension.CommandFunction;
+        assert.equal(func(originalString, multiselectData), expectedString);
+      });
+    });
   });
 });

@@ -1,11 +1,14 @@
-.gitignore
-.vscode
+.vscode/**
 .vscode-test/**
-**/.eslintrc.json
+out/**
+node_modules/**
+src/**
+.gitignore
+.yarnrc
+esbuild.js
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/eslint.config.mjs
 **/*.map
-**/jsconfig.json
-node_modules
-# out/
-src/
-test/**
-tsconfig.json
+**/*.ts
+**/.vscode-test.*

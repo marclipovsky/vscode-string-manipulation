@@ -1,5 +1,5 @@
+out
+dist
 node_modules
+.vscode-test/
 *.vsix
-.vscode-test
-.DS_Storedist
-out/

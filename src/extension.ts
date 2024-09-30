@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import * as _string from "underscore.string";
+import * as underscore from "underscore.string";
 const apStyleTitleCase = require("ap-style-title-case");
 const chicagoStyleTitleCase = require("chicago-capitalize");
 const slugify = require("@sindresorhus/slugify");
@@ -9,7 +9,7 @@ interface MultiSelectData {
 }
 
 const defaultFunction = (commandName: string, option?: any) => (str: string) =>
-  (_string as any)[commandName](str, option);
+  (underscore as any)[commandName](str, option);
 
 const sequence = (str: string, multiselectData: MultiSelectData = {}) => {
   return str.replace(/-?\d+/g, (n) => {
@@ -27,8 +27,13 @@ const increment = (str: string) =>
 const decrement = (str: string) =>
   str.replace(/-?\d+/g, (n) => String(Number(n) - 1));
 
-type StringFunction = (str: string) => string;
-type CommandFunction = StringFunction | ((...args: any[]) => StringFunction);
+export type StringFunction = (
+  str: string,
+  multiselectData?: MultiSelectData
+) => string;
+export type CommandFunction =
+  | StringFunction
+  | ((...args: any[]) => StringFunction);
 
 const commandNameFunctionMap: { [key: string]: CommandFunction } = {
   titleize: defaultFunction("titleize"),
@@ -44,18 +49,18 @@ const commandNameFunctionMap: { [key: string]: CommandFunction } = {
   capitalize: defaultFunction("capitalize"),
   sentence: defaultFunction("capitalize", true),
   camelize: (str: string) =>
-    _string.camelize(/[a-z]/.test(str) ? str : str.toLowerCase()),
+    underscore.camelize(/[a-z]/.test(str) ? str : str.toLowerCase()),
   slugify: slugify,
   swapCase: defaultFunction("swapCase"),
   snake: (str: string) =>
-    _string
+    underscore
       .underscored(str)
       .replace(/([A-Z])[^A-Z]/g, " $1")
       .replace(/[^a-z]+/gi, " ")
       .trim()
       .replace(/\s/gi, "_"),
   screamingSnake: (str: string) =>
-    _string
+    underscore
       .underscored(str)
       .replace(/([A-Z])[^A-Z]/g, " $1")
       .replace(/[^a-z]+/gi, " ")
@@ -100,7 +105,9 @@ const stringFunction = async (
   context: vscode.ExtensionContext
 ) => {
   const editor = vscode.window.activeTextEditor;
-  if (!editor) return;
+  if (!editor) {
+    return;
+  }
 
   const selectionMap: {
     [key: number]: { selection: vscode.Selection; replaced: string };
@@ -150,10 +157,10 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "string-manipulation.repeatLastAction",
-      async () => {
+      () => {
         const lastAction = context.globalState.get<string>("lastAction");
         if (lastAction) {
-          await stringFunction(lastAction, context);
+          return stringFunction(lastAction, context);
         }
       }
     )
@@ -163,9 +170,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
       vscode.commands.registerCommand(
         `string-manipulation.${commandName}`,
-        async () => {
-          await stringFunction(commandName, context);
-        }
+        () => stringFunction(commandName, context)
       )
     );
   });

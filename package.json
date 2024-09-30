@@ -1,368 +1,350 @@
 {
-	"name": "string-manipulation",
-	"displayName": "String Manipulation",
-	"description": "Format strings to camelize, dasherize, etc.",
-	"version": "0.7.2",
-	"publisher": "marclipovsky",
-	"repository": "https://github.com/marclipovsky/vscode-string-manipulation",
-	"license": "MIT",
-	"engines": {
-		"vscode": "^1.54.0"
-	},
-	"icon": "icon.png",
-	"keywords": [
-		"underscore",
-		"lodash",
-		"case",
-		"camelize",
-		"dasherize"
-	],
-	"categories": [
-		"Other"
-	],
-	"main": "./out/extension.js",
-	"activationEvents": [
-		"onCommand:string-manipulation.titleize",
-		"onCommand:string-manipulation.titleizeApStyle",
-		"onCommand:string-manipulation.titleizeChicagoStyle",
-		"onCommand:string-manipulation.camelize",
-		"onCommand:string-manipulation.chop",
-		"onCommand:string-manipulation.clean",
-		"onCommand:string-manipulation.cleanDiacritics",
-		"onCommand:string-manipulation.classify",
-		"onCommand:string-manipulation.underscored",
-		"onCommand:string-manipulation.dasherize",
-		"onCommand:string-manipulation.snake",
-		"onCommand:string-manipulation.screamingSnake",
-		"onCommand:string-manipulation.humanize",
-		"onCommand:string-manipulation.slugify",
-		"onCommand:string-manipulation.reverse",
-		"onCommand:string-manipulation.swapCase",
-		"onCommand:string-manipulation.decapitalize",
-		"onCommand:string-manipulation.capitalize",
-		"onCommand:string-manipulation.sentence",
-		"onCommand:string-manipulation.prune",
-		"onCommand:string-manipulation.truncate",
-		"onCommand:string-manipulation.repeat",
-		"onCommand:string-manipulation.increment",
-		"onCommand:string-manipulation.decrement",
-		"onCommand:string-manipulation.duplicateAndIncrement",
-		"onCommand:string-manipulation.duplicateAndDecrement",
-		"onCommand:string-manipulation.sequence"
-	],
-	"contributes": {
-		"commands": [
-			{
-				"title": "Titleize",
-				"category": "String Manipulation",
-				"command": "string-manipulation.titleize"
-			},
-			{
-				"title": "Titleize (AP Style)",
-				"category": "String Manipulation",
-				"command": "string-manipulation.titleizeApStyle"
-			},
-			{
-				"title": "Titleize (Chicago Style)",
-				"category": "String Manipulation",
-				"command": "string-manipulation.titleizeChicagoStyle"
-			},
-			{
-				"title": "Camelize",
-				"category": "String Manipulation",
-				"command": "string-manipulation.camelize"
-			},
-			{
-				"title": "Chop",
-				"category": "String Manipulation",
-				"command": "string-manipulation.chop"
-			},
-			{
-				"title": "Clean",
-				"category": "String Manipulation",
-				"command": "string-manipulation.clean"
-			},
-			{
-				"title": "Clean diacritics",
-				"category": "String Manipulation",
-				"command": "string-manipulation.cleanDiacritics"
-			},
-			{
-				"title": "Classify",
-				"category": "String Manipulation",
-				"command": "string-manipulation.classify"
-			},
-			{
-				"title": "Underscored",
-				"category": "String Manipulation",
-				"command": "string-manipulation.underscored"
-			},
-			{
-				"title": "Dasherize",
-				"category": "String Manipulation",
-				"command": "string-manipulation.dasherize"
-			},
-			{
-				"title": "Humanize",
-				"category": "String Manipulation",
-				"command": "string-manipulation.humanize"
-			},
-			{
-				"title": "Slugify",
-				"category": "String Manipulation",
-				"command": "string-manipulation.slugify"
-			},
-			{
-				"title": "Snake",
-				"category": "String Manipulation",
-				"command": "string-manipulation.snake"
-			},
-			{
-				"title": "Screaming Snake",
-				"category": "String Manipulation",
-				"command": "string-manipulation.screamingSnake"
-			},
-			{
-				"title": "Reverse",
-				"category": "String Manipulation",
-				"command": "string-manipulation.reverse"
-			},
-			{
-				"title": "Swap Case",
-				"category": "String Manipulation",
-				"command": "string-manipulation.swapCase"
-			},
-			{
-				"title": "Decapitalize",
-				"category": "String Manipulation",
-				"command": "string-manipulation.decapitalize"
-			},
-			{
-				"title": "Capitalize",
-				"category": "String Manipulation",
-				"command": "string-manipulation.capitalize"
-			},
-			{
-				"title": "Sentence",
-				"category": "String Manipulation",
-				"command": "string-manipulation.sentence"
-			},
-			{
-				"title": "Truncate",
-				"category": "String Manipulation",
-				"command": "string-manipulation.truncate"
-			},
-			{
-				"title": "Prune",
-				"category": "String Manipulation",
-				"command": "string-manipulation.prune"
-			},
-			{
-				"title": "Repeat",
-				"category": "String Manipulation",
-				"command": "string-manipulation.repeat"
-			},
-			{
-				"title": "Increment all numbers",
-				"category": "String Manipulation",
-				"command": "string-manipulation.increment"
-			},
-			{
-				"title": "Decrement all numbers",
-				"category": "String Manipulation",
-				"command": "string-manipulation.decrement"
-			},
-			{
-				"title": "Duplicate and increment all numbers",
-				"category": "String Manipulation",
-				"command": "string-manipulation.duplicateAndIncrement"
-			},
-			{
-				"title": "Duplicate and decrement all numbers",
-				"category": "String Manipulation",
-				"command": "string-manipulation.duplicateAndDecrement"
-			},
-			{
-				"title": "Sequence all numbers (starting with first number)",
-				"category": "String Manipulation",
-				"command": "string-manipulation.sequence"
-			},
-			{
-				"title": "Convert char to UTF8",
-				"category": "String Manipulation",
-				"command": "string-manipulation.charToUtf8"
-			},
-			{
-				"title": "Convert UTF8 to char",
-				"category": "String Manipulation",
-				"command": "string-manipulation.utf8ToChar"
-			}
-		],
-		"submenus": [
-			{
-				"id": "string-manipulation",
-				"label": "String Manipulation"
-			}
-		],
-		"menus": {
-			"editor/context": [
-				{
-					"submenu": "string-manipulation",
-					"group": "7_modification"
-				}
-			],
-			"string-manipulation": [
-				{
-					"command": "string-manipulation.titleize",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.titleizeApStyle",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.titleizeChicagoStyle",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.camelize",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.chop",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.clean",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.cleanDiacritics",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.classify",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.underscored",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.dasherize",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.humanize",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.slugify",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.snake",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.screamingSnake",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.reverse",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.swapCase",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.decapitalize",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.capitalize",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.sentence",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.truncate",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.prune",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.repeat",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.increment",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.decrement",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.duplicateAndIncrement",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.duplicateAndDecrement",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.sequence",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.utf8ToChar",
-					"group": "7_modification"
-				},
-				{
-					"command": "string-manipulation.charToUtf8",
-					"group": "7_modification"
-				}
-			]
-		}
-	},
-	"scripts": {
-		"test": "node ./test/runTest.js",
-		"build": "tsc",
-		"package": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package",
-		"vsce": "vsce",
-		"vscode:prepublish": "tsc -p ./"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.1.3",
-		"@types/mocha": "^5.2.7",
-		"@types/node": "^12.20.4",
-		"@types/vscode": "^1.54.0",
-		"@vscode/test-electron": "^2.1.3",
-		"eslint": "^6.6.0",
-		"glob": "^7.1.5",
-		"mocha": "^10.2.0",
-		"sinon": "^9.2.4",
-		"typescript": "^3.9.10",
-		"vsce": "^2.15.0",
-		"vscode-test": "^1.6.1"
-	},
-	"dependencies": {
-		"@sindresorhus/slugify": "^0.3.0",
-		"@types/underscore.string": "^0.0.41",
-		"ap-style-title-case": "^1.1.2",
-		"chicago-capitalize": "^0.1.0",
-		"underscore.string": "^3.3.5"
-	},
-	"__metadata": {
-		"id": "f458266d-2636-454c-86ba-1df8d80ed929",
-		"publisherDisplayName": "marclipovsky",
-		"publisherId": "0bb81b3d-47b5-4792-9d22-906e374145af",
-		"isPreReleaseVersion": false
-	}
+  "name": "string-manipulation",
+  "displayName": "String Manipulation",
+  "description": "Format strings to camelize, dasherize, etc.",
+  "version": "0.7.2",
+  "publisher": "marclipovsky",
+  "repository": "https://github.com/marclipovsky/vscode-string-manipulation",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "icon": "icon.png",
+  "keywords": [
+    "underscore",
+    "lodash",
+    "case",
+    "camelize",
+    "dasherize"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "title": "Titleize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.titleize"
+      },
+      {
+        "title": "Titleize (AP Style)",
+        "category": "String Manipulation",
+        "command": "string-manipulation.titleizeApStyle"
+      },
+      {
+        "title": "Titleize (Chicago Style)",
+        "category": "String Manipulation",
+        "command": "string-manipulation.titleizeChicagoStyle"
+      },
+      {
+        "title": "Camelize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.camelize"
+      },
+      {
+        "title": "Chop",
+        "category": "String Manipulation",
+        "command": "string-manipulation.chop"
+      },
+      {
+        "title": "Clean",
+        "category": "String Manipulation",
+        "command": "string-manipulation.clean"
+      },
+      {
+        "title": "Clean diacritics",
+        "category": "String Manipulation",
+        "command": "string-manipulation.cleanDiacritics"
+      },
+      {
+        "title": "Classify",
+        "category": "String Manipulation",
+        "command": "string-manipulation.classify"
+      },
+      {
+        "title": "Underscored",
+        "category": "String Manipulation",
+        "command": "string-manipulation.underscored"
+      },
+      {
+        "title": "Dasherize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.dasherize"
+      },
+      {
+        "title": "Humanize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.humanize"
+      },
+      {
+        "title": "Slugify",
+        "category": "String Manipulation",
+        "command": "string-manipulation.slugify"
+      },
+      {
+        "title": "Snake",
+        "category": "String Manipulation",
+        "command": "string-manipulation.snake"
+      },
+      {
+        "title": "Screaming Snake",
+        "category": "String Manipulation",
+        "command": "string-manipulation.screamingSnake"
+      },
+      {
+        "title": "Reverse",
+        "category": "String Manipulation",
+        "command": "string-manipulation.reverse"
+      },
+      {
+        "title": "Swap Case",
+        "category": "String Manipulation",
+        "command": "string-manipulation.swapCase"
+      },
+      {
+        "title": "Decapitalize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.decapitalize"
+      },
+      {
+        "title": "Capitalize",
+        "category": "String Manipulation",
+        "command": "string-manipulation.capitalize"
+      },
+      {
+        "title": "Sentence",
+        "category": "String Manipulation",
+        "command": "string-manipulation.sentence"
+      },
+      {
+        "title": "Truncate",
+        "category": "String Manipulation",
+        "command": "string-manipulation.truncate"
+      },
+      {
+        "title": "Prune",
+        "category": "String Manipulation",
+        "command": "string-manipulation.prune"
+      },
+      {
+        "title": "Repeat",
+        "category": "String Manipulation",
+        "command": "string-manipulation.repeat"
+      },
+      {
+        "title": "Increment all numbers",
+        "category": "String Manipulation",
+        "command": "string-manipulation.increment"
+      },
+      {
+        "title": "Decrement all numbers",
+        "category": "String Manipulation",
+        "command": "string-manipulation.decrement"
+      },
+      {
+        "title": "Duplicate and increment all numbers",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateAndIncrement"
+      },
+      {
+        "title": "Duplicate and decrement all numbers",
+        "category": "String Manipulation",
+        "command": "string-manipulation.duplicateAndDecrement"
+      },
+      {
+        "title": "Sequence all numbers (starting with first number)",
+        "category": "String Manipulation",
+        "command": "string-manipulation.sequence"
+      },
+      {
+        "title": "Convert char to UTF8",
+        "category": "String Manipulation",
+        "command": "string-manipulation.charToUtf8"
+      },
+      {
+        "title": "Convert UTF8 to char",
+        "category": "String Manipulation",
+        "command": "string-manipulation.utf8ToChar"
+      }
+    ],
+    "submenus": [
+      {
+        "id": "string-manipulation",
+        "label": "String Manipulation"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "string-manipulation",
+          "group": "7_modification"
+        }
+      ],
+      "string-manipulation": [
+        {
+          "command": "string-manipulation.titleize",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.titleizeApStyle",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.titleizeChicagoStyle",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.camelize",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.chop",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.clean",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.cleanDiacritics",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.classify",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.underscored",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.dasherize",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.humanize",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.slugify",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.snake",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.screamingSnake",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.reverse",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.swapCase",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.decapitalize",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.capitalize",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.sentence",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.truncate",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.prune",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.repeat",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.increment",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.decrement",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.duplicateAndIncrement",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.duplicateAndDecrement",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.sequence",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.utf8ToChar",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.charToUtf8",
+          "group": "7_modification"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "build": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "package": "(rm -rf out || true) && mkdir out && cp package.json out && vsce package",
+    "vsce": "vsce"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/underscore.string": "^0.0.41",
+    "@types/vscode": "^1.93.0",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.23.1",
+    "eslint": "^9.9.1",
+    "glob": "^7.1.5",
+    "mocha": "^10.2.0",
+    "npm-run-all": "^4.1.5",
+    "sinon": "^9.2.4",
+    "typescript": "^5.5.4",
+    "vsce": "^2.15.0",
+    "vscode-test": "^1.6.1"
+  },
+  "dependencies": {
+    "@sindresorhus/slugify": "^0.3.0",
+    "ap-style-title-case": "^1.1.2",
+    "chicago-capitalize": "^0.1.0",
+    "underscore.string": "^3.3.5"
+  },
+  "__metadata": {
+    "id": "f458266d-2636-454c-86ba-1df8d80ed929",
+    "publisherDisplayName": "marclipovsky",
+    "publisherId": "0bb81b3d-47b5-4792-9d22-906e374145af",
+    "isPreReleaseVersion": false
+  }
 }
