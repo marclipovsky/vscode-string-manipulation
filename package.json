@@ -45,7 +45,8 @@
     "onCommand:string-manipulation.decrement",
     "onCommand:string-manipulation.duplicateAndIncrement",
     "onCommand:string-manipulation.duplicateAndDecrement",
-    "onCommand:string-manipulation.sequence"
+    "onCommand:string-manipulation.sequence",
+    "onCommand:string-manipulation.randomCase"
   ],
   "contributes": {
     "commands": [
@@ -193,6 +194,11 @@
         "title": "Convert UTF8 to char",
         "category": "String Manipulation",
         "command": "string-manipulation.utf8ToChar"
+      },
+      {
+        "title": "Random Case",
+        "category": "String Manipulation",
+        "command": "string-manipulation.randomCase"
       }
     ],
     "submenus": [
@@ -323,6 +329,10 @@
         },
         {
           "command": "string-manipulation.charToUtf8",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.randomCase",
           "group": "7_modification"
         }
       ]

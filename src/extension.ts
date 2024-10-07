@@ -27,6 +27,18 @@ const increment = (str: string) =>
 const decrement = (str: string) =>
   str.replace(/-?\d+/g, (n) => String(Number(n) - 1));
 
+const randomCase = (input: string): string => {
+  let result = "";
+  for (const char of input) {
+    if (Math.random() < 0.5) {
+      result += char.toLowerCase();
+    } else {
+      result += char.toUpperCase();
+    }
+  }
+  return result;
+};
+
 export type StringFunction = (
   str: string,
   multiselectData?: MultiSelectData
@@ -88,6 +100,7 @@ const commandNameFunctionMap: { [key: string]: CommandFunction } = {
       .split("")
       .map((x) => `\\u${x.charCodeAt(0).toString(16).padStart(4, "0")}`)
       .join(""),
+  randomCase,
 };
 
 const numberFunctionNames = [

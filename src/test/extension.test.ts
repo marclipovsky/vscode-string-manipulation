@@ -146,5 +146,59 @@ suite("Extension Test Suite", () => {
         assert.equal(func(originalString, multiselectData), expectedString);
       });
     });
+
+    suite("randomCase", () => {
+    const input = "Hello, World!";
+
+    test("returns a string of the same length", () => {
+      const output = myExtension.commandNameFunctionMap["randomCase"](
+        input
+      ) as string;
+      assert.equal(output.length, input.length);
+    });
+
+    test("contains the same characters ignoring case", () => {
+      const output = myExtension.commandNameFunctionMap["randomCase"](
+        input
+      ) as string;
+      assert.equal(output.toLowerCase(), input.toLowerCase());
+    });
+
+    test("changes the case of at least one character (statistically)", () => {
+      let changed = false;
+      for (let i = 0; i < 10; i++) {
+        const output = myExtension.commandNameFunctionMap["randomCase"](
+          input
+        ) as string;
+        if (output !== input && output.toLowerCase() === input.toLowerCase()) {
+          changed = true;
+          break;
+        }
+      }
+      assert.equal(changed, true);
+    });
+
+    test("handles empty strings", () => {
+      const output = myExtension.commandNameFunctionMap.randomCase("");
+      assert.equal(output, "");
+    });
+
+    test("preserves non-alphabetic characters", () => {
+      const specialChars = "12345!@#$%";
+      const output =
+        myExtension.commandNameFunctionMap.randomCase(specialChars);
+      assert.equal(output, specialChars);
+    });
+
+    test("handles strings with mixed content", () => {
+      const mixedInput = "Test123!";
+      const output = myExtension.commandNameFunctionMap.randomCase(
+        mixedInput
+      ) as string;
+      assert.equal(output.length, mixedInput.length);
+      assert.notEqual(output.replace(/[^a-zA-Z]/g, ""), "");
+    });
+
+      });
   });
 });
