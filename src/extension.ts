@@ -174,6 +174,155 @@ export function activate(context: vscode.ExtensionContext) {
       )
     );
   });
+
+  // Register the new quick pick command with Temporary Preview using Overlays
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "string-manipulation.quickPickTransform",
+      async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+          vscode.window.showInformationMessage(
+            "No active editor found for transformation."
+          );
+          return;
+        }
+
+        const selections = editor.selections;
+        if (selections.length === 0) {
+          vscode.window.showInformationMessage("No text selected.");
+          return;
+        }
+
+        // Store original text for all selections to allow reverting
+        const originalTexts = selections.map((sel) =>
+          editor.document.getText(sel)
+        );
+
+        // Function to apply a transformation and generate preview texts
+        const applyTransformation = async (commandName: string) => {
+          let stringFunc: (str: string) => string;
+
+          if (functionNamesWithArgument.includes(commandName)) {
+            const valueStr = await vscode.window.showInputBox({
+              prompt: `Enter a number for "${commandName}"`,
+              validateInput: (input) => {
+                const num = Number(input);
+                return isNaN(num) ? "Please enter a valid number." : null;
+              },
+              ignoreFocusOut: true,
+            });
+            if (valueStr === undefined) {
+              return null; // User cancelled input
+            }
+            const value = Number(valueStr);
+            stringFunc = (commandNameFunctionMap[commandName] as Function)(
+              value
+            );
+          } else if (numberFunctionNames.includes(commandName)) {
+            stringFunc = (str: string) =>
+              (commandNameFunctionMap[commandName] as Function)(str, {});
+          } else {
+            stringFunc = commandNameFunctionMap[commandName] as StringFunction;
+          }
+
+          const transformedTexts = originalTexts.map((text) =>
+            stringFunc(text)
+          );
+
+          return transformedTexts;
+        };
+
+        // Prepare QuickPick items
+        const quickPickItems: vscode.QuickPickItem[] = Object.keys(
+          commandNameFunctionMap
+        ).map((cmd) => ({
+          label: cmd,
+          description: "Apply " + cmd + " transformation",
+        }));
+
+        // Create the QuickPick
+        const quickPick = vscode.window.createQuickPick();
+        quickPick.items = quickPickItems;
+        quickPick.placeholder = "Select a transformation to preview";
+
+        // Create a decoration type for previews
+        const decorationType = vscode.window.createTextEditorDecorationType({
+          // Customize the appearance of the preview overlay
+          backgroundColor: "rgba(0, 255, 0, 0.3)", // Semi-transparent green background for preview
+          border: "1px dashed rgba(0, 255, 0, 0.8)", // Dashed border to indicate preview
+          isWholeLine: false,
+          // Optionally, show the transformed text as an overlay
+          after: {
+            contentText: "",
+            color: "rgba(0,0,0,0.8)",
+            backgroundColor: "rgba(0,255,0,0.2)",
+          },
+        });
+
+        // Store current decorations to manage their lifecycle
+        let currentDecorations: vscode.DecorationOptions[] = [];
+
+        // Function to update decorations based on transformed texts
+        const updateDecorations = (transformedTexts: string[]) => {
+          currentDecorations = selections.map((sel, idx) => {
+            const transformed = transformedTexts[idx];
+            return {
+              range: sel,
+              renderOptions: {
+                after: {
+                  contentText: ` → ${transformed}`,
+                  color: "rgba(0, 0, 0, 0.6)",
+                  fontStyle: "italic",
+                },
+              },
+            };
+          });
+          editor.setDecorations(decorationType, currentDecorations);
+        };
+
+        // Function to clear decorations
+        const clearDecorations = () => {
+          editor.setDecorations(decorationType, []);
+          currentDecorations = [];
+        };
+
+        // Handle selection changes in QuickPick to update previews
+        quickPick.onDidChangeSelection(async (selection) => {
+          if (selection[0]) {
+            const cmd = selection[0].label;
+            const transformed = await applyTransformation(cmd);
+            if (transformed) {
+              updateDecorations(transformed);
+            } else {
+              clearDecorations();
+            }
+          }
+        });
+
+        // Handle QuickPick closure to remove decorations
+        quickPick.onDidHide(() => {
+          clearDecorations();
+          quickPick.dispose();
+          decorationType.dispose();
+        });
+
+        // Handle acceptance of a transformation
+        quickPick.onDidAccept(async () => {
+          const selected = quickPick.selectedItems[0];
+          if (selected) {
+            const cmd = selected.label;
+            clearDecorations(); // Remove previews before applying changes
+            await stringFunction(cmd, context);
+          }
+          quickPick.dispose();
+          decorationType.dispose();
+        });
+
+        quickPick.show();
+      }
+    )
+  );
 }
 
 export { commandNameFunctionMap };
