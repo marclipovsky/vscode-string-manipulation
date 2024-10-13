@@ -19,9 +19,19 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onCommand:string-manipulation.*"
+    "onCommand:string-manipulation.*",
+    "onView:stringManipulationSidebar"
   ],
   "contributes": {
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "stringManipulationSidebar",
+          "name": "String Manipulation"
+        }
+      ]
+    },
     "commands": [
       {
         "title": "Titleize",
