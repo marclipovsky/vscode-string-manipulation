@@ -45,4 +45,28 @@ To use these commands, press ⌘+p and enter any of the commands above while tex
 
 ![String Manipulation Screencast](images/demo.gif)
 
+## 🧪 Introducing Labs Features
+
+Introducing String Manipulation Labs
+
+We’re excited to announce the launch of String Manipulation Labs—a collection of (really just one at this moment) experimental features designed to enhance and expand the capabilities of the String Manipulation extension. Labs features are disabled by default to ensure a stable experience with the core functionalities.
+
+### 🚀 How to Enable Labs Features
+
+To try out the new Labs features, follow these simple steps:
+
+	1.	Open VSCode Settings:
+	•	Press Ctrl + , (Windows/Linux) or Cmd + , (macOS), or navigate to File > Preferences > Settings.
+	2.	Search for Labs Settings:
+	•	In the search bar, type stringManipulation.labs.
+	3.	Enable Labs Features:
+	•	Toggle the String Manipulation Labs setting to On.
+
+### 🛠️ We Value Your Feedback
+
+Since Labs features are experimental, your feedback is invaluable! Let us know your thoughts, report any issues, or suggest improvements to help us refine these tools.
+
+Thank you for using String Manipulation!
+Your support helps us build better tools for the community.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
