@@ -3,7 +3,7 @@ import * as assert from "assert";
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from "vscode";
-import * as myExtension from "../extension";
+import { commandNameFunctionMap, CommandFunction } from "../commands";
 
 type StringTransformationTest = [
   funcName: string,
@@ -140,65 +140,76 @@ suite("Extension Test Suite", () => {
       test(`${funcName} returns ${expectedString} when called with ${args}`, () => {
         const func = (
           functionArg
-            ? myExtension.commandNameFunctionMap[funcName](functionArg as any)
-            : myExtension.commandNameFunctionMap[funcName]
-        ) as myExtension.CommandFunction;
+            ? commandNameFunctionMap[funcName](functionArg as any)
+            : commandNameFunctionMap[funcName]
+        ) as CommandFunction;
         assert.equal(func(originalString, multiselectData), expectedString);
       });
     });
 
     suite("randomCase", () => {
-    const input = "Hello, World!";
+      const input = "Hello, World!";
 
-    test("returns a string of the same length", () => {
-      const output = myExtension.commandNameFunctionMap["randomCase"](
-        input
-      ) as string;
-      assert.equal(output.length, input.length);
-    });
-
-    test("contains the same characters ignoring case", () => {
-      const output = myExtension.commandNameFunctionMap["randomCase"](
-        input
-      ) as string;
-      assert.equal(output.toLowerCase(), input.toLowerCase());
-    });
-
-    test("changes the case of at least one character (statistically)", () => {
-      let changed = false;
-      for (let i = 0; i < 10; i++) {
-        const output = myExtension.commandNameFunctionMap["randomCase"](
-          input
-        ) as string;
-        if (output !== input && output.toLowerCase() === input.toLowerCase()) {
-          changed = true;
-          break;
-        }
-      }
-      assert.equal(changed, true);
-    });
-
-    test("handles empty strings", () => {
-      const output = myExtension.commandNameFunctionMap.randomCase("");
-      assert.equal(output, "");
-    });
-
-    test("preserves non-alphabetic characters", () => {
-      const specialChars = "12345!@#$%";
-      const output =
-        myExtension.commandNameFunctionMap.randomCase(specialChars);
-      assert.equal(output, specialChars);
-    });
-
-    test("handles strings with mixed content", () => {
-      const mixedInput = "Test123!";
-      const output = myExtension.commandNameFunctionMap.randomCase(
-        mixedInput
-      ) as string;
-      assert.equal(output.length, mixedInput.length);
-      assert.notEqual(output.replace(/[^a-zA-Z]/g, ""), "");
-    });
-
+      test("returns a string of the same length", () => {
+        const output = commandNameFunctionMap["randomCase"](input) as string;
+        assert.equal(output.length, input.length);
       });
+
+      test("contains the same characters ignoring case", () => {
+        const output = commandNameFunctionMap["randomCase"](input) as string;
+        assert.equal(output.toLowerCase(), input.toLowerCase());
+      });
+
+      test("changes the case of at least one character (statistically)", () => {
+        let changed = false;
+        for (let i = 0; i < 10; i++) {
+          const output = commandNameFunctionMap["randomCase"](input) as string;
+          if (
+            output !== input &&
+            output.toLowerCase() === input.toLowerCase()
+          ) {
+            changed = true;
+            break;
+          }
+        }
+        assert.equal(changed, true);
+      });
+
+      test("handles empty strings", () => {
+        const output = commandNameFunctionMap.randomCase("");
+        assert.equal(output, "");
+      });
+
+      test("preserves non-alphabetic characters", () => {
+        const specialChars = "12345!@#$%";
+        const output = commandNameFunctionMap.randomCase(specialChars);
+        assert.equal(output, specialChars);
+      });
+
+      test("handles strings with mixed content", () => {
+        const mixedInput = "Test123!";
+        const output = commandNameFunctionMap.randomCase(mixedInput) as string;
+        assert.equal(output.length, mixedInput.length);
+        assert.notEqual(output.replace(/[^a-zA-Z]/g, ""), "");
+      });
+    });
+  });
+
+  suite("activation events", () => {
+    const extension = vscode.extensions.getExtension(
+      "marclipovsky.string-manipulation"
+    )!;
+
+    test("is not active by default", () => {
+      const extension = vscode.extensions.getExtension(
+        "marclipovsky.string-manipulation"
+      )!;
+      assert.equal(false, extension.isActive);
+    });
+
+    test("invoked when running one of the commands", async () => {
+      await vscode.commands.executeCommand("string-manipulation.titleize");
+      assert.equal(true, extension.isActive);
+    });
   });
 });

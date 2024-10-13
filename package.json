@@ -19,36 +19,31 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onCommand:string-manipulation.titleize",
-    "onCommand:string-manipulation.titleizeApStyle",
-    "onCommand:string-manipulation.titleizeChicagoStyle",
-    "onCommand:string-manipulation.camelize",
-    "onCommand:string-manipulation.chop",
-    "onCommand:string-manipulation.clean",
-    "onCommand:string-manipulation.cleanDiacritics",
-    "onCommand:string-manipulation.classify",
-    "onCommand:string-manipulation.underscored",
-    "onCommand:string-manipulation.dasherize",
-    "onCommand:string-manipulation.snake",
-    "onCommand:string-manipulation.screamingSnake",
-    "onCommand:string-manipulation.humanize",
-    "onCommand:string-manipulation.slugify",
-    "onCommand:string-manipulation.reverse",
-    "onCommand:string-manipulation.swapCase",
-    "onCommand:string-manipulation.decapitalize",
-    "onCommand:string-manipulation.capitalize",
-    "onCommand:string-manipulation.sentence",
-    "onCommand:string-manipulation.prune",
-    "onCommand:string-manipulation.truncate",
-    "onCommand:string-manipulation.repeat",
-    "onCommand:string-manipulation.increment",
-    "onCommand:string-manipulation.decrement",
-    "onCommand:string-manipulation.duplicateAndIncrement",
-    "onCommand:string-manipulation.duplicateAndDecrement",
-    "onCommand:string-manipulation.sequence",
-    "onCommand:string-manipulation.randomCase"
+    "onCommand:string-manipulation.*",
+    "onView:stringManipulationSidebar"
   ],
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "String Manipulation Configuration",
+      "properties": {
+        "stringManipulation.labs": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable experimental String Manipulation Labs features."
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "stringManipulationSidebar",
+          "name": "String Manipulation",
+          "when": "config.stringManipulation.labs"
+        }
+      ]
+    },
     "commands": [
       {
         "title": "Titleize",
