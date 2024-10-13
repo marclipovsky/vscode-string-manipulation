@@ -23,12 +23,24 @@
     "onView:stringManipulationSidebar"
   ],
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "String Manipulation Configuration",
+      "properties": {
+        "stringManipulation.labs": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable experimental String Manipulation Labs features."
+        }
+      }
+    },
     "views": {
       "explorer": [
         {
           "type": "webview",
           "id": "stringManipulationSidebar",
-          "name": "String Manipulation"
+          "name": "String Manipulation",
+          "when": "config.stringManipulation.labs"
         }
       ]
     },
