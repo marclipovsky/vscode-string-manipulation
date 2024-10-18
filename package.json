@@ -176,7 +176,7 @@
         "command": "string-manipulation.duplicateAndDecrement"
       },
       {
-        "title": "Sequence all numbers (starting with first number)",
+        "title": "Sequence all numbers from first number",
         "category": "String Manipulation",
         "command": "string-manipulation.sequence"
       },
@@ -338,6 +338,7 @@
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.js --watch",
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "watch:test": "nodemon --exec 'npm run test' src/**/* content.txt",
     "build": "npm run check-types && npm run lint && node esbuild.js --production",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
@@ -372,6 +373,7 @@
     "@sindresorhus/slugify": "^0.3.0",
     "ap-style-title-case": "^1.1.2",
     "chicago-capitalize": "^0.1.0",
+    "nodemon": "^3.1.7",
     "underscore.string": "^3.3.5"
   },
   "__metadata": {

@@ -1,0 +1,45 @@
+moz-transform
+-moz-transform
+foo Bar
+ foo    bar
+ääkkönen
+foo Bar
+some_class_name
+MozTransform
+Foo Bar
+  capitalize dash-CamelCase_underscore trim
+Abc
+Un éléphant à l'orée du bois
+HELLOworld
+This-is_snake case
+screaming-snake case
+my name is tristan
+this is a test
+The quick brown fox jumps over the lazy dog.
+Underscored-is-like  snake-case
+aabbccdd
+aabbccdd
+aabbccddaabbccdd
+aabbccdd
+a1 b2 c3 4d 5e 6f 12x y23 34z45
+a1 b2 c3 4d 5e
+6f 12x y23 34z45
+a-4 b-3 c-2 -1d 0e
+6f 12x y23 34z45
+a1 b2 c3 4d 5e 6f 12x y23 34z45
+a1 b2 c3 4d
+5e 6f 12x y23 34z45
+a-3 b-2 c-1 0d
+1e 6f 12x y23 34z45
+a1 b2 c3 4d 5e 6f 12x y23 34z45
+
+a1 b2 c3 4d 5e 6f 12x y23 34z45
+
+a1 b2 c3 4d 5e 6f 12x y23 34z45
+a14 b2 c3
+4d 5e 6f 7x y8 9z12
+\u0061\u0062\u0063\u4e2d\u6587\ud83d\udc96
+abc中文💖
+Hello, World!
+12345!@#$%
+Test123!
