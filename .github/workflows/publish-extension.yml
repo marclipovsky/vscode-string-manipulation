@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - master
+  workflow_run:
+    workflows: ["Node.js CI"]
+    types:
+      - completed
+
 
 jobs:
   cd:
