@@ -19,7 +19,6 @@ type StringTransformationTest = [
 let editor: vscode.TextEditor;
 let document: vscode.TextDocument;
 const originalShowInputBox = vscode.window.showInputBox;
-const removeNewLines = (str: string) => str.replace(/[\n\r]/g, "");
 
 suite("Extension Test Suite", () => {
   beforeEach(async () => {
@@ -376,8 +375,8 @@ suite("Extension Test Suite", () => {
       );
 
       assert.strictEqual(output1, "a2 b3 c4 5d 6e 7f 13x y24 35z46");
-      assert.strictEqual(output2, "a2 b3 c4 5d 6e7f 13x y24 35z46");
-      assert.strictEqual(output3, "a-3 b-2 c-1 0d 1e7f 13x y24 35z46");
+      assert.strictEqual(output2, "a2 b3 c4 5d 6e\n7f 13x y24 35z46");
+      assert.strictEqual(output3, "a-3 b-2 c-1 0d 1e\n7f 13x y24 35z46");
     });
 
     test("decrement", async () => {
@@ -400,14 +399,8 @@ suite("Extension Test Suite", () => {
       );
 
       assert.strictEqual(output1, "a0 b1 c2 3d 4e 5f 11x y22 33z44");
-      assert.strictEqual(
-        removeNewLines(output2),
-        "a0 b1 c2 3d4e 5f 11x y22 33z44"
-      );
-      assert.strictEqual(
-        removeNewLines(output3),
-        "a-4 b-3 c-2 -1d0e 5f 11x y22 33z44"
-      );
+      assert.strictEqual(output2, "a0 b1 c2 3d\n4e 5f 11x y22 33z44");
+      assert.strictEqual(output3, "a-4 b-3 c-2 -1d\n0e 5f 11x y22 33z44");
     });
 
     test("duplicateAndIncrement", async () => {
@@ -422,8 +415,8 @@ suite("Extension Test Suite", () => {
       );
 
       assert.strictEqual(
-        removeNewLines(output),
-        "a1 b2 c3 4d 5e 6f 12x y23 34z45a2 b3 c4 5d 6e 7f 13x y24 35z46"
+        output,
+        "a1 b2 c3 4d 5e 6f 12x y23 34z45a2 b3 c4 5d 6e 7f 13x y24 35z46\n"
       );
     });
 
@@ -439,8 +432,8 @@ suite("Extension Test Suite", () => {
       );
 
       assert.strictEqual(
-        removeNewLines(output),
-        "a1 b2 c3 4d 5e 6f 12x y23 34z45a0 b1 c2 3d 4e 5f 11x y22 33z44"
+        output,
+        "a1 b2 c3 4d 5e 6f 12x y23 34z45a0 b1 c2 3d 4e 5f 11x y22 33z44\n"
       );
     });
 
@@ -460,10 +453,7 @@ suite("Extension Test Suite", () => {
       );
 
       assert.strictEqual(output1, "a1 b2 c3 4d 5e 6f 7x y8 9z10");
-      assert.strictEqual(
-        removeNewLines(output2),
-        "a11 b12 c1314d 15e 16f 17x y18 19z20"
-      );
+      assert.strictEqual(output2, "a11 b12 c13\n14d 15e 16f 17x y18 19z20");
     });
 
     test("utf8ToChar", async () => {
