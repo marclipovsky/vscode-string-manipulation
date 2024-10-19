@@ -198,7 +198,8 @@
       {
         "title": "Swap Quotes",
         "category": "String Manipulation",
-        "command": "string-manipulation.swapQuotes"
+        "command": "string-manipulation.swapQuotes",
+        "when": "config.stringManipulation.labs"
       }
     ],
     "submenus": [
@@ -337,7 +338,8 @@
         },
         {
           "command": "string-manipulation.swapQuotes",
-          "group": "7_modification"
+          "group": "7_modification",
+          "when": "config.stringManipulation.labs"
         }
       ]
     }
