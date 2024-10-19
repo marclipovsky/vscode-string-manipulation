@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import * as underscore from "underscore.string";
+import { swapQuotes } from "./commands/swap_quotes";
 const apStyleTitleCase = require("ap-style-title-case");
 const chicagoStyleTitleCase = require("chicago-capitalize");
 const slugify = require("@sindresorhus/slugify");
@@ -39,6 +40,14 @@ const randomCase = (input: string): string => {
   return result;
 };
 
+const snake = (str: string) =>
+  underscore
+    .underscored(str)
+    .replace(/([A-Z])[^A-Z]/g, " $1")
+    .replace(/[^a-z0-9]+/gi, " ")
+    .trim()
+    .replace(/\s/gi, "_");
+
 export type StringFunction = (
   str: string,
   multiselectData?: MultiSelectData
@@ -53,7 +62,7 @@ const commandNameFunctionMap: { [key: string]: CommandFunction } = {
   classify: defaultFunction("classify"),
   clean: defaultFunction("clean"),
   cleanDiacritics: defaultFunction("cleanDiacritics"),
-  underscored: defaultFunction("underscored"),
+  underscored: snake,
   dasherize: defaultFunction("dasherize"),
   humanize: defaultFunction("humanize"),
   reverse: defaultFunction("reverse"),
@@ -64,21 +73,8 @@ const commandNameFunctionMap: { [key: string]: CommandFunction } = {
     underscore.camelize(/[a-z]/.test(str) ? str : str.toLowerCase()),
   slugify: slugify,
   swapCase: defaultFunction("swapCase"),
-  snake: (str: string) =>
-    underscore
-      .underscored(str)
-      .replace(/([A-Z])[^A-Z]/g, " $1")
-      .replace(/[^a-z]+/gi, " ")
-      .trim()
-      .replace(/\s/gi, "_"),
-  screamingSnake: (str: string) =>
-    underscore
-      .underscored(str)
-      .replace(/([A-Z])[^A-Z]/g, " $1")
-      .replace(/[^a-z]+/gi, " ")
-      .trim()
-      .replace(/\s/gi, "_")
-      .toUpperCase(),
+  snake,
+  screamingSnake: (str: string) => snake(str).toUpperCase(),
   titleizeApStyle: apStyleTitleCase,
   titleizeChicagoStyle: chicagoStyleTitleCase,
   truncate: (n: number) => defaultFunction("truncate", n),
@@ -101,6 +97,7 @@ const commandNameFunctionMap: { [key: string]: CommandFunction } = {
       .map((x) => `\\u${x.charCodeAt(0).toString(16).padStart(4, "0")}`)
       .join(""),
   randomCase,
+  swapQuotes,
 };
 
 const numberFunctionNames = [

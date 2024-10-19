@@ -82,8 +82,8 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output1, "mozTransform");
-      assert.strictEqual(output2, "MozTransform");
+      assert.strictEqual(output1 /* moz-transform */, "mozTransform");
+      assert.strictEqual(output2 /* -moz-transform */, "MozTransform");
     });
 
     test("capitalize", async () => {
@@ -95,8 +95,8 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output1, "Foo");
-      assert.strictEqual(output2, "Bar");
+      assert.strictEqual(output1 /* foo */, "Foo");
+      assert.strictEqual(output2 /* Bar */, "Bar");
     });
 
     test("clean", async () => {
@@ -105,7 +105,7 @@ suite("Extension Test Suite", () => {
         [{ start: { line: 3, character: 0 }, end: { line: 3, character: 15 } }]
       );
 
-      assert.strictEqual(output, "foo bar");
+      assert.strictEqual(output /* foo    bar */, "foo bar");
     });
 
     test("cleanDiacritics", async () => {
@@ -114,7 +114,7 @@ suite("Extension Test Suite", () => {
         [{ start: { line: 4, character: 0 }, end: { line: 4, character: 8 } }]
       );
 
-      assert.strictEqual(output, "aakkonen");
+      assert.strictEqual(output /* ääkkönen */, "aakkonen");
     });
 
     test("sentence", async () => {
@@ -123,7 +123,7 @@ suite("Extension Test Suite", () => {
         [{ start: { line: 5, character: 0 }, end: { line: 5, character: 7 } }]
       );
 
-      assert.strictEqual(output, "Foo bar");
+      assert.strictEqual(output /* foo Bar */, "Foo bar");
     });
 
     test("classify", async () => {
@@ -132,7 +132,7 @@ suite("Extension Test Suite", () => {
         [{ start: { line: 6, character: 0 }, end: { line: 6, character: 15 } }]
       );
 
-      assert.strictEqual(output, "SomeClassName");
+      assert.strictEqual(output /* some_class_name */, "SomeClassName");
     });
 
     test("dasherize", async () => {
@@ -141,7 +141,7 @@ suite("Extension Test Suite", () => {
         [{ start: { line: 7, character: 0 }, end: { line: 7, character: 12 } }]
       );
 
-      assert.strictEqual(output, "-moz-transform");
+      assert.strictEqual(output /* MozTransform */, "-moz-transform");
     });
 
     test("decapitalize", async () => {
@@ -150,7 +150,7 @@ suite("Extension Test Suite", () => {
         [{ start: { line: 8, character: 0 }, end: { line: 8, character: 7 } }]
       );
 
-      assert.strictEqual(output, "foo Bar");
+      assert.strictEqual(output /* Foo Bar */, "foo Bar");
     });
 
     test("humanize", async () => {
@@ -159,7 +159,10 @@ suite("Extension Test Suite", () => {
         [{ start: { line: 9, character: 0 }, end: { line: 9, character: 45 } }]
       );
 
-      assert.strictEqual(output, "Capitalize dash camel case underscore trim");
+      assert.strictEqual(
+        output /*   capitalize dash-CamelCase_underscore trim */,
+        "Capitalize dash camel case underscore trim"
+      );
     });
 
     test("reverse", async () => {
@@ -168,7 +171,7 @@ suite("Extension Test Suite", () => {
         [{ start: { line: 10, character: 0 }, end: { line: 10, character: 3 } }]
       );
 
-      assert.strictEqual(output, "cbA");
+      assert.strictEqual(output /* Abc */, "cbA");
     });
 
     test("slugify", async () => {
@@ -182,7 +185,10 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "un-elephant-a-l-oree-du-bois");
+      assert.strictEqual(
+        output /* Un éléphant à l'orée du bois */,
+        "un-elephant-a-l-oree-du-bois"
+      );
     });
 
     test("swapCase", async () => {
@@ -196,7 +202,7 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "helloWORLD");
+      assert.strictEqual(output /* HELLOworld */, "helloWORLD");
     });
 
     test("snake", async () => {
@@ -210,7 +216,7 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "this_is_snake_case");
+      assert.strictEqual(output /* This-is_snake case */, "this_is_snake_case");
     });
 
     test("screamingSnake", async () => {
@@ -224,7 +230,10 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "SCREAMING_SNAKE_CASE");
+      assert.strictEqual(
+        output /* screaming-snake case */,
+        "SCREAMING_SNAKE_CASE"
+      );
     });
 
     test("titleize", async () => {
@@ -238,7 +247,7 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "My Name Is Tristan");
+      assert.strictEqual(output /* my name is tristan */, "My Name Is Tristan");
     });
 
     test("titleizeApStyle", async () => {
@@ -252,7 +261,7 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "This Is a Test");
+      assert.strictEqual(output /* this is a test */, "This Is a Test");
     });
 
     test("titleizeChicagoStyle", async () => {
@@ -267,23 +276,44 @@ suite("Extension Test Suite", () => {
       );
 
       assert.strictEqual(
-        output,
+        output /* The quick brown fox jumps over the lazy dog. */,
         "The Quick Brown Fox Jumps Over the Lazy Dog."
       );
     });
+    suite("underscore", () => {
+      test("underscore 1", async () => {
+        const [output] = await getTextForSelectionsByCommand(
+          "string-manipulation.underscored",
+          [
+            {
+              start: { line: 18, character: 0 },
+              end: { line: 18, character: 31 },
+            },
+          ]
+        );
 
-    test("underscored", async () => {
-      const [output] = await getTextForSelectionsByCommand(
-        "string-manipulation.underscored",
-        [
-          {
-            start: { line: 18, character: 0 },
-            end: { line: 18, character: 31 },
-          },
-        ]
-      );
+        assert.strictEqual(
+          output /* Underscored-is-like  snake-case */,
+          "underscored_is_like_snake_case"
+        );
+      });
 
-      assert.strictEqual(output, "underscored_is_like_snake_case");
+      test("underscore with special characters", async () => {
+        const [output] = await getTextForSelectionsByCommand(
+          "string-manipulation.underscored",
+          [
+            {
+              start: { line: 52, character: 0 },
+              end: { line: 52, character: 25 },
+            },
+          ]
+        );
+
+        assert.strictEqual(
+          output /* "My name's %20 Minalike!" */,
+          "my_name_s_20_minalike"
+        );
+      });
     });
 
     test("chop", async () => {
@@ -301,7 +331,7 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "aa,bb,cc,dd");
+      assert.strictEqual(output /* aabbccdd */, "aa,bb,cc,dd");
     });
 
     test("truncate", async () => {
@@ -319,7 +349,7 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "aabb...");
+      assert.strictEqual(output /* aabbccdd */, "aabb...");
     });
 
     test("prune", async () => {
@@ -337,7 +367,7 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "aabbc...");
+      assert.strictEqual(output /* aabbccddaabbccdd */, "aabbc...");
     });
 
     test("repeat", async () => {
@@ -355,7 +385,7 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "aabbccddaabbccdd");
+      assert.strictEqual(output /* aabbccdd */, "aabbccddaabbccdd");
     });
 
     test("increment", async () => {
@@ -377,9 +407,18 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output1, "a2 b3 c4 5d 6e 7f 13x y24 35z46");
-      assert.strictEqual(output2, "a2 b3 c4 5d 6e7f 13x y24 35z46");
-      assert.strictEqual(output3, "a-3 b-2 c-1 0d 1e7f 13x y24 35z46");
+      assert.strictEqual(
+        output1 /* a1 b2 c3 4d 5e 6f 12x y23 34z45 */,
+        "a2 b3 c4 5d 6e 7f 13x y24 35z46"
+      );
+      assert.strictEqual(
+        output2 /* a1 b2 c3 4d 5e\n6f 12x y23 34z45 */,
+        "a2 b3 c4 5d 6e7f 13x y24 35z46"
+      );
+      assert.strictEqual(
+        output3 /* a-4 b-3 c-2 -1d 0e\n6f 12x y23 34z45 */,
+        "a-3 b-2 c-1 0d 1e7f 13x y24 35z46"
+      );
     });
 
     test("decrement", async () => {
@@ -401,9 +440,18 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output1, "a0 b1 c2 3d 4e 5f 11x y22 33z44");
-      assert.strictEqual(output2, "a0 b1 c2 3d4e 5f 11x y22 33z44");
-      assert.strictEqual(output3, "a-4 b-3 c-2 -1d0e 5f 11x y22 33z44");
+      assert.strictEqual(
+        output1 /* a1 b2 c3 4d 5e 6f 12x y23 34z45 */,
+        "a0 b1 c2 3d 4e 5f 11x y22 33z44"
+      );
+      assert.strictEqual(
+        output2 /* a1 b2 c3 4d\n5e 6f 12x y23 34z45 */,
+        "a0 b1 c2 3d4e 5f 11x y22 33z44"
+      );
+      assert.strictEqual(
+        output3 /* a-3 b-2 c-1 0d\n1e 6f 12x y23 34z45 */,
+        "a-4 b-3 c-2 -1d0e 5f 11x y22 33z44"
+      );
     });
 
     test("duplicateAndIncrement", async () => {
@@ -419,7 +467,7 @@ suite("Extension Test Suite", () => {
 
       assert.strictEqual(
         output,
-        "a1 b2 c3 4d 5e 6f 12x y23 34z45a2 b3 c4 5d 6e 7f 13x y24 35z46"
+        /* a1 b2 c3 4d 5e 6f 12x y23 34z45\n */ "a1 b2 c3 4d 5e 6f 12x y23 34z45a2 b3 c4 5d 6e 7f 13x y24 35z46"
       );
     });
 
@@ -436,7 +484,7 @@ suite("Extension Test Suite", () => {
 
       assert.strictEqual(
         output,
-        "a1 b2 c3 4d 5e 6f 12x y23 34z45a0 b1 c2 3d 4e 5f 11x y22 33z44"
+        /* a1 b2 c3 4d 5e 6f 12x y23 34z45\n */ "a1 b2 c3 4d 5e 6f 12x y23 34z45a0 b1 c2 3d 4e 5f 11x y22 33z44"
       );
     });
 
@@ -455,8 +503,14 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output1, "a1 b2 c3 4d 5e 6f 7x y8 9z10");
-      assert.strictEqual(output2, "a11 b12 c1314d 15e 16f 17x y18 19z20");
+      assert.strictEqual(
+        output1 /* a1 b2 c3 4d 5e 6f 12x y23 34z45 */,
+        "a1 b2 c3 4d 5e 6f 7x y8 9z10"
+      );
+      assert.strictEqual(
+        output2 /* a14 b2 c3\n4d 5e 6f 7x y8 9z12 */,
+        "a11 b12 c1314d 15e 16f 17x y18 19z20"
+      );
     });
 
     test("utf8ToChar", async () => {
@@ -470,7 +524,10 @@ suite("Extension Test Suite", () => {
         ]
       );
 
-      assert.strictEqual(output, "abc中文💖");
+      assert.strictEqual(
+        output /* \u0061\u0062\u0063\u4e2d\u6587\ud83d\udc96 */,
+        "abc中文💖"
+      );
     });
 
     test("charToUtf8", async () => {
@@ -485,7 +542,7 @@ suite("Extension Test Suite", () => {
       );
 
       assert.strictEqual(
-        output,
+        output /* abc中文💖 */,
         "\\u0061\\u0062\\u0063\\u4e2d\\u6587\\ud83d\\udc96"
       );
     });
@@ -504,7 +561,7 @@ suite("Extension Test Suite", () => {
           ]
         );
         assert.equal(input.length, 13);
-        assert.equal(input.toLowerCase(), "hello, world!");
+        assert.equal(input.toLowerCase() /* Hello, World! */, "hello, world!");
       });
 
       test("changes the case of at least one character (statistically)", async () => {
@@ -554,7 +611,7 @@ suite("Extension Test Suite", () => {
             },
           ]
         );
-        assert.equal(output, specialChars);
+        assert.equal(output /* 12345!@#$% */, specialChars);
       });
 
       test("handles strings with mixed content", async () => {
@@ -569,6 +626,114 @@ suite("Extension Test Suite", () => {
         );
         assert.equal(output.length, 8);
         assert.notEqual(output.replace(/[^a-zA-Z]/g, ""), "");
+      });
+    });
+
+    suite("swap quotes", () => {
+      test("Swaps outer single quotes to double quotes and inner double quotes to single quotes", async () => {
+        const [output] = await getTextForSelectionsByCommand(
+          "string-manipulation.swapQuotes",
+          [
+            {
+              start: { line: 45, character: 0 },
+              end: { line: 45, character: 19 },
+            },
+          ]
+        );
+        assert.strictEqual(
+          output /* 'She said, "Hello"' */,
+          `"She said, 'Hello'"`
+        );
+      });
+
+      test("Swaps outer double quotes to single quotes and escapes inner apostrophe", async () => {
+        const [output] = await getTextForSelectionsByCommand(
+          "string-manipulation.swapQuotes",
+          [
+            {
+              start: { line: 46, character: 0 },
+              end: { line: 46, character: 20 },
+            },
+          ]
+        );
+        assert.strictEqual(
+          output /* "My name's Minalike" */,
+          `'My name\\'s Minalike'`
+        );
+      });
+
+      test("Swaps outer double quotes to single quotes, inner single quotes to double quotes, and escapes apostrophe in contraction", async () => {
+        const [output] = await getTextForSelectionsByCommand(
+          "string-manipulation.swapQuotes",
+          [
+            {
+              start: { line: 47, character: 0 },
+              end: { line: 47, character: 25 },
+            },
+          ]
+        );
+        assert.strictEqual(
+          output /* "He said, 'It's a trap!'" */,
+          `'He said, "It\\'s a trap!"'`
+        );
+      });
+
+      test("Swaps outer single quotes to double quotes and inner escaped double quotes to escaped single quotes", async () => {
+        const [output] = await getTextForSelectionsByCommand(
+          "string-manipulation.swapQuotes",
+          [
+            {
+              start: { line: 48, character: 0 },
+              end: { line: 48, character: 27 },
+            },
+          ]
+        );
+        assert.strictEqual(
+          output /* 'She exclaimed, \\"Wow!\\"' */,
+          `"She exclaimed, \\'Wow!\\'"`
+        );
+      });
+
+      test("Swaps outer double quotes to single quotes and inner single quotes to double quotes", async () => {
+        const [output] = await getTextForSelectionsByCommand(
+          "string-manipulation.swapQuotes",
+          [
+            {
+              start: { line: 49, character: 0 },
+              end: { line: 49, character: 30 },
+            },
+          ]
+        );
+        assert.strictEqual(
+          output /* "'Double' and 'single' quotes" */,
+          `'"Double" and "single" quotes'`
+        );
+      });
+
+      test("Returns input unchanged when string is not properly quoted", async () => {
+        const [output] = await getTextForSelectionsByCommand(
+          "string-manipulation.swapQuotes",
+          [
+            {
+              start: { line: 50, character: 0 },
+              end: { line: 50, character: 16 },
+            },
+          ]
+        );
+        assert.strictEqual(output /* No quotes at all */, `No quotes at all`);
+      });
+
+      test("Swaps outer single quotes to double quotes, preserving inner apostrophe", async () => {
+        const [output] = await getTextForSelectionsByCommand(
+          "string-manipulation.swapQuotes",
+          [
+            {
+              start: { line: 51, character: 0 },
+              end: { line: 51, character: 6 },
+            },
+          ]
+        );
+        assert.strictEqual(output /* 'It's' */, `"It's"`);
       });
     });
   });

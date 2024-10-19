@@ -43,3 +43,11 @@ abc中文💖
 Hello, World!
 12345!@#$%
 Test123!
+'She said, "Hello"'
+"My name's Minalike"
+"He said, 'It's a trap!'"
+'She exclaimed, \"Wow!\"'
+"'Double' and 'single' quotes"
+No quotes at all
+'It's'
+"My name's %20 Minalike!"
