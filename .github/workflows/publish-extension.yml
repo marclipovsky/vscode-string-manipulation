@@ -8,7 +8,7 @@ on:
 
 jobs:
   cd:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master' }}
+    if: contains( github.ref, 'master')
     runs-on: ubuntu-latest
     permissions:
       contents: write
