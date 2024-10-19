@@ -194,6 +194,11 @@
         "title": "Random Case",
         "category": "String Manipulation",
         "command": "string-manipulation.randomCase"
+      },
+      {
+        "title": "Swap Quotes",
+        "category": "String Manipulation",
+        "command": "string-manipulation.swapQuotes"
       }
     ],
     "submenus": [
@@ -328,6 +333,10 @@
         },
         {
           "command": "string-manipulation.randomCase",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.swapQuotes",
           "group": "7_modification"
         }
       ]
