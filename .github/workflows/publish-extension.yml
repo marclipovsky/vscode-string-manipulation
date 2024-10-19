@@ -3,12 +3,12 @@ name: "Publish to Marketplace"
 on:
   workflow_run:
     workflows: ["CI"]
-    types:
-      - completed
+    types: [completed]
+    branches: [master]
 
 jobs:
   cd:
-    if: contains( github.ref, 'master')
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
