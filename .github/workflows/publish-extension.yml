@@ -8,9 +8,7 @@ on:
 
 jobs:
   cd:
-    if: >
-      ${{ github.event.workflow_run.conclusion == 'success' &&
-          github.event.workflow_run.head_branch == 'master' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -20,18 +18,16 @@ jobs:
 
       - name: Setup node.js
         uses: actions/setup-node@v4
-        with:
-          node-version: 20
 
       - name: "Bump version"
-        uses: 'phips28/gh-action-bump-version@master'
+        uses: "phips28/gh-action-bump-version@master"
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
         with:
-          minor-wording:  'MINOR'
-          major-wording:  'MAJOR'
-          patch-wording:  'PATCH,FIX'
-          rc-wording:     'RELEASE'
+          minor-wording: "MINOR"
+          major-wording: "MAJOR"
+          patch-wording: "PATCH,FIX"
+          rc-wording: "RELEASE"
 
       - name: Install packages
         run: npm ci
