@@ -66,14 +66,14 @@ suite("Extension Test Suite", () => {
       assert.equal(false, extension.isActive);
     });
 
-    test("invoked when running one of the commands", async () => {
+    test("activates when running one of the commands", async () => {
       await vscode.commands.executeCommand("string-manipulation.titleize");
       assert.equal(true, extension.isActive);
     });
   });
 
   suite("commands", () => {
-    test("camelize", async () => {
+    test("camelize converts hyphenated strings to camelCase", async () => {
       const [output1, output2] = await getTextForSelectionsByCommand(
         "string-manipulation.camelize",
         [
@@ -86,7 +86,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output2 /* -moz-transform */, "MozTransform");
     });
 
-    test("capitalize", async () => {
+    test("capitalize capitalizes the first character of each selection", async () => {
       const [output1, output2] = await getTextForSelectionsByCommand(
         "string-manipulation.capitalize",
         [
@@ -99,7 +99,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output2 /* Bar */, "Bar");
     });
 
-    test("clean", async () => {
+    test("clean collapses multiple spaces into one", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.clean",
         [{ start: { line: 3, character: 0 }, end: { line: 3, character: 15 } }]
@@ -108,7 +108,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* foo    bar */, "foo bar");
     });
 
-    test("cleanDiacritics", async () => {
+    test("cleanDiacritics removes diacritic marks from characters", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.cleanDiacritics",
         [{ start: { line: 4, character: 0 }, end: { line: 4, character: 8 } }]
@@ -117,7 +117,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* ääkkönen */, "aakkonen");
     });
 
-    test("sentence", async () => {
+    test("sentence transforms text to sentence case", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.sentence",
         [{ start: { line: 5, character: 0 }, end: { line: 5, character: 7 } }]
@@ -126,7 +126,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* foo Bar */, "Foo bar");
     });
 
-    test("classify", async () => {
+    test("classify converts underscored text to PascalCase", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.classify",
         [{ start: { line: 6, character: 0 }, end: { line: 6, character: 15 } }]
@@ -135,7 +135,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* some_class_name */, "SomeClassName");
     });
 
-    test("dasherize", async () => {
+    test("dasherize converts camelCase to kebab-case", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.dasherize",
         [{ start: { line: 7, character: 0 }, end: { line: 7, character: 12 } }]
@@ -144,7 +144,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* MozTransform */, "-moz-transform");
     });
 
-    test("decapitalize", async () => {
+    test("decapitalize lowercases the first character of each selection", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.decapitalize",
         [{ start: { line: 8, character: 0 }, end: { line: 8, character: 7 } }]
@@ -153,7 +153,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* Foo Bar */, "foo Bar");
     });
 
-    test("humanize", async () => {
+    test("humanize converts text to human-readable form", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.humanize",
         [{ start: { line: 9, character: 0 }, end: { line: 9, character: 45 } }]
@@ -165,7 +165,7 @@ suite("Extension Test Suite", () => {
       );
     });
 
-    test("reverse", async () => {
+    test("reverse reverses the characters in the selection", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.reverse",
         [{ start: { line: 10, character: 0 }, end: { line: 10, character: 3 } }]
@@ -174,7 +174,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* Abc */, "cbA");
     });
 
-    test("slugify", async () => {
+    test("slugify converts text to a URL-friendly slug", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.slugify",
         [
@@ -191,7 +191,7 @@ suite("Extension Test Suite", () => {
       );
     });
 
-    test("swapCase", async () => {
+    test("swapCase inverts the case of each character", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.swapCase",
         [
@@ -205,7 +205,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* HELLOworld */, "helloWORLD");
     });
 
-    test("snake", async () => {
+    test("snake converts text to snake_case", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.snake",
         [
@@ -219,7 +219,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* This-is_snake case */, "this_is_snake_case");
     });
 
-    test("screamingSnake", async () => {
+    test("screamingSnake converts text to SCREAMING_SNAKE_CASE", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.screamingSnake",
         [
@@ -236,7 +236,7 @@ suite("Extension Test Suite", () => {
       );
     });
 
-    test("titleize", async () => {
+    test("titleize capitalizes the first letter of each word", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.titleize",
         [
@@ -250,7 +250,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* my name is tristan */, "My Name Is Tristan");
     });
 
-    test("titleizeApStyle", async () => {
+    test("titleizeApStyle capitalizes titles according to AP style", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.titleizeApStyle",
         [
@@ -264,7 +264,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* this is a test */, "This Is a Test");
     });
 
-    test("titleizeChicagoStyle", async () => {
+    test("titleizeChicagoStyle capitalizes titles according to Chicago style", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.titleizeChicagoStyle",
         [
@@ -280,8 +280,9 @@ suite("Extension Test Suite", () => {
         "The Quick Brown Fox Jumps Over the Lazy Dog."
       );
     });
+
     suite("underscore", () => {
-      test("underscore 1", async () => {
+      test("converts text to underscore_case", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.underscored",
           [
@@ -298,7 +299,7 @@ suite("Extension Test Suite", () => {
         );
       });
 
-      test("underscore with special characters", async () => {
+      test("removes special characters and converts text to lowercase with underscores", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.underscored",
           [
@@ -316,7 +317,7 @@ suite("Extension Test Suite", () => {
       });
     });
 
-    test("chop", async () => {
+    test("chop splits the string into chunks of given length", async () => {
       vscode.window.showInputBox = async () => {
         return "2";
       };
@@ -334,7 +335,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* aabbccdd */, "aa,bb,cc,dd");
     });
 
-    test("truncate", async () => {
+    test("truncate shortens the string to specified length and adds ellipsis", async () => {
       vscode.window.showInputBox = async () => {
         return "4";
       };
@@ -352,7 +353,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* aabbccdd */, "aabb...");
     });
 
-    test("prune", async () => {
+    test("prune truncates the string without breaking words", async () => {
       vscode.window.showInputBox = async () => {
         return "8";
       };
@@ -370,7 +371,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* aabbccddaabbccdd */, "aabbc...");
     });
 
-    test("repeat", async () => {
+    test("repeat duplicates the string given number of times", async () => {
       vscode.window.showInputBox = async () => {
         return "2";
       };
@@ -388,7 +389,7 @@ suite("Extension Test Suite", () => {
       assert.strictEqual(output /* aabbccdd */, "aabbccddaabbccdd");
     });
 
-    test("increment", async () => {
+    test("increment increases all numbers in the selection by 1", async () => {
       const [output1, output2, output3] = await getTextForSelectionsByCommand(
         "string-manipulation.increment",
         [
@@ -421,7 +422,7 @@ suite("Extension Test Suite", () => {
       );
     });
 
-    test("decrement", async () => {
+    test("decrement decreases all numbers in the selection by 1", async () => {
       const [output1, output2, output3] = await getTextForSelectionsByCommand(
         "string-manipulation.decrement",
         [
@@ -454,7 +455,7 @@ suite("Extension Test Suite", () => {
       );
     });
 
-    test("duplicateAndIncrement", async () => {
+    test("duplicateAndIncrement duplicates selection and increments numbers in duplicate", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.duplicateAndIncrement",
         [
@@ -471,7 +472,7 @@ suite("Extension Test Suite", () => {
       );
     });
 
-    test("duplicateAndDecrement", async () => {
+    test("duplicateAndDecrement duplicates selection and decrements numbers in duplicate", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.duplicateAndDecrement",
         [
@@ -488,7 +489,7 @@ suite("Extension Test Suite", () => {
       );
     });
 
-    test("sequence", async () => {
+    test("sequence replaces numbers with a sequence starting from 1", async () => {
       const [output1, output2] = await getTextForSelectionsByCommand(
         "string-manipulation.sequence",
         [
@@ -513,7 +514,7 @@ suite("Extension Test Suite", () => {
       );
     });
 
-    test("utf8ToChar", async () => {
+    test("utf8ToChar converts Unicode escapes to characters", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.utf8ToChar",
         [
@@ -530,7 +531,7 @@ suite("Extension Test Suite", () => {
       );
     });
 
-    test("charToUtf8", async () => {
+    test("charToUtf8 converts characters to Unicode escapes", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.charToUtf8",
         [
@@ -550,7 +551,7 @@ suite("Extension Test Suite", () => {
     suite("randomCase", () => {
       const input = "Hello, World!";
 
-      test("check length and compare lower case", async () => {
+      test("maintains string length and lowercased content", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.randomCase",
           [
@@ -629,8 +630,8 @@ suite("Extension Test Suite", () => {
       });
     });
 
-    suite("swap quotes", () => {
-      test("Swaps outer single quotes to double quotes and inner double quotes to single quotes", async () => {
+    suite("swapQuotes", () => {
+      test("swaps outer single quotes to double quotes and inner double quotes to single quotes", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.swapQuotes",
           [
@@ -646,7 +647,7 @@ suite("Extension Test Suite", () => {
         );
       });
 
-      test("Swaps outer double quotes to single quotes and escapes inner apostrophe", async () => {
+      test("swaps outer double quotes to single quotes and escapes inner apostrophe", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.swapQuotes",
           [
@@ -662,7 +663,7 @@ suite("Extension Test Suite", () => {
         );
       });
 
-      test("Swaps outer double quotes to single quotes, inner single quotes to double quotes, and escapes apostrophe in contraction", async () => {
+      test("swaps outer double quotes to single quotes, inner single quotes to double quotes, and escapes apostrophe in contraction", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.swapQuotes",
           [
@@ -678,7 +679,7 @@ suite("Extension Test Suite", () => {
         );
       });
 
-      test("Swaps outer single quotes to double quotes and inner escaped double quotes to escaped single quotes", async () => {
+      test("swaps outer single quotes to double quotes and inner escaped double quotes to escaped single quotes", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.swapQuotes",
           [
@@ -694,7 +695,7 @@ suite("Extension Test Suite", () => {
         );
       });
 
-      test("Swaps outer double quotes to single quotes and inner single quotes to double quotes", async () => {
+      test("swaps outer double quotes to single quotes and inner single quotes to double quotes", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.swapQuotes",
           [
@@ -710,7 +711,7 @@ suite("Extension Test Suite", () => {
         );
       });
 
-      test("Returns input unchanged when string is not properly quoted", async () => {
+      test("returns input unchanged when string is not properly quoted", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.swapQuotes",
           [
@@ -723,7 +724,7 @@ suite("Extension Test Suite", () => {
         assert.strictEqual(output /* No quotes at all */, `No quotes at all`);
       });
 
-      test("Swaps outer single quotes to double quotes, preserving inner apostrophe", async () => {
+      test("swaps outer single quotes to double quotes, preserving inner apostrophe", async () => {
         const [output] = await getTextForSelectionsByCommand(
           "string-manipulation.swapQuotes",
           [
