@@ -11,6 +11,8 @@ import {
   decrement,
   duplicateAndIncrement,
   duplicateAndDecrement,
+  handleDuplicateAndIncrementDecrement,
+  updateSelectionsAfterDuplicate,
 } from "./increment-decrement";
 import { sequence } from "./sequence";
 import { randomCase } from "./random-case";
@@ -75,7 +77,7 @@ export const stringFunction = async (
     return;
   }
 
-  const selectionMap: {
+  let selectionMap: {
     [key: number]: { selection: vscode.Selection; replaced: string };
   } = {};
 
@@ -83,7 +85,7 @@ export const stringFunction = async (
 
   let stringFunc: (str: string) => string;
 
-  let replacedSelections = [];
+  let replacedSelections: string[] = [];
 
   if (functionNamesWithArgument.includes(commandName)) {
     const valueStr = await vscode.window.showInputBox();
@@ -107,16 +109,16 @@ export const stringFunction = async (
     commandName === "duplicateAndIncrement" ||
     commandName === "duplicateAndDecrement"
   ) {
-    for (const [index, selection] of editor.selections.entries()) {
-      const text = editor.document.getText(selection);
+    const operation =
+      commandName === "duplicateAndIncrement" ? increment : decrement;
 
-      const operation =
-        commandName === "duplicateAndIncrement" ? increment : decrement;
-      const replaced = text + operation(text);
-
-      replacedSelections.push(replaced);
-      selectionMap[index] = { selection, replaced };
-    }
+    const result = handleDuplicateAndIncrementDecrement(
+      editor,
+      editor.selections,
+      operation as (str: string) => string
+    );
+    selectionMap = result.selectionMap;
+    replacedSelections = result.replacedSelections;
   } else {
     for (const [index, selection] of editor.selections.entries()) {
       const text = editor.document.getText(selection);
@@ -139,30 +141,7 @@ export const stringFunction = async (
       commandName === "duplicateAndIncrement" ||
       commandName === "duplicateAndDecrement"
     ) {
-      const newSelections = editor.selections.map((selection, index) => {
-        const originalSelection = selectionMap[index].selection;
-        const originalText = editor.document.getText(originalSelection);
-
-        // Calculate the start position of the duplicated text
-        const startPos = originalSelection.end;
-
-        // Calculate the end position based on the original text length
-        let endLine = startPos.line;
-        let endChar = startPos.character + originalText.length;
-
-        // Handle multi-line selections
-        const lines = originalText.split("\n");
-        if (lines.length > 1) {
-          endLine = startPos.line + lines.length - 1;
-          // If multi-line, the end character should be the length of the last line
-          endChar = lines[lines.length - 1].length;
-        }
-
-        const endPos = new vscode.Position(endLine, endChar);
-        return new vscode.Selection(startPos, endPos);
-      });
-
-      editor.selections = newSelections;
+      editor.selections = updateSelectionsAfterDuplicate(editor, selectionMap);
     }
 
     context.globalState.update("lastAction", commandName);
