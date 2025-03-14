@@ -51,6 +51,22 @@ To use these commands, press ⌘+p and enter any of the commands above while tex
 
 ![String Manipulation Screencast](images/demo.gif)
 
+## Preview Transformations
+
+The extension now includes a powerful preview feature that allows you to see how each transformation will affect your text before applying it.
+
+### How to Use the Preview Feature
+
+1. Select the text you want to transform
+2. Right-click to open the context menu
+3. Choose "Show Transformations with Preview"
+4. Browse through the available transformations with instant previews
+5. Select a transformation to apply it to your text
+
+This feature makes it easier to find the right transformation without trial and error.
+
+![String Manipulation Preview Feature](images/preview-demo.gif)
+
 ## 🧪 Introducing Labs Features
 
 Introducing String Manipulation Labs
