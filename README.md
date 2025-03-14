@@ -7,37 +7,43 @@ as multiple selections.
 
 Current string functions available:
 
-1. camelize
-1. capitalize
-1. classify
-1. chop - split into groups provided n # of characters
-1. clean
-1. clean diacritics
-1. dasherize
-1. decapitalize
-1. humanize
-1. reverse
-1. screaming snake
-1. sentence
-1. slugify
-1. snake
-1. underscore
-1. swap case
-1. titleize
-1. titleize (AP Style)
-1. titleize (Chicago Style)
+1. camelize - converts hyphenated strings to camelCase
+1. capitalize - capitalizes the first character of each selection
+1. classify - converts underscored text to PascalCase
+1. chop - splits into groups provided n # of characters
+1. clean - collapses multiple spaces into one
+1. clean diacritics - removes diacritic marks from characters
+1. dasherize - converts camelCase to kebab-case
+1. decapitalize - lowercases the first character of each selection
+1. humanize - converts text to human-readable form
+1. reverse - reverses the characters in the selection
+1. screaming snake - converts text to SCREAMING_SNAKE_CASE
+1. sentence - transforms text to sentence case
+1. slugify - converts text to a URL-friendly slug
+1. snake - converts text to snake_case
+1. swap case - inverts the case of each character
+1. titleize - capitalizes the first letter of each word
+1. titleize (AP Style) - capitalizes titles according to AP style
+1. titleize (Chicago Style) - capitalizes titles according to Chicago style
 1. truncate - trims string to n # of characters and appends ellipsis
 1. prune - truncate but keeps ellipsis within character count provided
-1. repeat - repeat selection n #of times
-1. convert between unicode and readable characters.
+1. repeat - repeat selection n # of times
+1. random case - randomly changes the case of characters
+1. swap quotes - swaps between single and double quotes
+1. utf8ToChar - converts Unicode escapes to characters
+1. charToUtf8 - converts characters to Unicode escapes
 
 Number related functions:
 
-1. increment all numbers in selection
-1. decrement all numbers in selection
-1. duplicate selection and increment all number
-1. duplicate selection and decrement all number
-1. sequence all numbers in selection from first number
+1. increment - increases all numbers in the selection by 1
+1. decrement - decreases all numbers in the selection by 1
+1. duplicate and increment - duplicates selection and increments all numbers
+1. duplicate and decrement - duplicates selection and decrements all numbers
+1. sequence - replaces numbers with a sequence starting from the first number
+
+Additional utility commands:
+
+1. repeat last action - repeats the last string manipulation command that was executed
 
 ## Use
 
@@ -49,7 +55,7 @@ To use these commands, press ⌘+p and enter any of the commands above while tex
 
 Introducing String Manipulation Labs
 
-We’re excited to announce the launch of String Manipulation Labs—a collection of (really just one at this moment) experimental features designed to enhance and expand the capabilities of the String Manipulation extension. Labs features are disabled by default to ensure a stable experience with the core functionalities.
+We're excited to announce the launch of String Manipulation Labs—a collection of (really just one at this moment) experimental features designed to enhance and expand the capabilities of the String Manipulation extension. Labs features are disabled by default to ensure a stable experience with the core functionalities.
 
 ### 🚀 How to Enable Labs Features
 

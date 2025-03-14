@@ -1,120 +1,70 @@
 import * as vscode from "vscode";
-import * as underscore from "underscore.string";
-import { swapQuotes } from "./commands/swap_quotes";
-const apStyleTitleCase = require("ap-style-title-case");
-const chicagoStyleTitleCase = require("chicago-capitalize");
-const slugify = require("@sindresorhus/slugify");
-
-interface MultiSelectData {
-  offset?: number;
-}
-
-const defaultFunction = (commandName: string, option?: any) => (str: string) =>
-  (underscore as any)[commandName](str, option);
-
-const sequence = (str: string, multiselectData: MultiSelectData = {}) => {
-  return str.replace(/-?\d+/g, (n) => {
-    const isFirst = typeof multiselectData.offset !== "number";
-    multiselectData.offset = isFirst
-      ? Number(n)
-      : (multiselectData.offset || 0) + 1;
-    return String(multiselectData.offset);
-  });
-};
-
-const increment = (str: string) =>
-  str.replace(/-?\d+/g, (n) => String(Number(n) + 1));
-
-const decrement = (str: string) =>
-  str.replace(/-?\d+/g, (n) => String(Number(n) - 1));
-
-const randomCase = (input: string): string => {
-  let result = "";
-  for (const char of input) {
-    if (Math.random() < 0.5) {
-      result += char.toLowerCase();
-    } else {
-      result += char.toUpperCase();
-    }
-  }
-  return result;
-};
-
-const snake = (str: string) =>
-  underscore
-    .underscored(str)
-    .replace(/([A-Z])[^A-Z]/g, " $1")
-    .replace(/[^a-z0-9]+/gi, " ")
-    .trim()
-    .replace(/\s/gi, "_");
-
-export type StringFunction = (
-  str: string,
-  multiselectData?: MultiSelectData
-) => string;
-export type CommandFunction =
-  | StringFunction
-  | ((...args: any[]) => StringFunction);
-
-const commandNameFunctionMap: { [key: string]: CommandFunction } = {
-  titleize: defaultFunction("titleize"),
-  chop: (n: number) => defaultFunction("chop", n),
-  classify: defaultFunction("classify"),
-  clean: defaultFunction("clean"),
-  cleanDiacritics: defaultFunction("cleanDiacritics"),
-  underscored: snake,
-  dasherize: defaultFunction("dasherize"),
-  humanize: defaultFunction("humanize"),
-  reverse: defaultFunction("reverse"),
-  decapitalize: defaultFunction("decapitalize"),
-  capitalize: defaultFunction("capitalize"),
-  sentence: defaultFunction("capitalize", true),
-  camelize: (str: string) =>
-    underscore.camelize(/[a-z]/.test(str) ? str : str.toLowerCase()),
-  slugify: slugify,
-  swapCase: defaultFunction("swapCase"),
-  snake,
-  screamingSnake: (str: string) => snake(str).toUpperCase(),
-  titleizeApStyle: apStyleTitleCase,
-  titleizeChicagoStyle: chicagoStyleTitleCase,
-  truncate: (n: number) => defaultFunction("truncate", n),
-  prune: (n: number) => (str: string) => str.slice(0, n - 3).trim() + "...",
-  repeat: (n: number) => defaultFunction("repeat", n),
+import {
+  CommandRegistry,
+  functionNamesWithArgument,
+  numberFunctionNames,
+  CommandFunction,
+} from "./types";
+import * as defaultFunctions from "./default-functions";
+import {
   increment,
   decrement,
-  duplicateAndIncrement: () => "",
-  duplicateAndDecrement: () => "",
+  duplicateAndIncrement,
+  duplicateAndDecrement,
+} from "./increment-decrement";
+import { sequence } from "./sequence";
+import { randomCase } from "./random-case";
+import { utf8ToChar, charToUtf8 } from "./utf8-conversion";
+import { titleizeApStyle, titleizeChicagoStyle } from "./title-case";
+import { slugify } from "./slugify";
+import { swapQuotes } from "./swap_quotes";
+
+// Combine all commands into a single registry
+export const commandNameFunctionMap: CommandRegistry = {
+  // Default functions
+  titleize: defaultFunctions.titleize,
+  chop: defaultFunctions.chop,
+  classify: defaultFunctions.classify,
+  clean: defaultFunctions.clean,
+  cleanDiacritics: defaultFunctions.cleanDiacritics,
+  underscored: defaultFunctions.snake,
+  dasherize: defaultFunctions.dasherize,
+  humanize: defaultFunctions.humanize,
+  reverse: defaultFunctions.reverse,
+  decapitalize: defaultFunctions.decapitalize,
+  capitalize: defaultFunctions.capitalize,
+  sentence: defaultFunctions.sentence,
+  camelize: defaultFunctions.camelize,
+  swapCase: defaultFunctions.swapCase,
+  snake: defaultFunctions.snake,
+  screamingSnake: defaultFunctions.screamingSnake,
+  truncate: defaultFunctions.truncate,
+  prune: defaultFunctions.prune,
+  repeat: defaultFunctions.repeat,
+
+  // Specialized functions
+  increment,
+  decrement,
+  duplicateAndIncrement,
+  duplicateAndDecrement,
   sequence,
-  utf8ToChar: (str: string) =>
-    str
-      .match(/\\u[\dA-Fa-f]{4}/g)
-      ?.map((x) => x.slice(2))
-      .map((x) => String.fromCharCode(parseInt(x, 16)))
-      .join("") || "",
-  charToUtf8: (str: string) =>
-    str
-      .split("")
-      .map((x) => `\\u${x.charCodeAt(0).toString(16).padStart(4, "0")}`)
-      .join(""),
+  utf8ToChar,
+  charToUtf8,
   randomCase,
+  titleizeApStyle,
+  titleizeChicagoStyle,
+  slugify,
   swapQuotes,
 };
 
-const numberFunctionNames = [
-  "increment",
-  "decrement",
-  "sequence",
-  "duplicateAndIncrement",
-  "duplicateAndDecrement",
-];
+// Re-export types and constants
+export {
+  functionNamesWithArgument,
+  numberFunctionNames,
+  CommandFunction,
+} from "./types";
 
-export const functionNamesWithArgument = [
-  "chop",
-  "truncate",
-  "prune",
-  "repeat",
-];
-
+// Main string function that applies the transformations
 export const stringFunction = async (
   commandName: string,
   context: vscode.ExtensionContext,
@@ -129,7 +79,7 @@ export const stringFunction = async (
     [key: number]: { selection: vscode.Selection; replaced: string };
   } = {};
 
-  let multiselectData: MultiSelectData = {};
+  let multiselectData = {};
 
   let stringFunc: (str: string) => string;
 
@@ -150,7 +100,7 @@ export const stringFunction = async (
     stringFunc = (str: string) =>
       (commandNameFunctionMap[commandName] as Function)(str, multiselectData);
   } else {
-    stringFunc = commandNameFunctionMap[commandName] as StringFunction;
+    stringFunc = commandNameFunctionMap[commandName] as (str: string) => string;
   }
 
   if (
@@ -221,6 +171,7 @@ export const stringFunction = async (
   return await Promise.resolve({ replacedSelections });
 };
 
+// Activation function
 export function activate(context: vscode.ExtensionContext) {
   context.globalState.setKeysForSync(["lastAction"]);
 
@@ -245,5 +196,3 @@ export function activate(context: vscode.ExtensionContext) {
     );
   });
 }
-
-export { commandNameFunctionMap };
