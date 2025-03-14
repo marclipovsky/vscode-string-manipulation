@@ -2,7 +2,7 @@ import * as assert from "assert";
 import { afterEach, beforeEach, suite, test } from "mocha";
 import * as path from "path";
 import * as vscode from "vscode";
-import { CommandFunction, commandNameFunctionMap } from "../commands";
+import { CommandFunction, commandNameFunctionMap } from "../commands/index";
 
 type StringTransformationTest = [
   funcName: string,
