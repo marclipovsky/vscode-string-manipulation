@@ -46,6 +46,11 @@
     },
     "commands": [
       {
+        "title": "Show Transformations with Preview",
+        "category": "String Manipulation",
+        "command": "string-manipulation.showTransformationsWithPreview"
+      },
+      {
         "title": "Titleize",
         "category": "String Manipulation",
         "command": "string-manipulation.titleize"
@@ -212,6 +217,11 @@
         {
           "submenu": "string-manipulation",
           "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.showTransformationsWithPreview",
+          "group": "7_modification",
+          "when": "editorHasSelection"
         }
       ],
       "string-manipulation": [
