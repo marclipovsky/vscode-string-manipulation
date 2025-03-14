@@ -82,8 +82,8 @@ const commandNameFunctionMap: { [key: string]: CommandFunction } = {
   repeat: (n: number) => defaultFunction("repeat", n),
   increment,
   decrement,
-  duplicateAndIncrement: (str: string) => str + increment(str),
-  duplicateAndDecrement: (str: string) => str + decrement(str),
+  duplicateAndIncrement: () => "",
+  duplicateAndDecrement: () => "",
   sequence,
   utf8ToChar: (str: string) =>
     str
@@ -153,12 +153,28 @@ export const stringFunction = async (
     stringFunc = commandNameFunctionMap[commandName] as StringFunction;
   }
 
-  for (const [index, selection] of editor.selections.entries()) {
-    const text = editor.document.getText(selection);
-    const textParts = text.split("\n");
-    const replaced = textParts.map((part) => stringFunc(part)).join("\n");
-    replacedSelections.push(replaced);
-    selectionMap[index] = { selection, replaced };
+  if (
+    commandName === "duplicateAndIncrement" ||
+    commandName === "duplicateAndDecrement"
+  ) {
+    for (const [index, selection] of editor.selections.entries()) {
+      const text = editor.document.getText(selection);
+
+      const operation =
+        commandName === "duplicateAndIncrement" ? increment : decrement;
+      const replaced = text + operation(text);
+
+      replacedSelections.push(replaced);
+      selectionMap[index] = { selection, replaced };
+    }
+  } else {
+    for (const [index, selection] of editor.selections.entries()) {
+      const text = editor.document.getText(selection);
+      const textParts = text.split("\n");
+      const replaced = textParts.map((part) => stringFunc(part)).join("\n");
+      replacedSelections.push(replaced);
+      selectionMap[index] = { selection, replaced };
+    }
   }
 
   if (shouldApply) {
@@ -167,6 +183,37 @@ export const stringFunction = async (
         builder.replace(selection, replaced);
       });
     });
+
+    // Set the selection to the duplicated part for duplicateAndIncrement and duplicateAndDecrement
+    if (
+      commandName === "duplicateAndIncrement" ||
+      commandName === "duplicateAndDecrement"
+    ) {
+      const newSelections = editor.selections.map((selection, index) => {
+        const originalSelection = selectionMap[index].selection;
+        const originalText = editor.document.getText(originalSelection);
+
+        // Calculate the start position of the duplicated text
+        const startPos = originalSelection.end;
+
+        // Calculate the end position based on the original text length
+        let endLine = startPos.line;
+        let endChar = startPos.character + originalText.length;
+
+        // Handle multi-line selections
+        const lines = originalText.split("\n");
+        if (lines.length > 1) {
+          endLine = startPos.line + lines.length - 1;
+          // If multi-line, the end character should be the length of the last line
+          endChar = lines[lines.length - 1].length;
+        }
+
+        const endPos = new vscode.Position(endLine, endChar);
+        return new vscode.Selection(startPos, endPos);
+      });
+
+      editor.selections = newSelections;
+    }
 
     context.globalState.update("lastAction", commandName);
   }

@@ -468,7 +468,7 @@ suite("Extension Test Suite", () => {
 
       assert.strictEqual(
         output,
-        /* a1 b2 c3 4d 5e 6f 12x y23 34z45\n */ "a1 b2 c3 4d 5e 6f 12x y23 34z45a2 b3 c4 5d 6e 7f 13x y24 35z46"
+        /* a1 b2 c3 4d 5e 6f 12x y23 34z45\n */ "a2 b3 c4 5d 6e 7f 13x y24 35z46"
       );
     });
 
@@ -485,7 +485,7 @@ suite("Extension Test Suite", () => {
 
       assert.strictEqual(
         output,
-        /* a1 b2 c3 4d 5e 6f 12x y23 34z45\n */ "a1 b2 c3 4d 5e 6f 12x y23 34z45a0 b1 c2 3d 4e 5f 11x y22 33z44"
+        /* a1 b2 c3 4d 5e 6f 12x y23 34z45\n */ "a0 b1 c2 3d 4e 5f 11x y22 33z44"
       );
     });
 
