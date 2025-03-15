@@ -7,6 +7,22 @@ export const increment: CommandFunction = (str: string) =>
 export const decrement: CommandFunction = (str: string) =>
   str.replace(/-?\d+/g, (n) => String(Number(n) - 1));
 
+export const incrementFloat: CommandFunction = (str: string) => {
+  return str.replace(/-?\d+\.\d+/g, (n) => {
+    let decimalPlaces = (n.split(".")[1] || "").length;
+    let factor = Math.pow(10, decimalPlaces);
+    return String((Number(n) * factor + 1) / factor);
+  });
+};
+
+export const decrementFloat: CommandFunction = (str: string) => {
+  return str.replace(/-?\d+\.\d+/g, (n) => {
+    let decimalPlaces = (n.split(".")[1] || "").length;
+    let factor = Math.pow(10, decimalPlaces);
+    return String((Number(n) * factor - 1) / factor);
+  });
+};
+
 // These functions are placeholders as the actual implementation is in the stringFunction
 // They're kept here for type consistency in the command registry
 export const duplicateAndIncrement: CommandFunction = () => "";

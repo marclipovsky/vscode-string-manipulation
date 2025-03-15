@@ -51,3 +51,5 @@ Test123!
 No quotes at all
 'It's'
 "My name's %20 Minalike!"
+Lorem -1.234 ipsum 5.678 dolor sit amet, consectetur adipiscing.
+Sed do 9.876 eiusmod -4.321 tempor incididunt labore.

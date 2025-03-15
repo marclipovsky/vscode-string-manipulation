@@ -23,6 +23,8 @@ export const numberFunctionNames = [
   "sequence",
   "duplicateAndIncrement",
   "duplicateAndDecrement",
+  "incrementFloat",
+  "decrementFloat",
 ];
 
 export const functionNamesWithArgument = [
