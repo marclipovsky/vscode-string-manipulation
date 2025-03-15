@@ -13,6 +13,8 @@ import {
   duplicateAndDecrement,
   handleDuplicateAndIncrementDecrement,
   updateSelectionsAfterDuplicate,
+  incrementFloat,
+  decrementFloat,
 } from "./increment-decrement";
 import { sequence } from "./sequence";
 import { randomCase } from "./random-case";
@@ -49,6 +51,8 @@ export const commandNameFunctionMap: CommandRegistry = {
   decrement,
   duplicateAndIncrement,
   duplicateAndDecrement,
+  incrementFloat,
+  decrementFloat,
   sequence,
   utf8ToChar,
   charToUtf8,

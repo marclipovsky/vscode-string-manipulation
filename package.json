@@ -181,6 +181,16 @@
         "command": "string-manipulation.duplicateAndDecrement"
       },
       {
+        "title": "Increment all floats",
+        "category": "String Manipulation",
+        "command": "string-manipulation.incrementFloat"
+      },
+      {
+        "title": "Decrement all floats",
+        "category": "String Manipulation",
+        "command": "string-manipulation.decrementFloat"
+      },
+      {
         "title": "Sequence all numbers from first number",
         "category": "String Manipulation",
         "command": "string-manipulation.sequence"
@@ -327,6 +337,14 @@
         },
         {
           "command": "string-manipulation.duplicateAndDecrement",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.incrementFloat",
+          "group": "7_modification"
+        },
+        {
+          "command": "string-manipulation.decrementFloat",
           "group": "7_modification"
         },
         {

@@ -455,6 +455,40 @@ suite("Extension Test Suite", () => {
       );
     });
 
+    test("incrementFloat increases all floats in the selection by 1", async () => {
+      const [output] = await getTextForSelectionsByCommand(
+        "string-manipulation.incrementFloat",
+        [
+          {
+            start: { line: 53, character: 0 },
+            end: { line: 53, character: 64 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output /* Lorem -1.234 ipsum 5.678 dolor sit amet, consectetur adipiscing. */,
+        "Lorem -1.233 ipsum 5.679 dolor sit amet, consectetur adipiscing."
+      );
+    });
+
+    test("decrementFloat decreases all floats in the selection by 1", async () => {
+      const [output] = await getTextForSelectionsByCommand(
+        "string-manipulation.decrementFloat",
+        [
+          {
+            start: { line: 54, character: 0 },
+            end: { line: 54, character: 53 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output /* Sed do 9.876 eiusmod -4.321 tempor incididunt labore. */,
+        "Sed do 9.875 eiusmod -4.322 tempor incididunt labore."
+      );
+    });
+
     test("duplicateAndIncrement duplicates selection and increments numbers in duplicate", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.duplicateAndIncrement",

@@ -40,6 +40,8 @@ Number related functions:
 1. duplicate and increment - duplicates selection and increments all numbers
 1. duplicate and decrement - duplicates selection and decrements all numbers
 1. sequence - replaces numbers with a sequence starting from the first number
+1. incrementFloat - increases all floating point numbers in the selection by 1
+1. decrementFloat - decreases all floating point numbers in the selection by 1
 
 Additional utility commands:
 
