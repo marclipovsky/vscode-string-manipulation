@@ -1,9 +1,8 @@
-![Node.js CI](https://github.com/marclipovsky/vscode-string-manipulation/workflows/Node.js%20CI/badge.svg)
+![CI](https://img.shields.io/github/actions/workflow/status/marclipovsky/vscode-string-manipulation/ci.yml) ![open vsx](https://img.shields.io/open-vsx/v/marclipovsky/string-manipulation) ![VS Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/marclipovsky.string-manipulation) ![VS Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/marclipovsky.string-manipulation)  ![VS Marketplace Stars](https://img.shields.io/visual-studio-marketplace/stars/marclipovsky.string-manipulation)  ![VS Marketplace Rating](https://img.shields.io/visual-studio-marketplace/r/marclipovsky.string-manipulation) ![VS Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/marclipovsky.string-manipulation)
 
-> **📢 Coming Soon for Cursor!**  
-> We're working on making this extension available for Cursor. It will be available in the coming days!
+> **📢 Now available on Cursor!**
 
-# String Manipulation for VSCode
+# String Manipulation for VSCode & Cursor
 
 This extension provides string manipulation commands for any selected text as well
 as multiple selections.
