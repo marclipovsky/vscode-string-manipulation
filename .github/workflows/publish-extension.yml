@@ -47,10 +47,15 @@ jobs:
       - name: Build VSIX package
         run: npm run package -- -o vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
 
-      - name: Publish extension package
+      - name: Publish extension package to Marketplace
         env:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
-        run: npm run vsce -- publish -p $VSCE_TOKEN
+        run: npm run ovsx -- publish -p $VSCE_TOKEN
+
+      - name: Publish extension package to Open VSX Registry
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: npm run ovsx -- publish -p $OVSX_PAT
 
       - uses: actions/upload-artifact@v4
         name: Upload artifact
