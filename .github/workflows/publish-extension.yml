@@ -50,7 +50,7 @@ jobs:
       - name: Publish extension package to Marketplace
         env:
           VSCE_TOKEN: ${{ secrets.VSCE_TOKEN }}
-        run: npm run ovsx -- publish -p $VSCE_TOKEN
+        run: npm run vsce -- publish -p $VSCE_TOKEN
 
       - name: Publish extension package to Open VSX Registry
         env:
