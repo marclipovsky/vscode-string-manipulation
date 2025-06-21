@@ -57,3 +57,13 @@ jobs:
         with:
           name: vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
           path: vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.calculateVersion.outputs.AppVersion }}
+          name: Release v${{ steps.calculateVersion.outputs.AppVersion }}
+          files: vscode-string-manipulation.v${{ steps.calculateVersion.outputs.AppVersion }}.vsix
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

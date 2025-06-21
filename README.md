@@ -1,5 +1,8 @@
 ![Node.js CI](https://github.com/marclipovsky/vscode-string-manipulation/workflows/Node.js%20CI/badge.svg)
 
+> **📢 Coming Soon for Cursor!**  
+> We're working on making this extension available for Cursor. It will be available in the coming days!
+
 # String Manipulation for VSCode
 
 This extension provides string manipulation commands for any selected text as well
