@@ -2,10 +2,58 @@ import * as vscode from "vscode";
 import { CommandFunction } from "./types";
 
 export const increment: CommandFunction = (str: string) =>
-  str.replace(/-?\d+/g, (n) => String(Number(n) + 1));
+  str.replace(/-?\d+/g, (n) => {
+    const num = Number(n);
+    const incremented = num + 1;
+    
+    // Preserve leading zeros if they exist in the original number
+    if (n.length > 1 && n.charAt(n.charAt(0) === '-' ? 1 : 0) === '0') {
+      const isNegative = n.charAt(0) === '-';
+      const originalLength = n.length;
+      const incrementedStr = String(incremented);
+      
+      if (isNegative) {
+        // For negative numbers, pad after the minus sign
+        const absStr = incrementedStr.substring(1);
+        return '-' + absStr.padStart(originalLength - 1, '0');
+      } else {
+        // For positive numbers, pad the entire string
+        return incrementedStr.padStart(originalLength, '0');
+      }
+    }
+    
+    return String(incremented);
+  });
 
 export const decrement: CommandFunction = (str: string) =>
-  str.replace(/-?\d+/g, (n) => String(Number(n) - 1));
+  str.replace(/-?\d+/g, (n) => {
+    const num = Number(n);
+    const decremented = num - 1;
+    
+    // Preserve leading zeros if they exist in the original number
+    if (n.length > 1 && n.charAt(n.charAt(0) === '-' ? 1 : 0) === '0') {
+      const isOriginalNegative = n.charAt(0) === '-';
+      const originalLength = n.length;
+      const decrementedStr = String(decremented);
+      const isResultNegative = decremented < 0;
+      
+      if (isOriginalNegative) {
+        // For negative numbers, pad after the minus sign
+        const absStr = decrementedStr.substring(1);
+        return '-' + absStr.padStart(originalLength - 1, '0');
+      } else if (isResultNegative) {
+        // When decrementing a positive zero-padded number results in negative
+        // Pad the absolute value and add minus sign
+        const absStr = decrementedStr.substring(1);
+        return '-' + absStr.padStart(originalLength - 1, '0');
+      } else {
+        // For positive results, pad the entire string
+        return decrementedStr.padStart(originalLength, '0');
+      }
+    }
+    
+    return String(decremented);
+  });
 
 export const incrementFloat: CommandFunction = (str: string) => {
   return str.replace(/-?\d+\.\d+/g, (n) => {

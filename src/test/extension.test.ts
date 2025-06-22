@@ -489,6 +489,204 @@ suite("Extension Test Suite", () => {
       );
     });
 
+    test("increment preserves leading zeros", async () => {
+      const [output1, output2, output3] = await getTextForSelectionsByCommand(
+        "string-manipulation.increment",
+        [
+          {
+            start: { line: 55, character: 0 },
+            end: { line: 55, character: 21 },
+          },
+          {
+            start: { line: 56, character: 0 },
+            end: { line: 56, character: 26 },
+          },
+          {
+            start: { line: 57, character: 0 },
+            end: { line: 57, character: 30 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output1 /* abc009 def010 ghi001 */,
+        "abc010 def011 ghi002"
+      );
+      assert.strictEqual(
+        output2 /* test001 value99 number000 */,
+        "test002 value100 number001"
+      );
+      assert.strictEqual(
+        output3 /* prefix007 suffix008 middle009 */,
+        "prefix008 suffix009 middle010"
+      );
+    });
+
+    test("decrement preserves leading zeros", async () => {
+      const [output1, output2, output3] = await getTextForSelectionsByCommand(
+        "string-manipulation.decrement",
+        [
+          {
+            start: { line: 55, character: 0 },
+            end: { line: 55, character: 21 },
+          },
+          {
+            start: { line: 56, character: 0 },
+            end: { line: 56, character: 26 },
+          },
+          {
+            start: { line: 57, character: 0 },
+            end: { line: 57, character: 30 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output1 /* abc009 def010 ghi001 */,
+        "abc008 def009 ghi000"
+      );
+      assert.strictEqual(
+        output2 /* test001 value99 number000 */,
+        "test000 value98 number-01"
+      );
+      assert.strictEqual(
+        output3 /* prefix007 suffix008 middle009 */,
+        "prefix006 suffix007 middle008"
+      );
+    });
+
+    test("increment preserves leading zeros without prefixes", async () => {
+      const [output1, output2, output3] = await getTextForSelectionsByCommand(
+        "string-manipulation.increment",
+        [
+          {
+            start: { line: 58, character: 0 },
+            end: { line: 58, character: 11 },
+          },
+          {
+            start: { line: 59, character: 0 },
+            end: { line: 59, character: 10 },
+          },
+          {
+            start: { line: 60, character: 0 },
+            end: { line: 60, character: 11 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output1 /* 009 010 001 */,
+        "010 011 002"
+      );
+      assert.strictEqual(
+        output2 /* 001 99 000 */,
+        "002 100 001"
+      );
+      assert.strictEqual(
+        output3 /* 007 008 009 */,
+        "008 009 010"
+      );
+    });
+
+    test("decrement preserves leading zeros without prefixes", async () => {
+      const [output1, output2, output3] = await getTextForSelectionsByCommand(
+        "string-manipulation.decrement",
+        [
+          {
+            start: { line: 58, character: 0 },
+            end: { line: 58, character: 11 },
+          },
+          {
+            start: { line: 59, character: 0 },
+            end: { line: 59, character: 10 },
+          },
+          {
+            start: { line: 60, character: 0 },
+            end: { line: 60, character: 11 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output1 /* 009 010 001 */,
+        "008 009 000"
+      );
+      assert.strictEqual(
+        output2 /* 001 99 000 */,
+        "000 98 -01"
+      );
+      assert.strictEqual(
+        output3 /* 007 008 009 */,
+        "006 007 008"
+      );
+    });
+
+    test("increment preserves 3 leading zeros", async () => {
+      const [output1, output2, output3] = await getTextForSelectionsByCommand(
+        "string-manipulation.increment",
+        [
+          {
+            start: { line: 61, character: 0 },
+            end: { line: 61, character: 14 },
+          },
+          {
+            start: { line: 62, character: 0 },
+            end: { line: 62, character: 14 },
+          },
+          {
+            start: { line: 63, character: 0 },
+            end: { line: 63, character: 14 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output1 /* 0009 0010 0001 */,
+        "0010 0011 0002"
+      );
+      assert.strictEqual(
+        output2 /* 0001 0099 0000 */,
+        "0002 0100 0001"
+      );
+      assert.strictEqual(
+        output3 /* 0007 0008 0009 */,
+        "0008 0009 0010"
+      );
+    });
+
+    test("decrement preserves 3 leading zeros", async () => {
+      const [output1, output2, output3] = await getTextForSelectionsByCommand(
+        "string-manipulation.decrement",
+        [
+          {
+            start: { line: 61, character: 0 },
+            end: { line: 61, character: 14 },
+          },
+          {
+            start: { line: 62, character: 0 },
+            end: { line: 62, character: 14 },
+          },
+          {
+            start: { line: 63, character: 0 },
+            end: { line: 63, character: 14 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output1 /* 0009 0010 0001 */,
+        "0008 0009 0000"
+      );
+      assert.strictEqual(
+        output2 /* 0001 0099 0000 */,
+        "0000 0098 -001"
+      );
+      assert.strictEqual(
+        output3 /* 0007 0008 0009 */,
+        "0006 0007 0008"
+      );
+    });
+
     test("duplicateAndIncrement duplicates selection and increments numbers in duplicate", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.duplicateAndIncrement",

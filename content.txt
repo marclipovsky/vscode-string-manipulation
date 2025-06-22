@@ -53,3 +53,12 @@ No quotes at all
 "My name's %20 Minalike!"
 Lorem -1.234 ipsum 5.678 dolor sit amet, consectetur adipiscing.
 Sed do 9.876 eiusmod -4.321 tempor incididunt labore.
+abc009 def010 ghi001
+test001 value99 number000
+prefix007 suffix008 middle009
+009 010 001
+001 99 000
+007 008 009
+0009 0010 0001
+0001 0099 0000
+0007 0008 0009
