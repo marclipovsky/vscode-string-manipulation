@@ -6,6 +6,7 @@ import {
   stringFunction,
   functionNamesWithArgument,
 } from "./commands";
+import { telemetryService } from "./telemetry";
 
 export class StringManipulationSidebar implements vscode.WebviewViewProvider {
   public static readonly viewType = "stringManipulationSidebar";
@@ -35,6 +36,9 @@ export class StringManipulationSidebar implements vscode.WebviewViewProvider {
     _token: vscode.CancellationToken
   ) {
     this._view = webviewView;
+    
+    // Log sidebar feature usage
+    telemetryService.logFeatureUsage("sidebar.opened");
 
     webviewView.webview.options = {
       // Allow scripts in the webview
@@ -157,14 +161,36 @@ export class StringManipulationSidebar implements vscode.WebviewViewProvider {
     const stringFunc = commandNameFunctionMap[commandName];
     if (!stringFunc) {
       vscode.window.showErrorMessage(`Command "${commandName}" not found.`);
+      telemetryService.logError({
+        errorType: "command_not_found",
+        source: `sidebar.applyCommand`,
+        message: `Command "${commandName}" not found in registry`
+      });
       return;
     }
 
-    stringFunction(commandName, this.context, /* shouldApplyChanges */ true);
+    try {
+      // Log sidebar feature usage
+      telemetryService.logFeatureUsage("sidebar.command_executed", {
+        commandName
+      });
+      
+      await stringFunction(commandName, this.context, /* shouldApplyChanges */ true, "sidebar");
 
-    vscode.window.showInformationMessage(
-      `Applied "${commandName}" to selected text.`
-    );
+      vscode.window.showInformationMessage(
+        `Applied "${commandName}" to selected text.`
+      );
+    } catch (error: any) {
+      vscode.window.showErrorMessage(
+        `Failed to apply command "${commandName}": ${error.message || String(error)}`
+      );
+      
+      telemetryService.logError({
+        errorType: "sidebar_command_execution_error",
+        source: `sidebar.applyCommand.${commandName}`,
+        message: error.message || String(error)
+      });
+    }
   }
 
   public async updateWebview() {

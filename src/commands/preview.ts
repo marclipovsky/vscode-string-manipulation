@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { commandNameFunctionMap } from "./index";
 import { functionNamesWithArgument, numberFunctionNames } from "./types";
 import { stringFunction } from "./index";
+import { telemetryService } from "../telemetry";
 
 /**
  * Maximum length for preview text in context menu
@@ -63,8 +64,13 @@ export function getTransformationPreview(
     const transformed = stringFunc(firstLine);
 
     return truncateForPreview(transformed);
-  } catch (error) {
+  } catch (error: any) {
     console.error(`Error generating preview for ${commandName}:`, error);
+    telemetryService.logError({
+      errorType: "preview_generation_error",
+      source: `getTransformationPreview.${commandName}`,
+      message: error.message || String(error)
+    });
     return undefined;
   }
 }
@@ -80,9 +86,13 @@ interface TransformationQuickPickItem extends vscode.QuickPickItem {
 export async function showTransformationQuickPick(
   context: vscode.ExtensionContext
 ): Promise<void> {
+  // Log preview feature usage
+  telemetryService.logFeatureUsage("preview.opened");
+  
   const editor = vscode.window.activeTextEditor;
   if (!editor || editor.selections.length === 0) {
     vscode.window.showInformationMessage("No text selected");
+    telemetryService.logFeatureUsage("preview.no_selection");
     return;
   }
 
@@ -92,6 +102,7 @@ export async function showTransformationQuickPick(
 
   if (!selectedText || selectedText.trim() === "") {
     vscode.window.showInformationMessage("No text selected");
+    telemetryService.logFeatureUsage("preview.no_selection");
     return;
   }
 
@@ -116,11 +127,16 @@ export async function showTransformationQuickPick(
       };
 
       quickPickItems.push(item);
-    } catch (error) {
+    } catch (error: any) {
       console.error(
         `Error creating quick pick item for ${commandName}:`,
         error
       );
+      telemetryService.logError({
+        errorType: "quickpick_item_error",
+        source: `showTransformationQuickPick.${commandName}`,
+        message: error.message || String(error)
+      });
     }
   }
 
@@ -133,14 +149,28 @@ export async function showTransformationQuickPick(
 
   if (selectedItem) {
     try {
+      // Log preview feature usage
+      telemetryService.logFeatureUsage("preview.command_selected", {
+        commandName: selectedItem.commandName
+      });
+      
       // Use the stored command name directly
-      await stringFunction(selectedItem.commandName, context);
+      await stringFunction(selectedItem.commandName, context, true, "preview");
     } catch (error: any) {
       console.error("Error applying transformation:", error);
       vscode.window.showErrorMessage(
         `Failed to apply transformation: ${error.message || String(error)}`
       );
+      
+      telemetryService.logError({
+        errorType: "preview_command_execution_error",
+        source: `showTransformationQuickPick.${selectedItem.commandName}`,
+        message: error.message || String(error)
+      });
     }
+  } else {
+    // Log preview cancellation
+    telemetryService.logFeatureUsage("preview.cancelled");
   }
 }
 

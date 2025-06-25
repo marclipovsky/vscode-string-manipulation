@@ -19,8 +19,7 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onCommand:string-manipulation.*",
-    "onView:stringManipulationSidebar"
+    "onCommand:string-manipulation.*"
   ],
   "contributes": {
     "configuration": {
@@ -31,6 +30,15 @@
           "type": "boolean",
           "default": false,
           "description": "Enable experimental String Manipulation Labs features."
+        },
+        "stringManipulation.telemetry": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable telemetry data collection for String Manipulation extension (respects VS Code's global telemetry setting).",
+          "tags": [
+            "telemetry",
+            "usesOnlineServices"
+          ]
         }
       }
     },
@@ -410,6 +418,7 @@
   },
   "dependencies": {
     "@sindresorhus/slugify": "^0.3.0",
+    "@vscode/extension-telemetry": "^1.0.0",
     "ap-style-title-case": "^1.1.2",
     "chicago-capitalize": "^0.1.0",
     "nodemon": "^3.1.7",
