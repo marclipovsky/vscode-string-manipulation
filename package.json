@@ -39,6 +39,66 @@
             "telemetry",
             "usesOnlineServices"
           ]
+        },
+        "stringManipulation.customCommands": {
+          "type": "array",
+          "default": [],
+          "description": "Custom regex-based string manipulation commands. Each command consists of a name, search pattern (regex), and replacement string.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Display name for the custom command (will appear in command palette as 'String Manipulation: <name>')",
+                "pattern": "^[a-zA-Z0-9\\s\\-_]+$",
+                "minLength": 1,
+                "maxLength": 50
+              },
+              "searchPattern": {
+                "type": "string",
+                "description": "Regular expression pattern to match text. Use parentheses to create capture groups that can be referenced in the replacement.",
+                "minLength": 1
+              },
+              "replacement": {
+                "type": "string",
+                "description": "Replacement string. Use $1, $2, etc. to reference capture groups from the search pattern. Use $& for the entire match.",
+                "minLength": 0
+              },
+              "global": {
+                "type": "boolean",
+                "description": "Global flag (g): Find all matches rather than stopping after the first match. Default: true.",
+                "default": true
+              },
+              "ignoreCase": {
+                "type": "boolean",
+                "description": "Ignore case flag (i): Case-insensitive search. Default: false.",
+                "default": false
+              },
+              "multiline": {
+                "type": "boolean",
+                "description": "Multiline flag (m): ^ and $ match start/end of line, not just start/end of string. Default: false.",
+                "default": false
+              },
+              "dotAll": {
+                "type": "boolean",
+                "description": "Dot all flag (s): . matches newline characters. Default: false.",
+                "default": false
+              },
+              "unicode": {
+                "type": "boolean",
+                "description": "Unicode flag (u): Enable full Unicode support. Default: false.",
+                "default": false
+              },
+              "sticky": {
+                "type": "boolean",
+                "description": "Sticky flag (y): Match only at the index indicated by the lastIndex property. Default: false.",
+                "default": false
+              }
+            },
+            "required": ["name", "searchPattern", "replacement"],
+            "additionalProperties": false
+          },
+          "maxItems": 20
         }
       }
     },
@@ -57,6 +117,11 @@
         "title": "Show Transformations with Preview",
         "category": "String Manipulation",
         "command": "string-manipulation.showTransformationsWithPreview"
+      },
+      {
+        "title": "Custom Command",
+        "category": "String Manipulation",
+        "command": "string-manipulation.customCommand"
       },
       {
         "title": "Titleize",
@@ -238,6 +303,11 @@
         },
         {
           "command": "string-manipulation.showTransformationsWithPreview",
+          "group": "7_modification",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "string-manipulation.customCommand",
           "group": "7_modification",
           "when": "editorHasSelection"
         }

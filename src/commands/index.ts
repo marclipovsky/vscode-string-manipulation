@@ -23,6 +23,7 @@ import { utf8ToChar, charToUtf8 } from "./utf8-conversion";
 import { titleizeApStyle, titleizeChicagoStyle } from "./title-case";
 import { slugify } from "./slugify";
 import { swapQuotes } from "./swap_quotes";
+import { getCustomCommands, createCustomRegexFunction, generateCommandId, CustomCommand, showCustomCommandPicker } from "./custom-regex";
 
 // Combine all commands into a single registry
 export const commandNameFunctionMap: CommandRegistry = {
@@ -206,6 +207,37 @@ export const stringFunction = async (
   }
 };
 
+// Store custom command disposables for cleanup
+let customCommandDisposables: vscode.Disposable[] = [];
+
+// Register custom commands from user configuration
+function registerCustomCommands(context: vscode.ExtensionContext) {
+  // Dispose previous custom commands
+  customCommandDisposables.forEach(disposable => disposable.dispose());
+  customCommandDisposables = [];
+
+  const customCommands = getCustomCommands();
+  
+  customCommands.forEach((command: CustomCommand) => {
+    const commandId = generateCommandId(command.name);
+    const fullCommandId = `string-manipulation.custom-${commandId}`;
+    
+    // Create the command function
+    const commandFunc = createCustomRegexFunction(command);
+    
+    // Add to command registry
+    commandNameFunctionMap[`custom-${commandId}`] = commandFunc;
+    
+    // Register the VSCode command
+    const disposable = vscode.commands.registerCommand(fullCommandId, () => 
+      stringFunction(`custom-${commandId}`, context)
+    );
+    
+    customCommandDisposables.push(disposable);
+    context.subscriptions.push(disposable);
+  });
+}
+
 // Activation function
 export function activate(context: vscode.ExtensionContext) {
   context.globalState.setKeysForSync(["lastAction"]);
@@ -222,6 +254,15 @@ export function activate(context: vscode.ExtensionContext) {
     )
   );
 
+  // Register the custom command picker
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "string-manipulation.customCommand",
+      () => showCustomCommandPicker(context)
+    )
+  );
+
+  // Register built-in commands
   Object.keys(commandNameFunctionMap).forEach((commandName) => {
     context.subscriptions.push(
       vscode.commands.registerCommand(
@@ -230,4 +271,16 @@ export function activate(context: vscode.ExtensionContext) {
       )
     );
   });
+
+  // Register custom commands initially
+  registerCustomCommands(context);
+
+  // Listen for configuration changes to re-register custom commands
+  const configWatcher = vscode.workspace.onDidChangeConfiguration((event) => {
+    if (event.affectsConfiguration("stringManipulation.customCommands")) {
+      registerCustomCommands(context);
+    }
+  });
+  
+  context.subscriptions.push(configWatcher);
 }

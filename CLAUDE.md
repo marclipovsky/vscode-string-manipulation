@@ -33,6 +33,7 @@ This is a VSCode extension that provides string manipulation commands for text e
   - `increment-decrement.ts` - Number manipulation commands
   - `sequence.ts` - Number sequencing functionality
   - `title-case.ts` - Specialized title casing (AP Style, Chicago Style)
+  - `custom-regex.ts` - Custom user-defined regex-based commands
   - `preview.ts` - Live preview functionality for transformations
   - `sidebar.ts` - Optional webview sidebar (Labs feature)
 
@@ -47,6 +48,7 @@ The extension registers VSCode commands dynamically from the `commandNameFunctio
 - **Multi-selection support**: All commands work with multiple text selections
 - **Preview mode**: Live preview of transformations before applying
 - **Argument-based commands**: Some commands (like `chop`, `truncate`) prompt for numeric arguments
+- **Custom regex commands**: Users can define their own regex-based transformations via settings
 - **Duplicate operations**: Special handling for duplicate-and-increment/decrement commands
 - **Labs features**: Experimental features behind a configuration flag
 

@@ -71,6 +71,68 @@ This feature makes it easier to find the right transformation without trial and 
 
 ![String Manipulation Preview Feature](images/preview-demo.gif)
 
+## 🎛️ Custom Commands
+
+Create your own regex-based string manipulation commands! Define custom transformations that fit your specific workflow needs.
+
+### Quick Start with Custom Commands
+
+1. **Select text** in your editor
+2. **Open Command Palette** (`Cmd+Shift+P` / `Ctrl+Shift+P`)
+3. **Type "String Manipulation: Custom Command"**
+4. **Choose from your configured commands** (or add some if none exist)
+
+### Setting Up Custom Commands
+
+Add custom commands to your VS Code settings:
+
+```json
+{
+  "stringManipulation.customCommands": [
+    {
+      "name": "Extract Numbers",
+      "searchPattern": "[^0-9]",
+      "replacement": "",
+      "global": true
+    },
+    {
+      "name": "Wrap in Quotes",
+      "searchPattern": "^(.*)$",
+      "replacement": "\"$1\""
+    },
+    {
+      "name": "Camel to Snake",
+      "searchPattern": "([a-z])([A-Z])",
+      "replacement": "$1_$2",
+      "global": true
+    }
+  ]
+}
+```
+
+### Regular Expression Flags
+
+Use intuitive boolean properties instead of cryptic flag letters. See the [MDN RegExp flags documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions#advanced_searching_with_flags) for detailed information.
+
+| Property | Flag | Description |
+|----------|------|-------------|
+| `global` | `g` | Find all matches rather than stopping after the first |
+| `ignoreCase` | `i` | Case-insensitive search |
+| `multiline` | `m` | `^` and `$` match start/end of line |
+| `dotAll` | `s` | `.` matches newline characters |
+| `unicode` | `u` | Enable full Unicode support |
+| `sticky` | `y` | Match only at specific index |
+
+### Custom Command Features
+
+- **🔍 Live Previews**: See transformation results before applying
+- **✅ Validation**: Real-time regex pattern validation with helpful errors
+- **🔄 Multi-selection**: Works with multiple text selections
+- **🎯 Saved & Reusable**: Your commands are stored and accessible anytime
+- **🔗 Integration**: Works with repeat last action and other features
+
+📖 **[Complete Custom Commands Guide](CUSTOM-COMMANDS.md)** - Detailed examples and advanced usage
+
 ## 🧪 Introducing Labs Features
 
 Introducing String Manipulation Labs

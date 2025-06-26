@@ -1115,5 +1115,102 @@ suite("Extension Test Suite", () => {
         assert.strictEqual(output /* 'It's' */, `"It's"`);
       });
     });
+
+    suite("custom regex commands", () => {
+      test("validates custom command configuration", async () => {
+        const { validateCustomCommand } = await import("../commands/custom-regex.js");
+        
+        // Valid command
+        const validCommand = {
+          name: "Test Command",
+          searchPattern: "([a-z]+)",
+          replacement: "$1",
+          global: true
+        };
+        assert.strictEqual(validateCustomCommand(validCommand).isValid, true);
+        
+        // Invalid command - missing name
+        const invalidCommand = {
+          searchPattern: "test",
+          replacement: "TEST"
+        };
+        assert.strictEqual(validateCustomCommand(invalidCommand).isValid, false);
+        
+        // Invalid regex pattern
+        const invalidRegex = {
+          name: "Bad Regex",
+          searchPattern: "[invalid",
+          replacement: "test"
+        };
+        assert.strictEqual(validateCustomCommand(invalidRegex).isValid, false);
+      });
+
+      test("creates functioning regex commands", async () => {
+        const { createCustomRegexFunction } = await import("../commands/custom-regex.js");
+        
+        // Test extract numbers command
+        const extractNumbers = createCustomRegexFunction({
+          name: "Extract Numbers",
+          searchPattern: "[^0-9]",
+          replacement: "",
+          global: true
+        });
+        
+        assert.strictEqual(extractNumbers("abc123def456"), "123456");
+        
+        // Test wrap in quotes command
+        const wrapInQuotes = createCustomRegexFunction({
+          name: "Wrap in Quotes", 
+          searchPattern: "^(.*)$",
+          replacement: "\"$1\""
+        });
+        
+        assert.strictEqual(wrapInQuotes("hello"), "\"hello\"");
+      });
+
+      test("generates valid command IDs", async () => {
+        const { generateCommandId } = await import("../commands/custom-regex.js");
+        
+        assert.strictEqual(generateCommandId("Extract Numbers"), "extract-numbers");
+        assert.strictEqual(generateCommandId("Wrap in Quotes!"), "wrap-in-quotes");
+        assert.strictEqual(generateCommandId("Test_Command-123"), "test-command-123");
+      });
+
+      test("converts named flags to flag string", async () => {
+        const { convertNamedFlagsToString } = await import("../commands/custom-regex.js");
+        
+        // Test all flags
+        const allFlags = {
+          name: "test",
+          searchPattern: "test",
+          replacement: "test",
+          global: true,
+          ignoreCase: true,
+          multiline: true,
+          dotAll: true,
+          unicode: true,
+          sticky: true
+        };
+        assert.strictEqual(convertNamedFlagsToString(allFlags), "gimsuy");
+        
+        // Test no flags (should default to global)
+        const noFlags = {
+          name: "test",
+          searchPattern: "test",
+          replacement: "test"
+        };
+        assert.strictEqual(convertNamedFlagsToString(noFlags), "g");
+        
+        // Test selective flags
+        const someFlags = {
+          name: "test",
+          searchPattern: "test",
+          replacement: "test",
+          global: true,
+          ignoreCase: true
+        };
+        assert.strictEqual(convertNamedFlagsToString(someFlags), "gi");
+      });
+    });
   });
 });
