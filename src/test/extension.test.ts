@@ -746,6 +746,152 @@ suite("Extension Test Suite", () => {
       );
     });
 
+    test("sequence preserves leading zeros", async () => {
+      const [output1, output2, output3] = await getTextForSelectionsByCommand(
+        "string-manipulation.sequence",
+        [
+          {
+            start: { line: 55, character: 0 },
+            end: { line: 55, character: 21 },
+          },
+          {
+            start: { line: 56, character: 0 },
+            end: { line: 56, character: 26 },
+          },
+          {
+            start: { line: 57, character: 0 },
+            end: { line: 57, character: 30 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output1 /* abc009 def010 ghi001 */,
+        "abc009 def010 ghi011"
+      );
+      assert.strictEqual(
+        output2 /* test001 value99 number000 */,
+        "test012 value013 number014"
+      );
+      assert.strictEqual(
+        output3 /* prefix007 suffix008 middle009 */,
+        "prefix015 suffix016 middle017"
+      );
+    });
+
+    test("sequence preserves leading zeros without prefixes", async () => {
+      const [output1, output2, output3] = await getTextForSelectionsByCommand(
+        "string-manipulation.sequence",
+        [
+          {
+            start: { line: 58, character: 0 },
+            end: { line: 58, character: 11 },
+          },
+          {
+            start: { line: 59, character: 0 },
+            end: { line: 59, character: 10 },
+          },
+          {
+            start: { line: 60, character: 0 },
+            end: { line: 60, character: 11 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output1 /* 009 010 001 */,
+        "009 010 011"
+      );
+      assert.strictEqual(
+        output2 /* 001 99 000 */,
+        "012 013 014"
+      );
+      assert.strictEqual(
+        output3 /* 007 008 009 */,
+        "015 016 017"
+      );
+    });
+
+    test("sequence preserves 3 leading zeros", async () => {
+      const [output1, output2, output3] = await getTextForSelectionsByCommand(
+        "string-manipulation.sequence",
+        [
+          {
+            start: { line: 61, character: 0 },
+            end: { line: 61, character: 14 },
+          },
+          {
+            start: { line: 62, character: 0 },
+            end: { line: 62, character: 14 },
+          },
+          {
+            start: { line: 63, character: 0 },
+            end: { line: 63, character: 14 },
+          },
+        ]
+      );
+
+      assert.strictEqual(
+        output1 /* 0009 0010 0001 */,
+        "0009 0010 0011"
+      );
+      assert.strictEqual(
+        output2 /* 0001 0099 0000 */,
+        "0012 0013 0014"
+      );
+      assert.strictEqual(
+        output3 /* 0007 0008 0009 */,
+        "0015 0016 0017"
+      );
+    });
+
+    test("sequence preserves leading zeros with mixed number formats", async () => {
+      const [output] = await getTextForSelectionsByCommand(
+        "string-manipulation.sequence",
+        [
+          {
+            start: { line: 64, character: 0 },
+            end: { line: 64, character: 28 },
+          },
+        ]
+      );
+
+      // Test with a mix of zero-padded and regular numbers
+      // Line 64 contains: "test01 value100 prefix007 99"  
+      // Max length is 3 from "prefix007", so all numbers should be padded to 3 digits
+      assert.strictEqual(
+        output /* test01 value100 prefix007 99 */,
+        "test001 value002 prefix003 004"
+      );
+    });
+
+    test("sequence uses max length for consistent zero padding", async () => {
+      const [output1, output2] = await getTextForSelectionsByCommand(
+        "string-manipulation.sequence",
+        [
+          {
+            start: { line: 65, character: 0 },
+            end: { line: 65, character: 8 },
+          },
+          {
+            start: { line: 66, character: 0 },
+            end: { line: 66, character: 11 },
+          },
+        ]
+      );
+
+      // Line 65: "02 100 4" - max length is 2 from "02", so all should be padded to 2 digits
+      assert.strictEqual(
+        output1 /* 02 100 4 */,
+        "02 03 04"
+      );
+      // Line 66: "010 100 123" - max length is 3 from "010", so all should be padded to 3 digits  
+      assert.strictEqual(
+        output2 /* 010 100 123 */,
+        "005 006 007"
+      );
+    });
+
     test("utf8ToChar converts Unicode escapes to characters", async () => {
       const [output] = await getTextForSelectionsByCommand(
         "string-manipulation.utf8ToChar",
@@ -784,7 +930,7 @@ suite("Extension Test Suite", () => {
       const input = "Hello, World!";
 
       test("maintains string length and lowercased content", async () => {
-        const [output] = await getTextForSelectionsByCommand(
+        await getTextForSelectionsByCommand(
           "string-manipulation.randomCase",
           [
             {
